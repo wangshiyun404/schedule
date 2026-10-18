@@ -166,6 +166,15 @@
     }
   }
 
+  // 让卡片网格排得整齐：根据容器宽度选列数，并尽量让每行数量相同
+  function evenColumns(el, n, minW) {
+    const w = el.clientWidth || el.parentElement.clientWidth || 1100;
+    let cols = Math.max(1, Math.min(n, Math.floor((w + 12) / (minW + 12))));
+    for (let c = cols; c >= 2; c--) if (n % c === 0) { cols = c; break; }
+    if (n % cols !== 0 && cols > 2 && n % (cols - 1) === 0) cols -= 1;
+    el.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+  }
+
   // ---- 视图切换：周 / 月 / 日程 ----
   function monthOf(d) { const p = parts(d); return new Date(Date.UTC(p.y, p.m - 1, 1) - 8 * 3600000); }
   function addMonths(d, n) { const p = parts(d); return new Date(Date.UTC(p.y, p.m - 1 + n, 1) - 8 * 3600000); }
@@ -311,13 +320,14 @@
       return { ...c, ss, sort: ss.length ? ss[0].sort : Infinity };
     }).sort((a, b) => a.sort - b.sort);
     $('course-sub').textContent = rows.length ? `${rows.length} 门 · 按每周上课时间排列` : '';
-    if (!rows.length) { el.innerHTML = '<div class="card empty">未来四周没有课程安排</div>'; return; }
+    if (!rows.length) { el.style.gridTemplateColumns = ''; el.innerHTML = '<div class="card empty">未来四周没有课程安排</div>'; return; }
+    evenColumns(el, rows.length, 230);
     for (const c of rows) {
-      const sessions = c.ss.map(x => `<li><span class="wd">${WEEKDAYS[x.wd]}</span><span class="t">${x.t}</span></li>`).join('');
+      const sessions = c.ss.map(x => `<tr><th>${WEEKDAYS[x.wd]}</th><td>${x.t}</td></tr>`).join('');
       const loc = [...c.locations].join(' / ');
       el.insertAdjacentHTML('beforeend', `<article class="card course-card">
         <h3>${esc(c.title)}</h3>
-        <ul class="sessions">${sessions}</ul>
+        <table class="sessions">${sessions}</table>
         ${loc ? `<p class="loc">${esc(loc)}</p>` : ''}
         <p class="meta">共 ${c.count} 次 · 至 ${md(c.last)}</p>
       </article>`);
@@ -335,7 +345,10 @@
       if (last && last.title === e.title && new Date(e.start) - new Date(last.end) <= DAY) last.end = e.end; else merged.push({ ...e });
     }
     document.body.classList.toggle('no-trips', merged.length === 0);
-    if (!merged.length) { el.innerHTML = '<div class="card empty">近期没有出差或外出行程。日历里新增的出差、航班会自动出现在这里。</div>'; return 0; }
+    // 没有行程时整块收起，把位置让给「接下来」，只在其副标题处注明
+    $('trips').hidden = merged.length === 0;
+    $('upcoming-sub').textContent = merged.length ? '未来几天的安排' : '近期没有出差或外出行程 · 以下是未来几天的安排';
+    if (!merged.length) { el.innerHTML = ''; return 0; }
     for (const t of merged.slice(0, 8)) {
       const s = new Date(t.start), e = new Date(t.end);
       const sameDay = dayKey(s) === dayKey(new Date(e.getTime() - 1));
@@ -350,7 +363,7 @@
     const now = new Date();
     // 没有行程时，“接下来”多显示几天，填满这一屏
     const noTrips = document.body.classList.contains('no-trips');
-    const maxDays = 4, maxItems = noTrips ? 5 : 3;
+    const maxDays = 4, maxItems = noTrips ? 4 : 3;
     const list = data.events.filter(e => e.status !== 'CANCELLED' && new Date(e.end) > now);
     const days = new Map();
     for (const e of list) {
@@ -358,7 +371,8 @@
       if (!days.has(k)) { if (days.size >= maxDays) break; days.set(k, []); }
       days.get(k).push(e);
     }
-    if (!days.size) { el.innerHTML = '<div class="card empty">暂无安排</div>'; return; }
+    if (!days.size) { el.style.gridTemplateColumns = ''; el.innerHTML = '<div class="card empty">暂无安排</div>'; return; }
+    evenColumns(el, days.size, 250);
     for (const [k, evs] of days) {
       const d = new Date(evs[0].start);
       const extra = evs.length - maxItems;
@@ -419,6 +433,7 @@
   });
   function showErr(e) { const n = $('notice'); n.hidden = false; n.className = 'notice'; n.textContent = `日历读取失败：${e.message}。请稍后刷新。`; }
 
+  let rsz; window.addEventListener('resize', () => { clearTimeout(rsz); rsz = setTimeout(() => { if (data) render(); }, 150); });
   setInterval(() => { $('clock').textContent = hhmm(new Date()); }, 1000);
   $('clock').textContent = hhmm(new Date());
   load().catch(showErr);
