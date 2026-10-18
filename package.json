@@ -1,0 +1,20 @@
+{
+  "name": "schedule-site",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node scripts/build.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^5.3.0",
+    "node-ical": "^0.26.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "calendars": [
+    { "name": "工作", "url": "webcal://pXX-caldav.icloud.com.cn/published/2/...", "kind": "auto" },
+    { "name": "飞行计划", "url": "webcal://pXX-caldav.icloud.com.cn/published/2/...", "kind": "trip", "hideDetails": false }
+  ]
+}

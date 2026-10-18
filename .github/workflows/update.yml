@@ -1,0 +1,41 @@
+name: 同步日历并发布到 GitHub Pages
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'   # 每 15 分钟（GitHub 在高峰期可能延迟几分钟）
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: 读取 iCloud 公共日历并生成 schedule.json
+        env:
+          CALENDARS_JSON: ${{ secrets.CALENDARS_JSON }}
+        run: node scripts/build.js
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+      - id: deployment
+        uses: actions/deploy-pages@v4

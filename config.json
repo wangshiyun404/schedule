@@ -1,0 +1,40 @@
+{
+  "owner": {
+    "name": "王世赟",
+    "title": "汕头大学 · 书院教师",
+    "intro": "这里实时同步我的日历。欢迎在空闲时段来找我聊教学、研究或创业训练项目。",
+    "email": "wangshiyun404@gmail.com",
+    "wechat": "",
+    "location": "汕头大学"
+  },
+  "timezone": "Asia/Shanghai",
+  "officeHours": [
+    {
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "start": "09:00",
+      "end": "12:00"
+    },
+    {
+      "days": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "start": "14:00",
+      "end": "18:00"
+    }
+  ],
+  "minFreeMinutes": 30,
+  "refreshSeconds": 60,
+  "showEventDetails": true,
+  "calendars": [],
+  "_说明": "日历地址不入库：本地放在 config.local.json（已 gitignore），线上通过 GitHub Secret CALENDARS_JSON 注入。"
+}

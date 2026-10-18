@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>王世赟 · 日程与课程</title>
+<meta name="description" content="王世赟（汕头大学）的公开日程、课程与行程，实时同步自个人日历。空闲时段欢迎来找我。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%232e6b66%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%2715%27 rx=%272%27 fill=%27%23f6f3ec%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%275%27 fill=%27%23b5542b%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./style.css?v=3">
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap masthead-grid">
+    <div>
+      <p class="eyebrow" id="owner-title">汕头大学 · 书院教师</p>
+      <h1 class="name" id="owner-name">王世赟</h1>
+      <p class="intro" id="owner-intro">这里实时同步我的日历。欢迎在空闲时段来找我聊教学、研究或创业训练项目。</p>
+      <nav class="jump">
+        <a href="#week">本周</a>
+        <a href="#courses">课程</a>
+        <a href="#trips">行程</a>
+        <a href="#find-me">找我</a>
+      </nav>
+    </div>
+    <aside class="status-card" id="status-card" aria-live="polite">
+      <div class="status-row">
+        <span class="dot" id="status-dot"></span>
+        <span class="status-label" id="status-label">正在读取日历…</span>
+      </div>
+      <p class="status-detail" id="status-detail">&nbsp;</p>
+      <p class="status-meta"><span id="clock">--:--</span> · 北京时间 · <span id="updated">同步中</span></p>
+    </aside>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="notice" id="notice" hidden></p>
+
+  <section id="week" class="section">
+    <div class="section-head">
+      <h2>本周安排</h2>
+      <div class="week-nav">
+        <button class="btn-ghost" id="prev-week" aria-label="上一周">‹</button>
+        <button class="btn-ghost" id="today-week">本周</button>
+        <button class="btn-ghost" id="next-week" aria-label="下一周">›</button>
+        <span class="week-range" id="week-range"></span>
+      </div>
+    </div>
+    <div class="week-grid" id="week-grid" role="table" aria-label="本周日程"></div>
+    <div class="day-list" id="day-list"></div>
+    <p class="legend">
+      <span><i class="sw sw-course"></i>课程</span>
+      <span><i class="sw sw-trip"></i>行程 / 出差</span>
+      <span><i class="sw sw-event"></i>其他安排</span>
+      <span><i class="sw sw-office"></i>可预约时段</span>
+    </p>
+  </section>
+
+  <div class="two-col">
+    <section id="courses" class="section">
+      <div class="section-head"><h2>本学期课程</h2></div>
+      <ul class="list" id="course-list"></ul>
+    </section>
+    <section id="trips" class="section">
+      <div class="section-head"><h2>近期行程</h2></div>
+      <ul class="list" id="trip-list"></ul>
+    </section>
+  </div>
+
+  <section id="upcoming" class="section">
+    <div class="section-head"><h2>接下来</h2></div>
+    <ol class="timeline" id="upcoming-list"></ol>
+  </section>
+
+  <section id="find-me" class="section find-me">
+    <div class="section-head"><h2>在我有空时找我</h2></div>
+    <p class="muted" id="office-hours-text"></p>
+    <div class="slots" id="slots"></div>
+    <div class="contact" id="contact"></div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>日程由个人日历自动同步，显示为北京时间（UTC+8）。页面每分钟自动刷新。</p>
+</footer>
+<script src="./app.js?v=3"></script>
+</body>
+</html>
