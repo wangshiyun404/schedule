@@ -1,104 +1,86 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="site">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>王世赟 · 日程与课程</title>
-<meta name="description" content="王世赟（汕头大学）的公开日程、课程与行程，实时同步自个人日历。空闲时段欢迎来找我。">
+<title>王世赟（Wang Shiyun）· 汕头大学</title>
+<meta name="description" content="王世赟（汕头大学）个人主页：研究方向、进行中的项目、本学期课程与实时同步的公开日程。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%232e6b66%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%2715%27 rx=%272%27 fill=%27%23f6f3ec%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%275%27 fill=%27%23b5542b%27/%3E%3C/svg%3E">
-<link rel="stylesheet" href="./style.css?v=5">
+<link rel="stylesheet" href="./style.css?v=6">
+<link rel="stylesheet" href="./site.css?v=1">
 </head>
-<body>
-
-<!-- 第 1 屏：个人信息 + 当前状态 + 本周安排 -->
-<div class="page" id="week">
-  <header class="masthead wrap">
-    <div class="masthead-grid">
-      <div>
-        <p class="eyebrow" id="owner-title">汕头大学</p>
-        <h1 class="name"><span id="owner-name">王世赟</span><span class="name-en" id="owner-name-en">（Wang Shiyun）</span></h1>
-        <p class="intro" id="owner-intro">这里实时同步我的日历。欢迎在空闲时段来找我聊教学、研究或创业训练项目。</p>
-        <nav class="jump">
-          <a href="#week">本周</a>
-          <a href="#courses">课程与行程</a>
-          <a href="#find-me">找我</a>
-        </nav>
-      </div>
-      <aside class="status-card" id="status-card" aria-live="polite">
-        <div class="status-row">
-          <span class="dot" id="status-dot"></span>
-          <span class="status-label" id="status-label">正在读取日历…</span>
-        </div>
-        <p class="status-detail" id="status-detail">&nbsp;</p>
-        <p class="status-meta"><span id="clock">--:--</span> · 北京时间 · <span id="updated">同步中</span></p>
-      </aside>
-    </div>
-    <p class="notice" id="notice" hidden></p>
-  </header>
-
-  <section class="section wrap week-section">
-    <div class="section-head">
-      <h2 id="cal-title">本周安排</h2>
-      <div class="week-nav">
-        <div class="seg" role="tablist" aria-label="视图">
-          <button class="seg-btn active" data-view="week" role="tab">周</button>
-          <button class="seg-btn" data-view="month" role="tab">月</button>
-          <button class="seg-btn" data-view="agenda" role="tab">日程</button>
-        </div>
-        <button class="btn-ghost" id="prev-week" aria-label="上一个">‹</button>
-        <button class="btn-ghost" id="today-week">今天</button>
-        <button class="btn-ghost" id="next-week" aria-label="下一个">›</button>
-        <span class="week-range" id="week-range"></span>
+<body class="site" data-page="home">
+<nav class="topnav"><div class="wrap">
+  <a class="brand" href="index.html">王世赟<small>Wang Shiyun · 汕头大学</small></a>
+  <div class="navlinks">
+    <a href="index.html">首页</a>
+    <a href="research.html">研究</a>
+    <a href="teaching.html">教学</a>
+    <a href="schedule.html">日程</a>
+    <a href="index.html#contact">联系</a>
+  </div>
+</div></nav>
+<main>
+<header class="hero wrap">
+  <div class="hero-grid">
+    <div>
+      <p class="eyebrow" data-site="title">汕头大学 · 教师</p>
+      <h1 class="name"><span data-site="name">王世赟</span><span class="name-en">（<span data-site="nameEn">Wang Shiyun</span>）</span></h1>
+      <p class="tagline" data-site="tagline"></p>
+      <ul class="tags" id="area-tags"></ul>
+      <div class="cta">
+        <a class="btn" href="schedule.html">查看我的日程与空闲时段</a>
+        <a class="btn secondary" href="research.html">研究与项目</a>
+        <a class="btn secondary" href="mailto:wangsy@stu.edu.cn">发邮件</a>
       </div>
     </div>
-    <div class="cal" id="cal">
-      <div class="week-grid" id="week-grid" role="table" aria-label="本周日程"></div>
-      <div class="day-list" id="day-list"></div>
-      <div class="month-grid" id="month-grid" hidden></div>
-      <div class="agenda" id="agenda" hidden></div>
-    </div>
-    <p class="cal-hint muted">鼠标悬停（手机上点一下）可查看完整信息；月视图中点击日期可放大到那一周。</p>
-    <p class="legend">
-      <span><i class="sw sw-course"></i>课程</span>
-      <span><i class="sw sw-trip"></i>行程 / 出差</span>
-      <span><i class="sw sw-event"></i>其他安排</span>
-      <span><i class="sw sw-office"></i>可预约时段</span>
-    </p>
-  </section>
-</div>
+    <aside class="today-card" id="today-card" aria-live="polite">
+      <div class="status-row"><span class="dot" id="today-dot"></span><span class="status-label" id="today-label">正在读取日历…</span></div>
+      <p class="status-detail" id="today-detail">&nbsp;</p>
+      <h3 id="today-h">今天</h3>
+      <ul class="today-list" id="today-list"></ul>
+      <h3 id="tomorrow-h">明天</h3>
+      <ul class="today-list" id="tomorrow-list"></ul>
+      <a class="more" href="schedule.html">完整的周 / 月视图与可预约时段 →</a>
+    </aside>
+  </div>
+</header>
 
-<!-- 第 2 屏：本学期课程（多列）→ 近期行程 → 接下来 -->
-<div class="page" id="courses">
-  <section class="section wrap">
-    <div class="section-head"><h2>本学期课程</h2><span class="section-sub" id="course-sub"></span></div>
-    <div class="course-grid" id="course-list"></div>
-  </section>
-  <section class="section wrap" id="trips">
-    <div class="section-head"><h2>近期行程</h2></div>
-    <div class="trip-grid" id="trip-list"></div>
-  </section>
-  <section class="section wrap" id="upcoming">
-    <div class="section-head"><h2>接下来</h2><span class="section-sub" id="upcoming-sub">未来几天的安排</span></div>
-    <div class="up-grid" id="upcoming-list"></div>
-  </section>
-</div>
+<section class="block"><div class="wrap">
+  <div class="block-head"><h2>关于我</h2></div>
+  <div class="prose" id="about"></div>
+</div></section>
 
-<!-- 第 3 屏：预约与联系 -->
-<div class="page page-last" id="find-me">
-  <section class="section wrap">
-    <div class="find-me">
-      <div class="section-head"><h2>在我有空时找我</h2></div>
-      <p class="muted" id="office-hours-text"></p>
-      <div class="slots" id="slots"></div>
-      <div class="contact" id="contact"></div>
-    </div>
-  </section>
-  <footer class="wrap foot">
-    <p>日程由个人日历自动同步，显示为北京时间（UTC+8）。页面每几分钟自动刷新。</p>
-  </footer>
-</div>
+<section class="block"><div class="wrap">
+  <div class="block-head"><h2>研究方向</h2><a class="more" href="research.html">全部研究与项目 →</a></div>
+  <div class="grid grid-4" id="home-areas"></div>
+</div></section>
 
-<div class="tip" id="tip" role="tooltip" hidden></div>
-<script src="./app.js?v=5"></script>
+<section class="block"><div class="wrap">
+  <div class="block-head"><h2>进行中的项目</h2><a class="more" href="research.html#projects">更多 →</a></div>
+  <div class="grid grid-3" id="home-projects"></div>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <div class="block-head"><h2>本学期课程</h2><a class="more" href="teaching.html">课程详情 →</a></div>
+  <div class="grid grid-4" id="home-courses"></div>
+</div></section>
+
+<section class="block" id="contact"><div class="wrap">
+  <div class="block-head"><h2>联系方式</h2></div>
+  <div class="contact-grid">
+    <div class="tile"><h3>邮箱</h3><p><a data-site="email" href="mailto:wangsy@stu.edu.cn">wangsy@stu.edu.cn</a></p></div>
+    <div class="tile"><h3>办公地点</h3><p data-site="location">汕头大学东海岸校区行政楼 C502</p></div>
+    <div class="tile"><h3>可预约时间</h3><p data-site="officeHoursText"></p><a class="more" href="schedule.html#find-me">查看实时空闲时段 →</a></div>
+  </div>
+</div></section>
+</main>
+
+<footer class="site-foot"><div class="wrap">
+  <span>© <span id="year"></span> 王世赟 · 汕头大学 · 日程由个人日历自动同步（北京时间）</span>
+  <span><a href="research.html">研究</a><a href="teaching.html">教学</a><a href="schedule.html">日程</a><a href="mailto:wangsy@stu.edu.cn">邮件</a></span>
+</div></footer>
+<script src="./content.js?v=1"></script>
+<script src="./site.js?v=1"></script>
 </body>
 </html>

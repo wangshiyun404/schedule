@@ -1,0 +1,124 @@
+/* ===== 站点级样式：导航、首页、研究、教学（依赖 style.css 的变量） ===== */
+html.site { scroll-snap-type: none; }
+body.site { display: flex; flex-direction: column; min-height: 100dvh; }
+body.site main { flex: 1; }
+
+/* ---- 顶部导航 ---- */
+.topnav { position: sticky; top: 0; z-index: 20; background: rgba(246,243,236,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.topnav .wrap { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); height: 56px; }
+.brand { font-family: var(--font-display); font-weight: 600; letter-spacing: .06em; color: var(--ink); text-decoration: none; font-size: var(--text-base); white-space: nowrap; }
+.brand small { font-family: var(--font-body); font-weight: 400; color: var(--ink-3); letter-spacing: 0; margin-left: .5em; font-size: var(--text-xs); }
+.navlinks { display: flex; gap: var(--space-5); font-size: var(--text-sm); }
+.navlinks a { color: var(--ink-2); text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; white-space: nowrap; }
+.navlinks a:hover { color: var(--accent); }
+.navlinks a.active { color: var(--ink); border-color: var(--accent); }
+
+/* ---- 首页 Hero ---- */
+.hero { padding: var(--space-12) 0 var(--space-8); }
+.hero-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: var(--space-10); align-items: start; }
+.hero .eyebrow { margin-bottom: var(--space-3); }
+.hero .name { font-size: clamp(2.4rem, 1.6rem + 3vw, 4rem); }
+.tagline { margin: var(--space-5) 0 var(--space-5); max-width: 34em; font-size: var(--text-base); color: var(--ink-2); line-height: 1.8; }
+.tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0 0 var(--space-6); padding: 0; list-style: none; }
+.tags li { font-size: var(--text-xs); padding: 3px 10px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink-2); }
+.cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+.btn { display: inline-block; background: var(--accent); color: #fff; text-decoration: none; padding: var(--space-2) var(--space-5); border-radius: 8px; font-size: var(--text-sm); }
+.btn:hover { filter: brightness(1.08); }
+.btn.secondary { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+.btn.secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+/* 今日卡片 */
+.today-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: var(--space-5); box-shadow: 0 1px 0 rgba(30,42,47,.04); }
+.today-card .status-row { margin-bottom: var(--space-2); }
+.today-card h3 { margin: var(--space-4) 0 var(--space-2); font-size: var(--text-xs); letter-spacing: .12em; color: var(--ink-3); font-weight: 600; }
+.today-list { list-style: none; margin: 0; padding: 0; }
+.today-list li { display: grid; grid-template-columns: max-content minmax(0,1fr); gap: var(--space-3); padding: var(--space-2) 0; border-top: 1px dashed var(--line); font-size: var(--text-sm); align-items: baseline; }
+.today-list li:first-child { border-top: 0; }
+.today-list time { color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.today-list .n { font-weight: 600; }
+.today-list .n small { display: block; font-weight: 400; color: var(--ink-3); font-size: var(--text-xs); }
+.today-list .empty { display: block; color: var(--ink-3); font-size: var(--text-sm); }
+.today-card .more { display: block; margin-top: var(--space-4); font-size: var(--text-sm); }
+
+/* ---- 通用区块 ---- */
+.block { padding: var(--space-8) 0; border-top: 1px solid var(--line); }
+.block-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-5); }
+.block-head h2 { margin: 0; font-family: var(--font-display); font-size: var(--text-xl); font-weight: 600; letter-spacing: .06em; }
+.block-head h2::before { content: ""; display: inline-block; width: 10px; height: 10px; background: var(--accent); margin-right: var(--space-3); transform: translateY(-2px) rotate(45deg); }
+.block-head .more { font-size: var(--text-sm); }
+.prose p { margin: 0 0 var(--space-4); max-width: 42em; color: var(--ink-2); line-height: 1.85; }
+.prose p:last-child { margin-bottom: 0; }
+
+.grid { display: grid; gap: var(--space-4); }
+.grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0,1fr)); }
+.grid-4 { grid-template-columns: repeat(4, minmax(0,1fr)); }
+
+.tile { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.tile h3 { margin: 0; font-size: var(--text-base); font-weight: 600; line-height: 1.4; }
+.tile .en { font-size: var(--text-xs); color: var(--ink-3); letter-spacing: .02em; }
+.tile p { margin: 0; font-size: var(--text-sm); color: var(--ink-2); line-height: 1.7; }
+.tile.link { text-decoration: none; color: inherit; transition: border-color .15s, transform .15s; }
+.tile.link:hover { border-color: var(--accent); transform: translateY(-2px); }
+.tile .arrow { margin-top: auto; padding-top: var(--space-3); color: var(--accent); font-size: var(--text-sm); }
+
+/* 项目卡 */
+.proj { border-top: 3px solid var(--accent); }
+.proj .top { display: flex; justify-content: space-between; gap: var(--space-3); align-items: center; }
+.pill { font-size: var(--text-xs); padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.pill.ongoing { background: var(--accent-soft); color: #1d4a46; }
+.pill.planned { background: var(--trip-bg); color: #6e3015; }
+.pill.done { background: var(--event-bg); color: #333d47; }
+.proj .period { font-size: var(--text-xs); color: var(--ink-3); }
+.proj .tags { margin: var(--space-2) 0 0; }
+
+/* 论文列表 */
+.pubs { list-style: none; margin: 0; padding: 0; }
+.pubs li { padding: var(--space-3) 0; border-top: 1px dashed var(--line); font-size: var(--text-sm); display: grid; grid-template-columns: 4.5em 1fr; gap: var(--space-4); }
+.pubs li:first-child { border-top: 0; }
+.pubs .y { color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.pubs .t { font-weight: 600; }
+.pubs .v { color: var(--ink-2); }
+
+/* 教学 */
+.course-tile .when { font-size: var(--text-sm); color: var(--ink); }
+.course-tile .when th { font-weight: 600; color: var(--ink-2); text-align: left; padding: 1px 10px 1px 0; white-space: nowrap; width: 1%; }
+.course-tile .when td { padding: 1px 0; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.course-tile .aud { font-size: var(--text-xs); color: var(--ink-3); }
+.course-tile .loc { font-size: var(--text-xs); color: var(--ink-2); margin-top: auto; padding-top: var(--space-2); }
+.course-tile.past { opacity: .8; }
+
+/* 联系 */
+.contact-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: var(--space-4); }
+.contact-grid .tile h3 { font-size: var(--text-xs); letter-spacing: .12em; color: var(--ink-3); font-weight: 600; }
+.contact-grid .tile p { font-size: var(--text-base); color: var(--ink); }
+.contact-grid .tile a { text-decoration: none; }
+
+/* 页脚 */
+.site-foot { border-top: 1px solid var(--line); padding: var(--space-6) 0; font-size: var(--text-xs); color: var(--ink-3); }
+.site-foot .wrap { display: flex; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+.site-foot a { color: var(--ink-2); text-decoration: none; margin-left: var(--space-4); }
+
+.page-head { padding: var(--space-10) 0 var(--space-6); }
+.page-head h1 { margin: 0; font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 600; letter-spacing: .04em; line-height: 1.15; }
+.page-head p { margin: var(--space-3) 0 0; color: var(--ink-2); max-width: 40em; }
+
+.draft-note { margin-top: var(--space-6); padding: var(--space-3) var(--space-4); border-left: 3px solid var(--accent); background: var(--accent-soft); font-size: var(--text-sm); border-radius: 0 var(--radius) var(--radius) 0; }
+
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: 1fr; gap: var(--space-6); }
+  .grid-3, .grid-4, .contact-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 640px) {
+  .topnav .wrap { height: auto; padding-top: var(--space-2); padding-bottom: var(--space-2); flex-wrap: wrap; }
+  .navlinks { gap: var(--space-4); overflow-x: auto; width: 100%; }
+  .grid-2, .grid-3, .grid-4, .contact-grid { grid-template-columns: 1fr; }
+  .hero { padding-top: var(--space-8); }
+  .pubs li { grid-template-columns: 1fr; gap: 2px; }
+}
+
+/* 日程页：为顶部导航让出高度 */
+html.sched { scroll-padding-top: 56px; }
+html.sched .page { min-height: calc(100vh - 56px); min-height: calc(100dvh - 56px); scroll-margin-top: 56px; }
+html.sched .cal { --hour-h: clamp(28px, calc((100vh - 536px) / 14), 44px); --hour-h: clamp(28px, calc((100dvh - 536px) / 14), 44px); }
+html.sched .masthead .jump { display: none; }
