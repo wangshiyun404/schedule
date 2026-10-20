@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="site">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 信源 · 王世赟</title>
+<meta name="description" content="仿「Follow Builders, Not Influencers」思路整理的微信公众号与视频号名单：一线 AI builder 个人号、模型厂商与技术团队官方号、深度访谈播客，以及作为对照的媒体资讯号。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%232e6b66%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%2715%27 rx=%272%27 fill=%27%23f6f3ec%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%275%27 fill=%27%23b5542b%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./style.css?v=6">
+<link rel="stylesheet" href="./site.css?v=2">
+</head>
+<body class="site" data-page="builders">
+<nav class="topnav"><div class="wrap">
+  <a class="brand" href="index.html">王世赟<small>Wang Shiyun · 汕头大学</small></a>
+  <div class="navlinks">
+    <a href="index.html">首页</a>
+    <a href="research.html">研究</a>
+    <a href="teaching.html">教学</a>
+    <a href="builders.html">AI 信源</a>
+    <a href="schedule.html">日程</a>
+    <a href="index.html#contact">联系</a>
+  </div>
+</div></nav>
+<main>
+<header class="page-head wrap">
+  <p class="eyebrow">Follow Builders, Not Influencers · 微信版</p>
+  <h1>AI 信源：微信生态里值得追踪的 Builder</h1>
+  <p>我给《智慧格致》课和自己的信息流整理的一份关注名单。思路来自张咋啦的开源项目 follow-builders：只关注亲手做模型、做产品、做研究的人，以及请他们本人上麦长谈的播客和他们所在团队的官方号；资讯搬运号只放在最后作对照。</p>
+  <ul class="stat-strip" id="stats"></ul>
+</header>
+
+<section class="block"><div class="wrap">
+  <div class="block-head"><h2>筛选原则</h2><span class="section-sub" id="updated"></span></div>
+  <div class="method-grid">
+    <div class="prose" id="method-origin"></div>
+    <table class="map-table" id="map-table"><thead><tr><th>follow-builders 原分类</th><th>微信生态对应</th><th>判断标准</th></tr></thead><tbody></tbody></table>
+  </div>
+  <p class="src-line" id="method-src"></p>
+</div></section>
+
+<section class="block" id="list"><div class="wrap">
+  <div class="block-head"><h2>名单</h2><span class="section-sub" id="count"></span></div>
+  <div class="toolbar">
+    <div class="chips" id="group-chips" role="tablist" aria-label="分类"></div>
+    <div class="toolbar-right">
+      <div class="chips kind-chips" id="kind-chips" aria-label="类型"></div>
+      <label class="search"><span class="sr-only">搜索账号</span><input id="q" type="search" placeholder="搜索账号、人名、产品…" autocomplete="off"></label>
+    </div>
+  </div>
+  <div id="groups"></div>
+  <p class="empty-state" id="empty" hidden>没有匹配的账号。换个关键词，或清除筛选。</p>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <div class="block-head"><h2 id="missing-title"></h2></div>
+  <div class="prose"><p id="missing-text"></p><p class="src-line" id="missing-src"></p></div>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <div class="block-head"><h2>怎么用这份名单</h2></div>
+  <ol class="howto" id="howto"></ol>
+  <div class="draft-note">核实说明：公众号名称均有第三方索引页或本人主页佐证；微信视频号的搜索引擎可见度很低，标「待确认」的请在微信内搜索。这是一份起点清单，不保证穷尽——中国 AI builder 更多活跃在即刻、X、小红书、B 站，微信只是其中一端。</div>
+</div></section>
+</main>
+
+<footer class="site-foot"><div class="wrap">
+  <span>© <span id="year"></span> 王世赟 · 汕头大学 · 日程由个人日历自动同步（北京时间）</span>
+  <span><a href="research.html">研究</a><a href="teaching.html">教学</a><a href="builders.html">AI 信源</a><a href="schedule.html">日程</a><a href="mailto:wangsy@stu.edu.cn">邮件</a></span>
+</div></footer>
+<script src="./content.js?v=1"></script>
+<script src="./builders.js?v=1"></script>
+<script src="./site.js?v=2"></script>
+<script>
+(() => {
+  const B = window.BUILDERS; if (!B) return;
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const KIND = { builder: ['一线建造者', 'k-builder'], grey: ['既动手也做内容', 'k-grey'], media: ['媒体 / 资讯', 'k-media'] };
+  const srcLinks = (arr) => (arr || []).map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a>`).join('<span class="sep">·</span>');
+  const all = B.groups.flatMap(g => g.items.map(it => ({ ...it, gid: g.id })));
+
+  // 顶部统计
+  const n = (f) => all.filter(f).length;
+  $('stats').innerHTML = [
+    [all.length, '个账号'], [n(i => i.kind === 'builder'), '一线建造者'], [n(i => i.mp === 'yes'), '公众号已核实'], [n(i => i.vc === 'yes'), '视频号已核实'], [B.groups.length, '个分类']
+  ].map(([v, l]) => `<li><strong>${v}</strong><span>${l}</span></li>`).join('');
+  $('updated').textContent = `整理于 ${B.updated}`;
+
+  // 方法
+  $('method-origin').innerHTML = `<p>${esc(B.method.origin)}</p>`;
+  $('map-table').querySelector('tbody').innerHTML = B.method.mapping.map(m => `<tr><td data-l="原分类">${esc(m.from)}</td><td data-l="微信对应">${esc(m.to)}</td><td data-l="判断标准">${esc(m.rule)}</td></tr>`).join('');
+  $('method-src').innerHTML = `依据：${srcLinks(B.method.sources)}`;
+
+  // 缺失与用法
+  $('missing-title').textContent = B.missing.title;
+  $('missing-text').textContent = B.missing.text;
+  $('missing-src').innerHTML = `来源：${srcLinks(B.missing.src)}`;
+  $('howto').innerHTML = B.howto.map(h => `<li>${esc(h)}</li>`).join('');
+
+  // 筛选状态
+  let gid = 'all', kind = 'all', q = '';
+  const chip = (id, label, active) => `<button type="button" class="chip${active ? ' active' : ''}" data-v="${esc(id)}">${esc(label)}</button>`;
+  function renderChips() {
+    $('group-chips').innerHTML = chip('all', '全部', gid === 'all') + B.groups.map(g => chip(g.id, g.title, gid === g.id)).join('');
+    $('kind-chips').innerHTML = chip('all', '所有类型', kind === 'all') + Object.entries(KIND).map(([k, [l]]) => chip(k, l, kind === k)).join('');
+  }
+  function match(it) {
+    if (gid !== 'all' && it.gid !== gid) return false;
+    if (kind !== 'all' && it.kind !== kind) return false;
+    if (!q) return true;
+    const hay = [it.name, it.vcName, it.role, it.why].join(' ').toLowerCase();
+    return q.split(/\s+/).filter(Boolean).every(w => hay.includes(w));
+  }
+  const badge = (label, state) => state ? `<span class="pf ${state === 'yes' ? 'ok' : 'chk'}" title="${state === 'yes' ? '已核实' : '需在微信内确认'}">${label}${state === 'yes' ? '' : '<small>待确认</small>'}</span>` : '';
+  function card(it) {
+    const [kl, kc] = KIND[it.kind] || ['', ''];
+    return `<article class="tile acct">
+      <div class="top"><span class="kind ${kc}">${esc(kl)}</span><span class="pfs">${badge('公众号', it.mp)}${badge(it.vcName && it.vcName !== it.name ? `视频号 ${esc(it.vcName)}` : '视频号', it.vc)}</span></div>
+      <h3>${esc(it.name)}</h3>
+      <p class="role">${esc(it.role)}</p>
+      <p class="why">${esc(it.why)}</p>
+      <p class="src-line">${srcLinks(it.src)}</p>
+    </article>`;
+  }
+  function render() {
+    renderChips();
+    let total = 0;
+    $('groups').innerHTML = B.groups.map(g => {
+      const items = all.filter(i => i.gid === g.id && match(i)); total += items.length;
+      if (!items.length) return '';
+      return `<section class="bgroup" id="g-${esc(g.id)}">
+        <div class="bgroup-head"><h3>${esc(g.title)}<span class="n">${items.length}</span></h3><p>${esc(g.sub)}</p></div>
+        <div class="grid grid-3">${items.map(card).join('')}</div>
+        ${g.note ? `<p class="gnote">${esc(g.note)}</p>` : ''}
+      </section>`;
+    }).join('');
+    $('count').textContent = total === all.length ? `共 ${all.length} 个账号` : `显示 ${total} / ${all.length} 个账号`;
+    $('empty').hidden = total > 0;
+  }
+  $('group-chips').addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return; gid = b.dataset.v; render(); });
+  $('kind-chips').addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return; kind = b.dataset.v; render(); });
+  $('q').addEventListener('input', e => { q = e.target.value.trim().toLowerCase(); render(); });
+  if (location.hash.startsWith('#g-')) { const h = location.hash.slice(3); if (B.groups.some(g => g.id === h)) gid = h; }
+  render();
+})();
+</script>
+</body>
+</html>

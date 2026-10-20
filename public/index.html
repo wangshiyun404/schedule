@@ -7,7 +7,7 @@
 <meta name="description" content="王世赟（汕头大学）个人主页：研究方向、进行中的项目、本学期课程与实时同步的公开日程。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%232e6b66%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%2715%27 rx=%272%27 fill=%27%23f6f3ec%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%275%27 fill=%27%23b5542b%27/%3E%3C/svg%3E">
 <link rel="stylesheet" href="./style.css?v=6">
-<link rel="stylesheet" href="./site.css?v=1">
+<link rel="stylesheet" href="./site.css?v=2">
 </head>
 <body class="site" data-page="home">
 <nav class="topnav"><div class="wrap">
@@ -16,6 +16,7 @@
     <a href="index.html">首页</a>
     <a href="research.html">研究</a>
     <a href="teaching.html">教学</a>
+    <a href="builders.html">AI 信源</a>
     <a href="schedule.html">日程</a>
     <a href="index.html#contact">联系</a>
   </div>
@@ -62,6 +63,19 @@
 </div></section>
 
 <section class="block"><div class="wrap">
+  <div class="block-head"><h2>AI 信源名单</h2><a class="more" href="builders.html">完整名单与筛选 →</a></div>
+  <div class="home-builders">
+    <a class="tile link" href="builders.html">
+      <h3>Follow Builders, Not Influencers · 微信版</h3>
+      <p>仿张咋啦 follow-builders 的思路，整理微信公众号与视频号里亲手做模型、做产品、做研究的 AI builder，以及请他们上麦长谈的播客和所在团队的官方号；资讯搬运号只作对照。</p>
+      <ul class="stat-strip" id="home-builder-stats"></ul>
+      <span class="arrow">查看全部 →</span>
+    </a>
+    <div class="tile"><h3>分类一览</h3><ul class="mini-list" id="home-builder-groups"></ul></div>
+  </div>
+</div></section>
+
+<section class="block"><div class="wrap">
   <div class="block-head"><h2>本学期课程</h2><a class="more" href="teaching.html">课程详情 →</a></div>
   <div class="grid grid-4" id="home-courses"></div>
 </div></section>
@@ -78,9 +92,13 @@
 
 <footer class="site-foot"><div class="wrap">
   <span>© <span id="year"></span> 王世赟 · 汕头大学 · 日程由个人日历自动同步（北京时间）</span>
-  <span><a href="research.html">研究</a><a href="teaching.html">教学</a><a href="schedule.html">日程</a><a href="mailto:wangsy@stu.edu.cn">邮件</a></span>
+  <span><a href="research.html">研究</a><a href="teaching.html">教学</a><a href="builders.html">AI 信源</a><a href="schedule.html">日程</a><a href="mailto:wangsy@stu.edu.cn">邮件</a></span>
 </div></footer>
 <script src="./content.js?v=1"></script>
-<script src="./site.js?v=1"></script>
+<script src="./builders.js?v=1"></script>
+<script src="./site.js?v=2"></script>
+<script>(()=>{const B=window.BUILDERS;if(!B)return;const all=B.groups.flatMap(g=>g.items);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+document.getElementById('home-builder-stats').innerHTML=[[all.length,'个账号'],[all.filter(i=>i.kind==='builder').length,'一线建造者'],[B.groups.length,'个分类']].map(([v,l])=>`<li><strong>${v}</strong><span>${l}</span></li>`).join('');
+document.getElementById('home-builder-groups').innerHTML=B.groups.map(g=>`<li><a href="builders.html#g-${esc(g.id)}"><b>${esc(g.title)}</b> · ${g.items.length}</a></li>`).join('');})();</script>
 </body>
 </html>
