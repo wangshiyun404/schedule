@@ -67,7 +67,7 @@
   <div class="home-builders">
     <a class="tile link" href="builders.html">
       <h3>Follow Builders, Not Influencers · 微信版</h3>
-      <p>仿张咋啦 follow-builders 的思路，整理微信公众号与视频号里亲手做模型、做产品、做研究的 AI builder，以及请他们上麦长谈的播客和所在团队的官方号；资讯搬运号只作对照。</p>
+      <p>仿张咋啦 follow-builders 的思路，整理微信公众号与视频号里亲手做模型、做产品、做研究的 AI builder，以及所在团队的官方号和创业、产品视角的深度号；资讯聚合号只作对照。</p>
       <ul class="stat-strip" id="home-builder-stats"></ul>
       <span class="arrow">查看全部 →</span>
     </a>
@@ -95,7 +95,7 @@
   <span><a href="research.html">研究</a><a href="teaching.html">教学</a><a href="builders.html">AI 信源</a><a href="schedule.html">日程</a><a href="mailto:wangsy@stu.edu.cn">邮件</a></span>
 </div></footer>
 <script src="./content.js?v=1"></script>
-<script src="./builders.js?v=1"></script>
+<script src="./builders.js?v=2"></script>
 <script src="./site.js?v=2"></script>
 <script>(()=>{const B=window.BUILDERS;if(!B)return;const all=B.groups.flatMap(g=>g.items);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 document.getElementById('home-builder-stats').innerHTML=[[all.length,'个账号'],[all.filter(i=>i.kind==='builder').length,'一线建造者'],[B.groups.length,'个分类']].map(([v,l])=>`<li><strong>${v}</strong><span>${l}</span></li>`).join('');
