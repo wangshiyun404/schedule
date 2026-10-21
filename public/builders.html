@@ -7,7 +7,7 @@
 <meta name="description" content="仿「Follow Builders, Not Influencers」思路整理的微信公众号与视频号名单：一线 AI builder 个人号、模型厂商与技术团队官方号、深度访谈播客，以及作为对照的媒体资讯号。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%232e6b66%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%2715%27 rx=%272%27 fill=%27%23f6f3ec%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%275%27 fill=%27%23b5542b%27/%3E%3C/svg%3E">
 <link rel="stylesheet" href="./style.css?v=6">
-<link rel="stylesheet" href="./site.css?v=2">
+<link rel="stylesheet" href="./site.css?v=3">
 </head>
 <body class="site" data-page="builders">
 <nav class="topnav"><div class="wrap">
@@ -43,7 +43,6 @@
   <div class="toolbar">
     <div class="chips" id="group-chips" role="tablist" aria-label="分类"></div>
     <div class="toolbar-right">
-      <div class="chips kind-chips" id="kind-chips" aria-label="类型"></div>
       <label class="search"><span class="sr-only">搜索账号</span><input id="q" type="search" placeholder="搜索账号、人名、产品…" autocomplete="off"></label>
     </div>
   </div>
@@ -68,8 +67,8 @@
   <span><a href="research.html">研究</a><a href="teaching.html">教学</a><a href="builders.html">AI 信源</a><a href="schedule.html">日程</a><a href="mailto:wangsy@stu.edu.cn">邮件</a></span>
 </div></footer>
 <script src="./content.js?v=1"></script>
-<script src="./builders.js?v=2"></script>
-<script src="./site.js?v=2"></script>
+<script src="./builders.js?v=3"></script>
+<script src="./site.js?v=3"></script>
 <script>
 (() => {
   const B = window.BUILDERS; if (!B) return;
@@ -98,15 +97,13 @@
   $('howto').innerHTML = B.howto.map(h => `<li>${esc(h)}</li>`).join('');
 
   // 筛选状态
-  let gid = 'all', kind = 'all', q = '';
+  let gid = 'all', q = '';
   const chip = (id, label, active) => `<button type="button" class="chip${active ? ' active' : ''}" data-v="${esc(id)}">${esc(label)}</button>`;
   function renderChips() {
     $('group-chips').innerHTML = chip('all', '全部', gid === 'all') + B.groups.map(g => chip(g.id, g.title, gid === g.id)).join('');
-    $('kind-chips').innerHTML = chip('all', '所有类型', kind === 'all') + Object.entries(KIND).map(([k, [l]]) => chip(k, l, kind === k)).join('');
   }
   function match(it) {
     if (gid !== 'all' && it.gid !== gid) return false;
-    if (kind !== 'all' && it.kind !== kind) return false;
     if (!q) return true;
     const hay = [it.name, it.vcName, it.role, it.why].join(' ').toLowerCase();
     return q.split(/\s+/).filter(Boolean).every(w => hay.includes(w));
@@ -138,7 +135,6 @@
     $('empty').hidden = total > 0;
   }
   $('group-chips').addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return; gid = b.dataset.v; render(); });
-  $('kind-chips').addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return; kind = b.dataset.v; render(); });
   $('q').addEventListener('input', e => { q = e.target.value.trim().toLowerCase(); render(); });
   if (location.hash.startsWith('#g-')) { const h = location.hash.slice(3); if (B.groups.some(g => g.id === h)) gid = h; }
   render();
