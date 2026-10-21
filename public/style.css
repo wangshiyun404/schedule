@@ -95,7 +95,7 @@ a { color: var(--accent); }
 .week-range { color: var(--ink-2); margin-left: var(--space-2); font-variant-numeric: tabular-nums; }
 
 /* ===== Calendar container (周 / 月 / 日程 共用高度) ===== */
-.cal { --hour-h: clamp(28px, calc((100vh - 480px) / 14), 44px); --hour-h: clamp(28px, calc((100dvh - 480px) / 14), 44px); --cal-h: calc(var(--hour-h) * 14); }
+.cal { --hour-h: clamp(28px, calc((100vh - 480px) / 15), 44px); --hour-h: clamp(28px, calc((100dvh - 480px) / 15), 44px); --cal-h: calc(var(--hour-h) * 15); }
 .cal-hint { margin: var(--space-2) 0 0; font-size: var(--text-xs); color: var(--ink-3); }
 .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #fff; margin-right: var(--space-2); }
 .seg-btn { background: transparent; border: 0; padding: var(--space-1) var(--space-3); color: var(--ink-2); line-height: 1.4; }
@@ -104,7 +104,7 @@ a { color: var(--accent); }
 
 /* ===== Week grid ===== */
 .week-grid {
-  --start-hour: 8; --end-hour: 22;
+  --start-hour: 8; --end-hour: 23;
   display: grid; grid-template-columns: 48px repeat(7, 1fr);
   background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
 }

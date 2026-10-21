@@ -116,7 +116,7 @@
 
   function renderWeek() {
     const g = $('week-grid'); g.innerHTML = '';
-    const SH = 8, EH = 22; g.style.setProperty('--start-hour', SH); g.style.setProperty('--end-hour', EH);
+    const SH = 8, EH = 23; g.style.setProperty('--start-hour', SH); g.style.setProperty('--end-hour', EH);
     const todayKey = dayKey(new Date());
     const weekEnd = new Date(weekStart.getTime() + 6 * DAY);
     g.insertAdjacentHTML('beforeend', '<div class="wg-corner"></div>');
@@ -157,7 +157,7 @@
         const en = Math.min(Math.max(eMin, s + 20), EH * 60);
         let lane = lanes.findIndex(l => l <= s); if (lane < 0) { lane = lanes.length; lanes.push(0); } lanes[lane] = en;
         const top = pct(s), h = pct(en) - top;
-        const hourPx = Math.min(44, Math.max(28, (window.innerHeight - 480) / 14)); // 与 style.css 中 --hour-h 一致
+        const hourPx = Math.min(44, Math.max(28, (window.innerHeight - 480) / 15)); // 与 style.css 中 --hour-h 一致
         const short = (new Date(e.end) - new Date(e.start)) / 3600000 * hourPx < 40;
         col += `<div class="wg-ev ${e.kind}${short ? ' short' : ''}" style="top:${top}%;height:${h}%;left:${3 + lane * 10}px" data-ev="${esc(e.id)}" tabindex="0"><b>${esc(e.title)}</b><small>${short ? hhmm(new Date(e.start)) : hhmm(new Date(e.start)) + '–' + hhmm(new Date(e.end)) + (e.location ? ' · ' + esc(e.location) : '')}</small></div>`;
       }
@@ -216,8 +216,8 @@
     const todayKey = dayKey(new Date());
     let html = WEEKDAYS.slice(1).concat(WEEKDAYS[0]).map(w => `<div class="mg-head">${w}</div>`).join('');
     // 根据单元格实际高度决定能放几条，放不下的折叠为「还有 N 项」
-    const hourPx = Math.min(44, Math.max(28, (window.innerHeight - 480) / 14));
-    const cellH = window.innerWidth <= 860 ? 64 : (hourPx * 14 + 56 - 26) / rows;
+    const hourPx = Math.min(44, Math.max(28, (window.innerHeight - 480) / 15));
+    const cellH = window.innerWidth <= 860 ? 64 : (hourPx * 15 + 56 - 26) / rows;
     const chipH = 19, dateH = 22;
     const fit = Math.max(1, Math.floor((cellH - dateH - 4) / chipH));
     for (let i = 0; i < rows * 7; i++) {
