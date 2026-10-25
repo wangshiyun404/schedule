@@ -17,3 +17,10 @@
 | 日程 | `public/schedule.html` | 完全由日历自动同步（原来的日程页） |
 
 **更新网站文字只需编辑 `public/content.js`**，提交后 GitHub Actions 会自动重新发布。
+
+## 课表与行程展示
+
+- `public/calendar-model.js`：北京时间、全天／跨日事项、分类、去重和冲突判断。
+- `public/calendar-view.js` / `calendar-view.css`：紧凑月历、周课表、完整清单、类别／地点筛选与事项详情。手机默认显示从所选日期起28天的清单，月历直接列出各项安排；源数据仍使用原有公开日历快照。
+- 首页今日／明日概览包含全部已公开事项，支持全天与跨日显示。
+- `npm test`：验证日期边界、重复、重叠及调课分类；GitHub Actions 构建前运行。

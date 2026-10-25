@@ -37,6 +37,7 @@
       const r = await fetch(`data/schedule.json?t=${Date.now()}`, { cache: 'no-store' });
       if (!r.ok) throw new Error(r.status);
       schedule = await r.json();
+      if (window.CalendarModel) schedule.events = window.CalendarModel.normalize(schedule.events);
     } catch (e) { schedule = null; }
     return schedule;
   }
@@ -51,6 +52,7 @@
     renderToday();
     const hc = $('home-courses'); if (hc) hc.innerHTML = currentCourses().slice(0, 4).map(c => `<a class="tile link" href="teaching.html"><h3>${esc(c.title)}</h3><p>${c.ss.map(x => `${WEEKDAYS[x.wd]} ${x.t}`).join(' · ') || '本学期'}</p></a>`).join('') || '<div class="tile"><p>课程信息同步中…</p></div>';
     setInterval(renderToday, 60000);
+    setInterval(async () => { await loadSchedule(); renderToday(); }, 300000);
   }
 
   function renderToday() {
@@ -69,12 +71,16 @@
       : next ? `下一项：${md(new Date(next.start))} ${hhmm(new Date(next.start))} ${next.title}` : '近期没有已排定的安排';
     // 今日 / 明日列表
     const d0 = startOfDay(now), d1 = new Date(d0.getTime() + DAY), d2 = new Date(d1.getTime() + DAY);
-    const inDay = (a, b) => evs.filter(e => new Date(e.start) < b && new Date(e.end) > a && !e.allDay).sort((x, y) => new Date(x.start) - new Date(y.start));
-    const li = (e) => `<li><time>${hhmm(new Date(e.start))}–${hhmm(new Date(e.end))}</time><span class="n">${esc(e.title)}${e.location ? `<small>${esc(e.location)}</small>` : ''}</span></li>`;
+    const inDay = (a, b) => evs.filter(e => new Date(e.start) < b && new Date(e.end) > a).sort((x, y) => new Date(x.start) - new Date(y.start));
+    const li = (e, day) => {
+      const start = new Date(e.start), end = new Date(e.end), nextDay = new Date(day.getTime() + DAY);
+      const label = e.allDay ? '全天' : `${start < day ? '00:00' : hhmm(start)}–${end >= nextDay ? '24:00' : hhmm(end)}${start < day || end > nextDay ? ' · 跨日' : ''}`;
+      return `<li><time>${label}</time><span class="n">${esc(e.title)}${e.location ? `<small>${esc(e.location)}</small>` : ''}</span></li>`;
+    };
     const today = inDay(d0, d1), tomorrow = inDay(d1, d2);
-    $('today-list').innerHTML = today.length ? today.map(li).join('') : '<li><span class="empty">今天没有已排定的安排</span></li>';
+    $('today-list').innerHTML = today.length ? today.map(e => li(e, d0)).join('') : '<li><span class="empty">今天没有已排定的安排</span></li>';
     $('today-h').textContent = `今天 · ${md(now)} ${WEEKDAYS[p.wd]}`;
-    $('tomorrow-list').innerHTML = tomorrow.length ? tomorrow.slice(0, 4).map(li).join('') : '<li><span class="empty">明天暂无安排</span></li>';
+    $('tomorrow-list').innerHTML = tomorrow.length ? tomorrow.map(e => li(e, d1)).join('') : '<li><span class="empty">明天暂无安排</span></li>';
     $('tomorrow-h').textContent = `明天 · ${md(d1)} ${WEEKDAYS[parts(new Date(d1.getTime() + 3600000)).wd]}`;
   }
 

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="sched">
+<html lang="zh-CN" class="calendar-page">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>日程 · 王世赟</title>
+<title>课表与行程 · 王世赟</title>
 <meta name="description" content="王世赟（汕头大学）的公开日程、课程与行程，实时同步自个人日历。空闲时段欢迎来找我。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%232e6b66%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%2715%27 rx=%272%27 fill=%27%23f6f3ec%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%275%27 fill=%27%23b5542b%27/%3E%3C/svg%3E">
 <link rel="stylesheet" href="./style.css?v=6">
 <link rel="stylesheet" href="./site.css?v=2">
+<link rel="stylesheet" href="./calendar-view.css?v=1">
 </head>
 <body>
 <nav class="topnav"><div class="wrap">
@@ -21,97 +22,54 @@
     <a href="index.html#contact">联系</a>
   </div>
 </div></nav>
-
-<!-- 第 1 屏：个人信息 + 当前状态 + 本周安排 -->
-<div class="page" id="week">
-  <header class="masthead wrap">
-    <div class="masthead-grid">
-      <div>
-        <p class="eyebrow" id="owner-title">汕头大学</p>
-        <h1 class="name"><span id="owner-name">王世赟</span><span class="name-en" id="owner-name-en">（Wang Shiyun）</span></h1>
-        <p class="intro" id="owner-intro">这里实时同步我的日历。欢迎在空闲时段来找我聊教学、研究或创业训练项目。</p>
-        <nav class="jump">
-          <a href="#week">本周</a>
-          <a href="#courses">课程与行程</a>
-          <a href="#find-me">找我</a>
-        </nav>
+<main class="wrap calendar-main">
+  <header class="calendar-heading">
+    <div><h1>课表与行程</h1><p>王世赟 · 汕头大学 · 北京时间（UTC+8）</p></div>
+    <div class="calendar-status" aria-live="polite"><strong id="calendar-status">正在读取日历…</strong><span id="calendar-next"></span></div>
+  </header>
+  <p id="calendar-notice" class="calendar-notice" role="status" hidden></p>
+  <section aria-label="公开课表与行程">
+    <div class="calendar-toolbar">
+      <button class="control" id="calendar-today">今天</button>
+      <button class="control" id="calendar-prev" aria-label="上一段日期">‹</button>
+      <button class="control" id="calendar-next-date" aria-label="下一段日期">›</button>
+      <h2 id="calendar-range">课表与行程</h2>
+      <input class="control date-picker" id="calendar-date" type="date" aria-label="跳转到日期">
+      <div class="view-switch" aria-label="日历视图">
+        <button class="control" data-calendar-view="month" aria-pressed="true">月历</button>
+        <button class="control" data-calendar-view="week" aria-pressed="false">周课表</button>
+        <button class="control" data-calendar-view="agenda" aria-pressed="false">完整清单</button>
       </div>
-      <aside class="status-card" id="status-card" aria-live="polite">
-        <div class="status-row">
-          <span class="dot" id="status-dot"></span>
-          <span class="status-label" id="status-label">正在读取日历…</span>
-        </div>
-        <p class="status-detail" id="status-detail">&nbsp;</p>
-        <p class="status-meta"><span id="clock">--:--</span> · 北京时间 · <span id="updated">同步中</span></p>
+    </div>
+    <div class="calendar-filters" aria-label="筛选日程">
+      <button class="filter-button" data-calendar-filter="all" aria-pressed="true">全部</button>
+      <button class="filter-button type-course" data-calendar-filter="course" aria-pressed="false"><i></i>课程</button>
+      <button class="filter-button type-meeting" data-calendar-filter="meeting" aria-pressed="false"><i></i>组会与会议</button>
+      <button class="filter-button type-trip" data-calendar-filter="trip" aria-pressed="false"><i></i>行程</button>
+      <button class="filter-button type-other" data-calendar-filter="other" aria-pressed="false"><i></i>其他</button>
+      <input class="calendar-search" id="calendar-search" type="search" placeholder="搜索课程、事项或地点" aria-label="搜索课程、事项或地点">
+    </div>
+    <div class="calendar-layout">
+      <div class="calendar-surface" id="calendar-surface" aria-label="日历内容"></div>
+      <aside class="calendar-day-panel" aria-labelledby="calendar-day-title">
+        <h2 id="calendar-day-title">当天安排</h2><p class="day-subtitle" id="calendar-day-subtitle"></p>
+        <div class="day-jumps"><button class="control" id="day-today">看今天</button><button class="control" id="day-tomorrow">看明天</button></div>
+        <ul class="day-items" id="calendar-day-items"></ul>
       </aside>
     </div>
-    <p class="notice" id="notice" hidden></p>
-  </header>
-
-  <section class="section wrap week-section">
-    <div class="section-head">
-      <h2 id="cal-title">本周安排</h2>
-      <div class="week-nav">
-        <div class="seg" role="tablist" aria-label="视图">
-          <button class="seg-btn active" data-view="week" role="tab">周</button>
-          <button class="seg-btn" data-view="month" role="tab">月</button>
-          <button class="seg-btn" data-view="agenda" role="tab">日程</button>
-        </div>
-        <button class="btn-ghost" id="prev-week" aria-label="上一个">‹</button>
-        <button class="btn-ghost" id="today-week">今天</button>
-        <button class="btn-ghost" id="next-week" aria-label="下一个">›</button>
-        <span class="week-range" id="week-range"></span>
-      </div>
-    </div>
-    <div class="cal" id="cal">
-      <div class="week-grid" id="week-grid" role="table" aria-label="本周日程"></div>
-      <div class="day-list" id="day-list"></div>
-      <div class="month-grid" id="month-grid" hidden></div>
-      <div class="agenda" id="agenda" hidden></div>
-    </div>
-    <p class="cal-hint muted">鼠标悬停（手机上点一下）可查看完整信息；月视图中点击日期可放大到那一周。</p>
-    <p class="legend">
-      <span><i class="sw sw-course"></i>课程</span>
-      <span><i class="sw sw-trip"></i>行程 / 出差</span>
-      <span><i class="sw sw-event"></i>其他安排</span>
-      <span><i class="sw sw-office"></i>可预约时段</span>
-    </p>
+    <div class="calendar-bottom"><p>月历可滚动查看整月；点击日期看当天全部安排，点击事项看详情。</p><p id="calendar-updated">同步中…</p></div>
   </section>
-</div>
-
-<!-- 第 2 屏：本学期课程（多列）→ 近期行程 → 接下来 -->
-<div class="page" id="courses">
-  <section class="section wrap">
-    <div class="section-head"><h2>本学期课程</h2><span class="section-sub" id="course-sub"></span></div>
-    <div class="course-grid" id="course-list"></div>
-  </section>
-  <section class="section wrap" id="trips">
-    <div class="section-head"><h2>近期行程</h2></div>
-    <div class="trip-grid" id="trip-list"></div>
-  </section>
-  <section class="section wrap" id="upcoming">
-    <div class="section-head"><h2>接下来</h2><span class="section-sub" id="upcoming-sub">未来几天的安排</span></div>
-    <div class="up-grid" id="upcoming-list"></div>
-  </section>
-</div>
-
-<!-- 第 3 屏：预约与联系 -->
-<div class="page page-last" id="find-me">
-  <section class="section wrap">
-    <div class="find-me">
-      <div class="section-head"><h2>在我有空时找我</h2></div>
-      <p class="muted" id="office-hours-text"></p>
-      <div class="slots" id="slots"></div>
-      <div class="contact" id="contact"></div>
-    </div>
-  </section>
-  <footer class="wrap foot">
-    <p>日程由个人日历自动同步，显示为北京时间（UTC+8）。页面每几分钟自动刷新。</p>
-  </footer>
-</div>
-
-<div class="tip" id="tip" role="tooltip" hidden></div>
-<script src="./app.js?v=6"></script>
-<script>document.querySelectorAll(".navlinks a").forEach(a=>{if(a.getAttribute("href")==="schedule.html")a.classList.add("active")});</script>
-</body>
-</html>
+  <div class="calendar-quick">
+    <section aria-labelledby="trips-title"><h2 id="trips-title">近期行程与特别安排</h2><div class="quick-events" id="calendar-special"></div></section>
+    <section id="find-me" aria-labelledby="slots-title"><h2 id="slots-title">找我聊聊</h2><div class="free-slots" id="calendar-slots"></div><p class="calendar-contact" id="calendar-contact"></p></section>
+  </div>
+  <footer class="calendar-bottom"><p>仅显示已公开的课表与行程。临时调课、地点及待定事项，以最新通知为准。</p><a href="teaching.html">课程介绍 →</a></footer>
+</main>
+<dialog class="event-dialog" id="calendar-event-dialog" aria-labelledby="event-dialog-title">
+ <button class="dialog-close" id="event-dialog-close" aria-label="关闭事项详情">×</button>
+ <span class="dialog-type" id="event-dialog-type"></span><h2 id="event-dialog-title"></h2><dl id="event-dialog-details"></dl>
+</dialog>
+<script src="./calendar-model.js?v=1"></script>
+<script src="./calendar-view.js?v=1"></script>
+<script>document.querySelectorAll('.navlinks a').forEach(a=>{if(a.getAttribute('href')==='schedule.html')a.classList.add('active')});</script>
+</body></html>

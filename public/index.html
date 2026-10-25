@@ -30,7 +30,7 @@
       <p class="tagline" data-site="tagline"></p>
       <ul class="tags" id="area-tags"></ul>
       <div class="cta">
-        <a class="btn" href="schedule.html">查看我的日程与空闲时段</a>
+        <a class="btn" href="schedule.html">查看课表与行程</a>
         <a class="btn secondary" href="research.html">研究与项目</a>
         <a class="btn secondary" href="mailto:wangsy@stu.edu.cn">发邮件</a>
       </div>
@@ -96,7 +96,8 @@
 </div></footer>
 <script src="./content.js?v=1"></script>
 <script src="./builders.js?v=3"></script>
-<script src="./site.js?v=2"></script>
+<script src="./calendar-model.js?v=1"></script>
+<script src="./site.js?v=3"></script>
 <script>(()=>{const B=window.BUILDERS;if(!B)return;const all=B.groups.flatMap(g=>g.items);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 document.getElementById('home-builder-stats').innerHTML=[[all.length,'个账号'],[all.filter(i=>i.kind==='builder').length,'一线建造者'],[B.groups.length,'个分类']].map(([v,l])=>`<li><strong>${v}</strong><span>${l}</span></li>`).join('');
 document.getElementById('home-builder-groups').innerHTML=B.groups.map(g=>`<li><a href="builders.html#g-${esc(g.id)}"><b>${esc(g.title)}</b> · ${g.items.length}</a></li>`).join('');})();</script>

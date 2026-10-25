@@ -29,6 +29,7 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      - run: npm test
       - name: 读取 iCloud 公共日历并生成 schedule.json
         env:
           CALENDARS_JSON: ${{ secrets.CALENDARS_JSON }}
