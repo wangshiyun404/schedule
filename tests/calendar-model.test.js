@@ -47,3 +47,11 @@ test('upcoming agenda keeps every category, empty dates and each day of a trip',
  assert.equal(M.dayTime(days[3].items[0], days[3].date), '00:00–24:00 · 跨日');
  assert.equal(M.dailyAgenda(list, days[0].date).length, 30);
 });
+
+test('exam paper preparation stays work preparation even with a course source label', () => {
+ const span = ['2026-10-27T06:00:00Z','2026-10-27T09:00:00Z'];
+ for (const title of ['命题：三门汉语课期中、期末试卷','命题：汉语读写（A）期中试卷','商务汉语精读（A）期末出卷']) {
+  assert.equal(M.normalize([e(title,...span,{kind:'course'})])[0].category,'other');
+ }
+ assert.equal(M.normalize([e('期中考试：汉语读写（A）',...span,{kind:'course'})])[0].category,'course');
+});

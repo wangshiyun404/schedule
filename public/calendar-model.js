@@ -25,8 +25,8 @@
   function category(e) {
     if (e.kind === 'trip' || /航班|高铁|班车|中转|打车|赴.+(?:参加|培训)/.test(e.title)) return 'trip';
     if (/组会|教研会|会议|推进会|指导会|培训|小组.*讨论/.test(e.title) && !/回放|备课/.test(e.title)) return 'meeting';
-    if (/商务汉语精读|汉语读写|中级汉语听说|智慧格致|^期中考试|^期末考试/.test(e.title) && !/备课|材料|名单|顺课|通知|回放|准备|核对|申请/.test(e.title)) return 'course';
-    if (e.kind === 'course' && !/备课|调课|回放|提醒|顺课/.test(e.title)) return 'course';
+    if (/商务汉语精读|汉语读写|中级汉语听说|智慧格致|^期中考试|^期末考试/.test(e.title) && !/备课|命题|出卷|试卷|材料|名单|顺课|通知|回放|准备|核对|申请/.test(e.title)) return 'course';
+    if (e.kind === 'course' && !/备课|命题|出卷|试卷|调课|回放|提醒|顺课/.test(e.title)) return 'course';
     return 'other';
   }
   function normalize(events) {
