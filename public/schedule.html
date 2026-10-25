@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%232e6b66%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%2715%27 rx=%272%27 fill=%27%23f6f3ec%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%275%27 fill=%27%23b5542b%27/%3E%3C/svg%3E">
 <link rel="stylesheet" href="./style.css?v=6">
 <link rel="stylesheet" href="./site.css?v=2">
-<link rel="stylesheet" href="./calendar-view.css?v=2">
+<link rel="stylesheet" href="./calendar-view.css?v=3">
 </head>
 <body>
 <nav class="topnav"><div class="wrap">
@@ -23,12 +23,13 @@
   </div>
 </div></nav>
 <main class="wrap calendar-main">
+<section class="calendar-screen" id="week-overview" aria-label="本周课表部分">
   <header class="calendar-heading">
-    <div><h1>课表与行程</h1><p>王世赟 · 汕头大学 · 北京时间（UTC+8）</p></div>
+    <div><h1>课表与行程</h1><p>王世赟 · 汕头大学 · 北京时间（UTC+8）</p><nav class="part-links" aria-label="页面部分"><a href="#week-overview">课表</a><a href="#special-arrangements">近期安排</a><a href="#find-me">找我聊聊</a></nav></div>
     <div class="calendar-status" aria-live="polite"><strong id="calendar-status">正在读取日历…</strong><span id="calendar-next"></span></div>
   </header>
   <p id="calendar-notice" class="calendar-notice" role="status" hidden></p>
-  <section aria-label="公开课表与行程">
+  <section class="calendar-core" aria-label="公开课表与行程">
     <div class="calendar-toolbar">
       <button class="control" id="calendar-today">今天</button>
       <button class="control" id="calendar-prev" aria-label="上一段日期">‹</button>
@@ -47,6 +48,7 @@
       <button class="filter-button type-meeting" data-calendar-filter="meeting" aria-pressed="false"><i></i>组会与会议</button>
       <button class="filter-button type-trip" data-calendar-filter="trip" aria-pressed="false"><i></i>行程</button>
       <button class="filter-button type-other" data-calendar-filter="other" aria-pressed="false"><i></i>其他</button>
+      <button class="control density-control" id="calendar-density" aria-pressed="false">展开时间轴</button>
       <input class="calendar-search" id="calendar-search" type="search" placeholder="搜索课程、事项或地点" aria-label="搜索课程、事项或地点">
     </div>
     <div class="calendar-layout">
@@ -57,19 +59,27 @@
         <ul class="day-items" id="calendar-day-items"></ul>
       </aside>
     </div>
-    <div class="calendar-bottom"><p>默认显示本周课表；手机可左右滑动查看整周，点击事项查看完整标题、时间和地点。</p><p id="calendar-updated">同步中…</p></div>
+    <div class="calendar-bottom"><p id="calendar-layout-note">空闲时段已收起；按每天的实际时间顺序排列，卡片高度不代表时长。</p><p id="calendar-updated">同步中…</p></div>
   </section>
-  <div class="calendar-quick">
-    <section aria-labelledby="trips-title"><h2 id="trips-title">近期行程与特别安排</h2><div class="quick-events" id="calendar-special"></div></section>
-    <section id="find-me" aria-labelledby="slots-title"><h2 id="slots-title">找我聊聊</h2><div class="free-slots" id="calendar-slots"></div><p class="calendar-contact" id="calendar-contact"></p></section>
-  </div>
-  <footer class="calendar-bottom"><p>仅显示已公开的课表与行程。临时调课、地点及待定事项，以最新通知为准。</p><a href="teaching.html">课程介绍 →</a></footer>
+  <nav class="section-nav" aria-label="切换部分"><span>01 / 03 · 本周课表</span><a href="#special-arrangements">下一部分：近期安排 ↓</a></nav>
+</section>
+<section class="calendar-screen" id="special-arrangements" aria-labelledby="trips-title">
+  <header class="part-heading"><p>02 / 03</p><h2 id="trips-title">近期行程与特别安排</h2><p>未来30天的出行、考试、培训及特别安排，按日期排列。</p></header>
+  <div class="quick-events part-content" id="calendar-special"></div>
+  <nav class="section-nav" aria-label="切换部分"><a href="#week-overview">↑ 本周课表</a><a href="#find-me">下一部分：找我聊聊 ↓</a></nav>
+</section>
+<section class="calendar-screen" id="find-me" aria-labelledby="slots-title">
+  <header class="part-heading"><p>03 / 03</p><h2 id="slots-title">找我聊聊</h2><p>以下为未来一周可预约的时段。点击时段发邮件，预约前请确认。</p></header>
+  <div class="part-content contact-part"><div class="free-slots" id="calendar-slots"></div><p class="calendar-contact" id="calendar-contact"></p><a class="control contact-email" href="mailto:wangsy@stu.edu.cn">发邮件预约</a></div>
+  <footer class="calendar-bottom"><p>仅显示已公开的课表与行程。临时调整及待定事项，以最新通知为准。</p><a href="teaching.html">课程介绍 →</a></footer>
+  <nav class="section-nav" aria-label="切换部分"><a href="#special-arrangements">↑ 近期安排</a><a href="#week-overview">返回课表 ↑</a></nav>
+</section>
 </main>
 <dialog class="event-dialog" id="calendar-event-dialog" aria-labelledby="event-dialog-title">
  <button class="dialog-close" id="event-dialog-close" aria-label="关闭事项详情">×</button>
  <span class="dialog-type" id="event-dialog-type"></span><h2 id="event-dialog-title"></h2><dl id="event-dialog-details"></dl>
 </dialog>
 <script src="./calendar-model.js?v=1"></script>
-<script src="./calendar-view.js?v=2"></script>
+<script src="./calendar-view.js?v=3"></script>
 <script>document.querySelectorAll('.navlinks a').forEach(a=>{if(a.getAttribute('href')==='schedule.html')a.classList.add('active')});</script>
 </body></html>

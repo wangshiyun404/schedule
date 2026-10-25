@@ -1,5 +1,4 @@
-/* Compact calendar page; regular document flow, with no full-screen snapping. */
-html.calendar-page { scroll-snap-type: none; }
+/* Calendar views and slide-sized page sections. */
 .calendar-page body { background: #f7f8fa; background-image: none; font-size: 15px; }
 .calendar-page .wrap { max-width: 1440px; }
 .calendar-page .topnav { background: #fff; }
@@ -120,3 +119,78 @@ html.calendar-page { scroll-snap-type: none; }
  .calendar-quick { grid-template-columns: minmax(0,1fr); } .quick-row { grid-template-columns: 80px minmax(0,1fr); } .calendar-page .wrap { padding-left: 12px; padding-right: 12px; }
 }
 @media print { .topnav,.calendar-toolbar,.calendar-filters,.calendar-quick,.dialog-close { display:none; } .calendar-layout { display:block; } .calendar-day-panel { position:static; max-height:none; } .calendar-surface { overflow:visible; } body { background:#fff; } }
+
+/* Three slide-sized sections. Overflow stays inside a dense section. */
+html.calendar-page { scroll-snap-type: y mandatory; scroll-padding-top: 56px; }
+.calendar-main { padding-top: 0; padding-bottom: 0; }
+.calendar-screen { height: calc(100dvh - 56px); min-height: 520px; padding: 18px 0 12px; display: flex; flex-direction: column; gap: 12px; scroll-snap-align: start; scroll-margin-top: 0; }
+.calendar-screen .calendar-heading { margin-bottom: 0; flex: none; }
+.part-links { display: flex; gap: 16px; margin-top: 6px; font-size: 12px; }
+.part-links a { text-decoration: none; }
+.calendar-core { min-height: 0; display: flex; flex-direction: column; flex: 1; }
+.calendar-core .calendar-layout { min-height: 0; flex: 1; overflow: auto; }
+.calendar-core .calendar-bottom { flex: none; }
+.calendar-core .calendar-toolbar { padding: 10px 12px; }
+.calendar-core .calendar-filters { padding: 7px 12px; }
+.calendar-layout[data-compact="true"] .calendar-day-panel { display: none; }
+.calendar-layout[data-compact="true"] .calendar-surface { min-height: 0; }
+.density-control { font-size: 12px !important; min-height: 30px; padding: 3px 8px; }
+.compact-week { display: grid; grid-template-columns: repeat(7, minmax(150px, 1fr)); min-width: 1050px; }
+.compact-week .week-head { padding: 6px 3px; }
+.compact-week-day { padding: 6px; border-left: 1px solid #e3e8eb; display: flex; flex-direction: column; gap: 6px; }
+.compact-week-day:nth-child(8) { border-left: 0; }
+.compact-week-event { width: 100%; border: 0; border-left: 3px solid var(--item-color); border-radius: 4px; background: var(--item-bg); padding: 7px 7px; text-align: left; color: #243c46; line-height: 1.45; }
+.compact-week-event time { display: block; color: var(--item-color); font-size: 12px; font-weight: 600; }
+.compact-week-event strong { display: block; font-size: 14px; font-weight: 600; overflow-wrap: anywhere; }
+.compact-week-event small { display: block; font-size: 12px; color: #52636e; overflow-wrap: anywhere; margin-top: 3px; }
+.compact-week-event:hover { filter: brightness(.97); }
+.compact-empty { text-align: center; color: #7b8991; font-size: 12px; margin: 20px 0; }
+.section-nav { display: flex; justify-content: space-between; gap: 16px; align-items: center; padding-top: 8px; border-top: 1px solid #dce1e5; font-size: 12px; flex: none; }
+.section-nav span { color: #6b7a83; }
+.section-nav a { text-decoration: none; padding: 3px 0; }
+.part-heading { flex: none; padding: 4px 0; }
+.part-heading h2 { margin: 4px 0 8px; font-size: 28px; font-family: var(--font-display); }
+.part-heading p { margin: 0; font-size: 13px; color: #61727c; }
+.part-content { flex: 1; min-height: 0; overflow: auto; }
+#special-arrangements .quick-row { padding: 7px 0; grid-template-columns: 112px minmax(0,1fr); }
+#special-arrangements .quick-row strong { font-size: 14px; }
+.contact-part { display: flex; flex-direction: column; justify-content: center; gap: 20px; }
+.contact-part .free-slots { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; }
+.contact-part .free-slot { font-size: 15px; padding: 18px 14px; text-align: center; }
+.contact-part .calendar-contact { font-size: 15px; }
+.contact-email { align-self: flex-start; text-decoration: none; }
+@media(max-width:900px) { .contact-part .free-slots { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media(max-width:600px) {
+ html.calendar-page { scroll-padding-top: 94px; }
+ .calendar-screen { height: calc(100dvh - 94px); min-height: 540px; padding: 10px 0; gap: 8px; }
+ .calendar-screen .calendar-heading { gap: 4px; }
+ .calendar-screen .calendar-status { display: none; }
+ .calendar-screen .calendar-toolbar { padding: 8px; }
+ .calendar-screen .calendar-heading h1 { font-size: 22px; }
+ .calendar-screen .calendar-filters { padding: 6px; }
+ .calendar-screen .calendar-search { margin-top: 3px; }
+ .calendar-screen .calendar-bottom { font-size: 11px; gap: 2px; margin-top: 4px; }
+ .part-heading h2 { font-size: 24px; }
+ .contact-part .free-slot { padding: 10px 6px; font-size: 12px; }
+ .contact-part .calendar-contact { font-size: 13px; }
+ #special-arrangements .quick-row { grid-template-columns: 78px minmax(0,1fr); }
+}
+@media(prefers-reduced-motion:reduce) { html.calendar-page { scroll-behavior: auto; } }
+@media print { html.calendar-page { scroll-snap-type:none; } .calendar-screen { height:auto; min-height:0; display:block; } .part-content,.calendar-core .calendar-layout { overflow:visible; } .section-nav,.part-links,.density-control { display:none; } }
+/* Keep the regular teaching week readable within a 720px-tall desktop window. */
+@media(min-width:601px) { .calendar-screen { padding-top: 14px; padding-bottom: 8px; gap: 8px; } }
+.compact-week-day { gap: 4px; }
+.compact-week-event { padding-top: 6px; padding-bottom: 6px; }
+@media(min-width:901px) {
+ #week-overview .calendar-heading > div:first-child { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 2px 20px; }
+ #week-overview .calendar-heading h1 { grid-row: span 2; margin: 0; line-height: 1.2; }
+ #week-overview .calendar-heading p { line-height: 1.3; }
+ #week-overview .part-links { margin: 0; line-height: 1.3; }
+ .calendar-core .calendar-toolbar { padding-top: 6px; padding-bottom: 6px; }
+ .calendar-core .calendar-bottom { margin-top: 4px; font-size: 11px; line-height: 1.3; }
+ .calendar-screen { gap: 6px; }
+ .section-nav { padding-top: 4px; font-size: 11px; line-height: 1.3; }
+ .compact-week-event { padding-top: 5px; padding-bottom: 5px; }
+ .compact-week-day { padding-top: 4px; padding-bottom: 4px; }
+}
+@media(max-width:600px) { #week-overview .part-links { display: none; } }

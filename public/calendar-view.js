@@ -3,7 +3,7 @@
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   let snapshot, events = [], anchor = M.day(new Date()), selected = M.day(new Date());
   let view = 'week', filter = 'all', query = '';
-  let focusedEventButton = null, revealDay = true;
+  let focusedEventButton = null, revealDay = true, compactWeek = true;
   const dayName = d => `${M.date(d)} ${M.weekdays[M.parts(d).wd]}`;
   const match = e => (filter === 'all' || e.category === filter) && (!query || [e.title, e.location, M.labels[e.category]].join(' ').toLowerCase().includes(query));
   const filtered = () => events.filter(match);
@@ -33,6 +33,19 @@
     }
   }
   function renderWeek(list) {
+    if (!compactWeek) { renderWeekTimeline(list); return; }
+    const from = M.monday(anchor), days = Array.from({ length: 7 }, (_, i) => M.add(from, i));
+    let html = '<div class="compact-week">';
+    html += days.map(d => `<div class="week-head ${M.key(d) === M.key(new Date()) ? 'today' : ''}"><button data-select-day="${M.key(d)}" aria-label="查看${dayName(d)}全部安排">${M.weekdays[M.parts(d).wd]}<br>${M.date(d)}</button></div>`).join('');
+    for (const d of days) {
+      const items = M.inDay(list, d), clashes = M.conflicts(items);
+      html += `<div class="compact-week-day" data-week-day="${M.key(d)}">`;
+      html += items.length ? items.map(e => `<button class="compact-week-event type-${e.category}" data-event-id="${esc(e.id)}" data-event-day="${M.key(d)}" title="${esc(M.fullTime(e) + ' ' + e.title + (e.location ? ' · ' + e.location : ''))}" aria-label="${esc(M.dayTime(e, d) + ' ' + e.title)}"><time>${M.dayTime(e, d)}</time><strong>${esc(e.title)}</strong>${e.location ? `<small>${esc(e.location)}</small>` : ''}${clashes.has(e.id) ? '<span class="conflict-tag">时间重叠</span>' : ''}</button>`).join('') : '<p class="compact-empty">暂无安排</p>';
+      html += '</div>';
+    }
+    $('calendar-surface').innerHTML = html + '</div>';
+  }
+  function renderWeekTimeline(list) {
     const from = M.monday(anchor), days = Array.from({ length: 7 }, (_, i) => M.add(from, i));
     const relevant = M.inRange(list, from, M.add(from, 7));
     // Adapt the time axis to the real events; even an early train or 22:00 meeting stays visible.
@@ -89,6 +102,11 @@
     document.querySelectorAll('[data-calendar-filter]').forEach(el => el.setAttribute('aria-pressed', String(el.dataset.calendarFilter === filter)));
     $('calendar-surface').dataset.view = view;
     document.querySelector('.calendar-layout').dataset.view = view;
+    document.querySelector('.calendar-layout').dataset.compact = String(view === 'week' && compactWeek);
+    $('calendar-density').hidden = view !== 'week';
+    $('calendar-density').textContent = compactWeek ? '展开时间轴' : '收起空闲时段';
+    $('calendar-density').setAttribute('aria-pressed', String(!compactWeek));
+    $('calendar-layout-note').textContent = view === 'week' && compactWeek ? '空闲时段已收起；按每天的实际时间顺序排列，卡片高度不代表时长。' : '按实际时间轴显示；点击事项查看完整标题、时间和地点。';
     if (view === 'month') renderMonth(list); else if (view === 'week') renderWeek(list); else renderAgenda(list);
     renderDay(list); revealDay = false;
     const notice = $('calendar-notice'), bad = (snapshot.sources || []).filter(s => !s.ok);
@@ -142,11 +160,12 @@
   }
   document.addEventListener('click', e => {
     const event = e.target.closest('[data-event-id]');
-    if (event) { if (event.dataset.eventDay) selectDay(M.parseDay(event.dataset.eventDay)); openEvent(event.dataset.eventId, document.querySelector('#calendar-day-items [data-event-id=' + JSON.stringify(event.dataset.eventId) + ']') || event); return; }
+    if (event) { if (event.dataset.eventDay) selectDay(M.parseDay(event.dataset.eventDay)); openEvent(event.dataset.eventId, Array.from(document.querySelectorAll('#calendar-surface [data-event-id]')).find(el => el.dataset.eventId === event.dataset.eventId && el.dataset.eventDay === event.dataset.eventDay) || event); return; }
     const date = e.target.closest('[data-select-day]'); if (date) selectDay(M.parseDay(date.dataset.selectDay));
     const mode = e.target.closest('[data-calendar-view]'); if (mode) { view = mode.dataset.calendarView; revealDay = true; render(); }
     const type = e.target.closest('[data-calendar-filter]'); if (type) { filter = type.dataset.calendarFilter; render(); }
   });
+  $('calendar-density').onclick = () => { compactWeek = !compactWeek; render(); };
   $('calendar-prev').onclick = () => { anchor = view === 'month' ? M.nextMonth(anchor, -1) : M.add(anchor, view === 'week' ? -7 : -28); selected = view === 'month' ? M.month(anchor) : view === 'week' ? M.monday(anchor) : anchor; revealDay = true; render(); };
   $('calendar-next-date').onclick = () => { anchor = view === 'month' ? M.nextMonth(anchor, 1) : M.add(anchor, view === 'week' ? 7 : 28); selected = view === 'month' ? M.month(anchor) : view === 'week' ? M.monday(anchor) : anchor; revealDay = true; render(); };
   $('calendar-today').onclick = () => selectDay(new Date(), true);
