@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%232e6b66%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%2715%27 rx=%272%27 fill=%27%23f6f3ec%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%275%27 fill=%27%23b5542b%27/%3E%3C/svg%3E">
 <link rel="stylesheet" href="./style.css?v=6">
 <link rel="stylesheet" href="./site.css?v=2">
-<link rel="stylesheet" href="./calendar-view.css?v=1">
+<link rel="stylesheet" href="./calendar-view.css?v=2">
 </head>
 <body>
 <nav class="topnav"><div class="wrap">
@@ -36,8 +36,8 @@
       <h2 id="calendar-range">课表与行程</h2>
       <input class="control date-picker" id="calendar-date" type="date" aria-label="跳转到日期">
       <div class="view-switch" aria-label="日历视图">
-        <button class="control" data-calendar-view="month" aria-pressed="true">月历</button>
-        <button class="control" data-calendar-view="week" aria-pressed="false">周课表</button>
+        <button class="control" data-calendar-view="month" aria-pressed="false">月历</button>
+        <button class="control" data-calendar-view="week" aria-pressed="true">周课表</button>
         <button class="control" data-calendar-view="agenda" aria-pressed="false">完整清单</button>
       </div>
     </div>
@@ -57,7 +57,7 @@
         <ul class="day-items" id="calendar-day-items"></ul>
       </aside>
     </div>
-    <div class="calendar-bottom"><p>月历可滚动查看整月；点击日期看当天全部安排，点击事项看详情。</p><p id="calendar-updated">同步中…</p></div>
+    <div class="calendar-bottom"><p>默认显示本周课表；手机可左右滑动查看整周，点击事项查看完整标题、时间和地点。</p><p id="calendar-updated">同步中…</p></div>
   </section>
   <div class="calendar-quick">
     <section aria-labelledby="trips-title"><h2 id="trips-title">近期行程与特别安排</h2><div class="quick-events" id="calendar-special"></div></section>
@@ -70,6 +70,6 @@
  <span class="dialog-type" id="event-dialog-type"></span><h2 id="event-dialog-title"></h2><dl id="event-dialog-details"></dl>
 </dialog>
 <script src="./calendar-model.js?v=1"></script>
-<script src="./calendar-view.js?v=1"></script>
+<script src="./calendar-view.js?v=2"></script>
 <script>document.querySelectorAll('.navlinks a').forEach(a=>{if(a.getAttribute('href')==='schedule.html')a.classList.add('active')});</script>
 </body></html>

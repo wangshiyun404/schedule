@@ -2,7 +2,7 @@
   const M = window.CalendarModel, $ = id => document.getElementById(id);
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   let snapshot, events = [], anchor = M.day(new Date()), selected = M.day(new Date());
-  let view = window.innerWidth <= 600 ? 'agenda' : 'month', filter = 'all', query = '';
+  let view = 'week', filter = 'all', query = '';
   let focusedEventButton = null, revealDay = true;
   const dayName = d => `${M.date(d)} ${M.weekdays[M.parts(d).wd]}`;
   const match = e => (filter === 'all' || e.category === filter) && (!query || [e.title, e.location, M.labels[e.category]].join(' ').toLowerCase().includes(query));
@@ -58,7 +58,7 @@
         for (const b of g) {
           const startMinute = (b.s - +d) / 60000, endMinute = (b.t - +d) / 60000;
           const top = (startMinute - sh * 60) / (hours * 60) * 100, h = (endMinute - startMinute) / (hours * 60) * 100;
-          html += `<button class="week-event type-${b.e.category}" style="--top:${top}%;--height:${h}%;--left:calc(${b.lane / lanes.length * 100}% + 1px);--width:calc(${100 / lanes.length}% - 2px)" data-event-id="${esc(b.e.id)}" data-event-day="${M.key(d)}" aria-label="${esc(M.dayTime(b.e, d) + ' ' + b.e.title)}"><time>${M.dayTime(b.e, d)}</time><strong>${esc(b.e.title)}</strong>${b.e.location ? `<small>${esc(b.e.location)}</small>` : ''}</button>`;
+          html += `<button class="week-event type-${b.e.category}" style="--top:${top}%;--height:${h}%;--left:calc(${b.lane / lanes.length * 100}% + 1px);--width:calc(${100 / lanes.length}% - 2px)" data-event-id="${esc(b.e.id)}" data-event-day="${M.key(d)}" title="${esc(M.fullTime(b.e) + ' ' + b.e.title + (b.e.location ? ' · ' + b.e.location : ''))}" aria-label="${esc(M.dayTime(b.e, d) + ' ' + b.e.title)}"><time>${M.dayTime(b.e, d)}</time><strong>${esc(b.e.title)}</strong>${b.e.location ? `<small>${esc(b.e.location)}</small>` : ''}</button>`;
         }
       }
       html += '</div>';
