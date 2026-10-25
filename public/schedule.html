@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%232e6b66%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%2715%27 rx=%272%27 fill=%27%23f6f3ec%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%275%27 fill=%27%23b5542b%27/%3E%3C/svg%3E">
 <link rel="stylesheet" href="./style.css?v=6">
 <link rel="stylesheet" href="./site.css?v=2">
-<link rel="stylesheet" href="./calendar-view.css?v=4">
+<link rel="stylesheet" href="./calendar-view.css?v=5">
 </head>
 <body>
 <nav class="topnav"><div class="wrap">
@@ -64,8 +64,9 @@
   <nav class="section-nav" aria-label="切换部分"><span>01 / 03 · 本周课表</span><a href="#special-arrangements">下一部分：近期安排 ↓</a></nav>
 </section>
 <section class="calendar-screen" id="special-arrangements" aria-labelledby="trips-title">
-  <header class="part-heading"><p>02 / 03</p><h2 id="trips-title">近期行程与特别安排</h2><p>未来30天的出行、考试、培训及特别安排，按日期排列。</p></header>
-  <div class="quick-events part-content" id="calendar-special"></div>
+  <header class="part-heading"><p>02 / 03</p><h2 id="trips-title">近期全部日程</h2><p>从今天起30天的全部公开安排：课程、组会与会议、行程及其他事项。</p></header>
+  <p class="upcoming-summary" id="calendar-special-summary" aria-live="polite"></p>
+  <div class="quick-events part-content" id="calendar-special" tabindex="0" aria-label="未来30天全部公开日程，可向下滚动"></div>
   <nav class="section-nav" aria-label="切换部分"><a href="#week-overview">↑ 本周课表</a><a href="#find-me">下一部分：找我聊聊 ↓</a></nav>
 </section>
 <section class="calendar-screen" id="find-me" aria-labelledby="slots-title">
@@ -79,7 +80,7 @@
  <button class="dialog-close" id="event-dialog-close" aria-label="关闭事项详情">×</button>
  <span class="dialog-type" id="event-dialog-type"></span><h2 id="event-dialog-title"></h2><dl id="event-dialog-details"></dl>
 </dialog>
-<script src="./calendar-model.js?v=1"></script>
-<script src="./calendar-view.js?v=3"></script>
+<script src="./calendar-model.js?v=2"></script>
+<script src="./calendar-view.js?v=4"></script>
 <script>document.querySelectorAll('.navlinks a').forEach(a=>{if(a.getAttribute('href')==='schedule.html')a.classList.add('active')});</script>
 </body></html>

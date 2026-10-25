@@ -30,3 +30,20 @@ test('a real rescheduled lesson remains a course while rescheduling paperwork do
  assert.equal(M.normalize([e('调课：商务汉语精读（A）','2026-10-08T00:00:00Z','2026-10-08T01:40:00Z')])[0].category,'course');
  assert.equal(M.normalize([e('核对10月8日获批调课通知与课堂材料','2026-10-06T02:00:00Z','2026-10-06T02:20:00Z')])[0].category,'other');
 });
+
+test('upcoming agenda keeps every category, empty dates and each day of a trip', () => {
+ const list = M.normalize([
+  e('组会', '2026-10-25T10:00:00+08:00', '2026-10-25T11:00:00+08:00'),
+  e('汉语读写（A）', '2026-10-26T14:00:00+08:00', '2026-10-26T15:40:00+08:00'),
+  e('提交材料', '2026-10-26T16:00:00+08:00', '2026-10-26T17:00:00+08:00'),
+  e('出行', '2026-10-27T09:00:00+08:00', '2026-10-29T00:00:00+08:00', {kind:'trip'}),
+  e('范围之外', '2026-10-30T09:00:00+08:00', '2026-10-30T10:00:00+08:00')
+ ]);
+ const days = M.dailyAgenda(list, '2026-10-25T20:00:00+08:00', 5);
+ assert.deepEqual(days.map(d => M.key(d.date)), ['2026-10-25','2026-10-26','2026-10-27','2026-10-28','2026-10-29']);
+ assert.deepEqual(days.map(d => d.items.length), [1,2,1,1,0]);
+ assert.deepEqual([...new Set(days.flatMap(d => d.items.map(e => e.category)))].sort(), ['course','meeting','other','trip']);
+ assert.equal(M.weekdays[M.parts(days[1].date).wd], '周一');
+ assert.equal(M.dayTime(days[3].items[0], days[3].date), '00:00–24:00 · 跨日');
+ assert.equal(M.dailyAgenda(list, days[0].date).length, 30);
+});

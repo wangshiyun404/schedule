@@ -125,9 +125,9 @@
   }
   function selectDay(d, shiftAnchor = false) { selected = M.day(d); revealDay = true; if (shiftAnchor) anchor = selected; render(); }
   function specialAndSlots() {
-    const now = new Date(), limit = M.add(M.day(now), 30);
-    const special = events.filter(e => new Date(e.end) > now && new Date(e.start) < limit && (e.category === 'trip' || /期中考试|期末考试|外出|停课|补课|培训/.test(e.title)));
-    $('calendar-special').innerHTML = special.length ? special.map(e => `<button class="quick-row type-${e.category}" data-event-id="${esc(e.id)}"><time>${M.date(e.start)}<br>${e.allDay ? '全天' : M.time(e.start)}</time><span><strong>${esc(e.title)}</strong>${e.location ? `<small>${esc(e.location)}</small>` : ''}</span></button>`).join('') : '<p class="empty-calendar">未来30天暂无公开的特别安排。</p>';
+    const now = new Date(), days = M.dailyAgenda(events, now), unique = new Set(days.flatMap(d => d.items.map(e => e.id)));
+    $('calendar-special-summary').textContent = `${dayName(days[0].date)}—${dayName(days[days.length - 1].date)} · 共${unique.size}项公开安排；跨日事项逐日列出。向下滚动查看全部日期。`;
+    $('calendar-special').innerHTML = days.map(({ date, items }) => `<section class="upcoming-day" data-upcoming-day="${M.key(date)}"><h3>${dayName(date)}<span>${items.length ? items.length + '项' : '暂无安排'}</span></h3>${items.length ? items.map(e => `<button class="quick-row type-${e.category}" data-event-id="${esc(e.id)}"><time>${M.dayTime(e, date)}</time><span><strong>${esc(e.title)}</strong><small>${M.labels[e.category]}${e.location ? ' · ' + esc(e.location) : ''}</small></span></button>`).join('') : '<p class="upcoming-empty">暂无公开安排</p>'}</section>`).join('');
     const slots = [], busy = events.filter(e => !e.allDay).map(e => [Date.parse(e.start), Date.parse(e.end)]);
     for (let i = 0; i < 7; i++) {
       const d = M.add(M.day(now), i), wd = M.parts(d).wd;

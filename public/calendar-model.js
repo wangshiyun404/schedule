@@ -40,6 +40,10 @@
   }
   const inRange = (events, a, b) => events.filter(e => Date.parse(e.start) < +b && Date.parse(e.end) > +a);
   const inDay = (events, d) => inRange(events, day(d), add(day(d), 1));
+  // A continuous date list of every public event category, including empty days.
+  function dailyAgenda(events, from, count = 30) {
+    return Array.from({ length: count }, (_, i) => { const date = add(day(from), i); return { date, items: inDay(events, date) }; });
+  }
   function dayTime(e, d) {
     if (e.allDay) return '全天';
     const a = day(d), b = add(a, 1), start = new Date(e.start), end = new Date(e.end);
@@ -58,5 +62,5 @@
     }
     return result;
   }
-  return { DAY, TZ, weekdays, labels, parts, key, day, parseDay, add, time, date, monday, month, nextMonth, normalize, inRange, inDay, dayTime, fullTime, conflicts };
+  return { DAY, TZ, weekdays, labels, parts, key, day, parseDay, add, time, date, monday, month, nextMonth, normalize, inRange, inDay, dailyAgenda, dayTime, fullTime, conflicts };
 });
