@@ -8,7 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%232e6b66%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%2715%27 rx=%272%27 fill=%27%23f6f3ec%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%275%27 fill=%27%23b5542b%27/%3E%3C/svg%3E">
 <link rel="stylesheet" href="./style.css?v=6">
 <link rel="stylesheet" href="./site.css?v=2">
-<link rel="stylesheet" href="./calendar-view.css?v=5">
+<link rel="stylesheet" href="./calendar-view.css?v=6">
 </head>
 <body>
 <nav class="topnav"><div class="wrap">
@@ -70,8 +70,23 @@
   <nav class="section-nav" aria-label="切换部分"><a href="#week-overview">↑ 本周课表</a><a href="#find-me">下一部分：找我聊聊 ↓</a></nav>
 </section>
 <section class="calendar-screen" id="find-me" aria-labelledby="slots-title">
-  <header class="part-heading"><p>03 / 03</p><h2 id="slots-title">找我聊聊</h2><p>以下为未来一周可预约的时段。点击时段发邮件，预约前请确认。</p></header>
-  <div class="part-content contact-part"><div class="free-slots" id="calendar-slots"></div><p class="calendar-contact" id="calendar-contact"></p><a class="control contact-email" href="mailto:wangsy@stu.edu.cn">发邮件预约</a></div>
+  <header class="part-heading"><p>03 / 03</p><h2 id="slots-title">找我聊聊</h2><p>关于教学、研究或项目，欢迎找个时间交流。</p></header>
+  <div class="part-content contact-part">
+    <div class="contact-board">
+      <section class="availability-panel" aria-labelledby="availability-title">
+        <header class="availability-heading"><div><h3 id="availability-title">未来一周可约时间</h3><p id="calendar-slot-summary" aria-live="polite">正在读取可约时段…</p></div><span class="timezone-label">北京时间 UTC+8</span><a class="contact-shortcut" id="calendar-email-mobile" href="mailto:wangsy@stu.edu.cn">邮件联系 ↗</a></header>
+        <p class="mobile-contact-hint">上下滑动查看全部时段与联系方式</p>
+        <div class="free-slots" id="calendar-slots"></div>
+        <p class="availability-note">点击时间即可打开预约邮件，具体安排请以邮件确认为准。</p>
+      </section>
+      <aside class="contact-sidebar" aria-labelledby="contact-title">
+        <span class="contact-eyebrow">联系与预约</span><h3 id="contact-title">从一个想法开始</h3><p class="contact-intro">教学交流、研究讨论，或是项目中的新想法，都欢迎来聊聊。</p>
+        <dl class="calendar-contact" id="calendar-contact"></dl>
+        <a class="contact-email" id="calendar-email" href="mailto:wangsy@stu.edu.cn">发邮件预约 <span aria-hidden="true">↗</span></a>
+        <p class="booking-note">请在邮件中说明交流主题，以及希望线上还是线下交流。</p>
+      </aside>
+    </div>
+  </div>
   <footer class="calendar-bottom"><p>仅显示已公开的课表与行程。临时调整及待定事项，以最新通知为准。</p><a href="teaching.html">课程介绍 →</a></footer>
   <nav class="section-nav" aria-label="切换部分"><a href="#special-arrangements">↑ 近期安排</a><a href="#week-overview">返回课表 ↑</a></nav>
 </section>
@@ -81,6 +96,6 @@
  <span class="dialog-type" id="event-dialog-type"></span><h2 id="event-dialog-title"></h2><dl id="event-dialog-details"></dl>
 </dialog>
 <script src="./calendar-model.js?v=3"></script>
-<script src="./calendar-view.js?v=4"></script>
+<script src="./calendar-view.js?v=5"></script>
 <script>document.querySelectorAll('.navlinks a').forEach(a=>{if(a.getAttribute('href')==='schedule.html')a.classList.add('active')});</script>
 </body></html>

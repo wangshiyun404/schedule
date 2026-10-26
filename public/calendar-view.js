@@ -140,8 +140,13 @@
       }
     }
     const email = snapshot.owner.email || '';
-    $('calendar-slots').innerHTML = slots.slice(0, 8).map(([a, b]) => `<a class="free-slot" href="mailto:${esc(email)}?subject=${encodeURIComponent('预约：' + dayName(a) + ' ' + M.time(a) + '—' + M.time(b))}">${dayName(a)} ${M.time(a)}—${M.time(b)}</a>`).join('') || '<p class="empty-calendar">未来一周暂无可预约时段，欢迎邮件联系。</p>';
-    $('calendar-contact').textContent = `${email} · ${snapshot.owner.location || ''} · 预约前请邮件确认。`;
+    const slotDays = new Map();
+    for (const slot of slots) { const key = M.key(slot[0]); if (!slotDays.has(key)) slotDays.set(key, []); slotDays.get(key).push(slot); }
+    $('calendar-slot-summary').textContent = `${M.date(now)}—${M.date(M.add(M.day(now), 6))} · ${slots.length}个可约时段`;
+    $('calendar-slots').innerHTML = [...slotDays].map(([date, times]) => `<section class="availability-day"><h4><span>${M.weekdays[M.parts(times[0][0]).wd]}</span><time datetime="${date}">${M.date(times[0][0])}</time></h4><div class="slot-options">${times.map(([a, b]) => `<a class="free-slot" href="mailto:${esc(email)}?subject=${encodeURIComponent('预约：' + dayName(a) + ' ' + M.time(a) + '—' + M.time(b))}" aria-label="${esc('邮件预约 ' + dayName(a) + ' ' + M.time(a) + '—' + M.time(b))}"><span>${M.time(a)}—${M.time(b)}</span><span class="slot-arrow" aria-hidden="true">↗</span></a>`).join('')}</div></section>`).join('') || '<p class="empty-calendar">未来一周暂无可预约时段，欢迎邮件联系。</p>';
+    $('calendar-contact').innerHTML = `<dt>邮箱</dt><dd><a href="mailto:${esc(email)}">${esc(email)}</a></dd>${snapshot.owner.location ? `<dt>常用办公地点</dt><dd>${esc(snapshot.owner.location)}</dd>` : ''}`;
+    $('calendar-email').href = 'mailto:' + email + '?subject=' + encodeURIComponent('预约交流');
+    $('calendar-email-mobile').href = $('calendar-email').href;
   }
   function renderStatus() {
     if (!snapshot) return;
