@@ -53,11 +53,12 @@
     const ends = relevant.filter(e => !e.allDay).map(e => { const p = M.parts(e.end); return p.hh + (p.mm ? 1 : 0); });
     const crossesDay = relevant.some(e => !e.allDay && M.key(e.start) !== M.key(e.end));
     const sh = crossesDay ? 0 : Math.max(0, Math.min(8, ...starts)), eh = crossesDay ? 24 : Math.min(24, Math.max(23, ...ends)), hours = eh - sh;
-    let html = `<div class="week-table" style="--week-hours:${hours}"><div class="week-head"></div>`;
+    const ticks = Array.from({ length: hours + 1 }, (_, i) => (sh + i) * 60);
+    let html = `<div class="week-table" data-start-minute="${sh * 60}" data-end-minute="${eh * 60}" style="--week-height:${hours * 76}px"><div class="week-head"></div>`;
     html += days.map(d => `<div class="week-head ${M.key(d) === M.key(new Date()) ? 'today' : ''}"><button data-select-day="${M.key(d)}" aria-label="查看${dayName(d)}全部安排">${M.weekdays[M.parts(d).wd]}<br>${M.date(d)}</button></div>`).join('');
     html += '<div class="week-all-label">全天</div>';
     html += days.map(d => `<div class="week-allday">${M.inDay(list, d).filter(e => e.allDay).map(e => button(e, d)).join('')}</div>`).join('');
-    html += '<div class="week-hours">' + Array.from({ length: hours - 1 }, (_, i) => `<span style="top:${(i + 1) / hours * 100}%">${sh + i + 1}:00</span>`).join('') + '</div>';
+    html += '<div class="week-hours">' + ticks.map(minute => `<span data-timeline-minute="${minute}">${minute / 60}:00</span>`).join('') + '</div>';
     for (const d of days) {
       const blocks = M.inDay(list, d).filter(e => !e.allDay).map(e => ({ e, s: Math.max(+new Date(e.start), +d), t: Math.min(+new Date(e.end), +M.add(d, 1)) }));
       // Partition overlap groups into equal-width lanes, so simultaneous events never cover each other.
@@ -65,18 +66,43 @@
       for (const b of blocks) { if (b.s >= until && group.length) { groups.push(group); group = []; until = -Infinity; } group.push(b); until = Math.max(until, b.t); }
       if (group.length) groups.push(group);
       html += `<div class="week-day" data-week-day="${M.key(d)}">`;
+      html += ticks.map(minute => `<span class="week-grid-line" data-timeline-minute="${minute}" aria-hidden="true"></span>`).join('');
       for (const g of groups) {
         const lanes = [];
         for (const b of g) { let lane = lanes.findIndex(t => t <= b.s); if (lane < 0) lane = lanes.length; lanes[lane] = b.t; b.lane = lane; }
         for (const b of g) {
           const startMinute = (b.s - +d) / 60000, endMinute = (b.t - +d) / 60000;
-          const top = (startMinute - sh * 60) / (hours * 60) * 100, h = (endMinute - startMinute) / (hours * 60) * 100;
-          html += `<button class="week-event type-${b.e.category}" style="--top:${top}%;--height:${h}%;--left:calc(${b.lane / lanes.length * 100}% + 1px);--width:calc(${100 / lanes.length}% - 2px)" data-event-id="${esc(b.e.id)}" data-event-day="${M.key(d)}" title="${esc(M.fullTime(b.e) + ' ' + b.e.title + (b.e.location ? ' · ' + b.e.location : ''))}" aria-label="${esc(M.dayTime(b.e, d) + ' ' + b.e.title)}"><time>${M.dayTime(b.e, d)}</time><strong>${esc(b.e.title)}</strong>${b.e.location ? `<small>${esc(b.e.location)}</small>` : ''}</button>`;
+          html += `<button class="week-event type-${b.e.category}" style="--top:0px;--height:auto;--left:calc(${b.lane / lanes.length * 100}% + 1px);--width:calc(${100 / lanes.length}% - 2px)" data-start-minute="${startMinute}" data-end-minute="${endMinute}" data-lanes="${lanes.length}" data-event-id="${esc(b.e.id)}" data-event-day="${M.key(d)}" title="${esc(M.fullTime(b.e) + ' ' + b.e.title + (b.e.location ? ' · ' + b.e.location : ''))}" aria-label="${esc(M.dayTime(b.e, d) + ' ' + b.e.title)}"><time>${M.dayTime(b.e, d)}</time><strong>${esc(b.e.title)}</strong>${b.e.location ? `<small>${esc(b.e.location)}</small>` : ''}</button>`;
         }
       }
       html += '</div>';
     }
     $('calendar-surface').innerHTML = html + '</div>';
+    fitWeekTimeline();
+  }
+  function fitWeekTimeline() {
+    const table = $('calendar-surface').querySelector('.week-table');
+    if (!table) return;
+    const widths = Array.from(table.querySelectorAll('.week-day'), day => Math.max(150, ...Array.from(day.querySelectorAll('.week-event'), card => +card.dataset.lanes * 128)));
+    table.style.gridTemplateColumns = '56px ' + widths.map(width => `minmax(${width}px, 1fr)`).join(' ');
+    table.style.minWidth = `${56 + widths.reduce((sum, width) => sum + width, 0)}px`;
+    const cards = Array.from(table.querySelectorAll('.week-event'));
+    cards.forEach(card => card.style.setProperty('--height', 'auto'));
+    const blocks = cards.map(card => ({ start: +card.dataset.startMinute, end: +card.dataset.endMinute, height: Math.ceil(card.getBoundingClientRect().height) + 4 }));
+    const hourHeight = parseFloat(getComputedStyle(table).getPropertyValue('--week-hour-height')) || 76;
+    const axis = M.timelineAxis(+table.dataset.startMinute, +table.dataset.endMinute, blocks, hourHeight / 60);
+    table.style.setProperty('--week-height', `${axis.height}px`);
+    cards.forEach((card, i) => {
+      const top = axis.position(blocks[i].start);
+      card.style.setProperty('--top', `${top}px`);
+      card.style.setProperty('--height', `${axis.position(blocks[i].end) - top}px`);
+    });
+    table.querySelectorAll('[data-timeline-minute]').forEach(tick => tick.style.top = `${axis.position(+tick.dataset.timelineMinute)}px`);
+  }
+  let timelineFrame = 0;
+  function scheduleTimelineFit() {
+    cancelAnimationFrame(timelineFrame);
+    timelineFrame = requestAnimationFrame(() => { timelineFrame = 0; fitWeekTimeline(); });
   }
   function renderAgenda(list) {
     const [a, b] = range(); let html = '';
@@ -106,7 +132,7 @@
     $('calendar-density').hidden = view !== 'week';
     $('calendar-density').textContent = compactWeek ? '展开时间轴' : '收起空闲时段';
     $('calendar-density').setAttribute('aria-pressed', String(!compactWeek));
-    $('calendar-layout-note').textContent = view === 'week' && compactWeek ? '空闲时段已收起；按每天的实际时间顺序排列，卡片高度不代表时长。' : '按实际时间轴显示；点击事项查看完整标题、时间和地点。';
+    $('calendar-layout-note').textContent = view === 'week' ? compactWeek ? '空闲时段已收起；按每天的实际时间顺序排列，卡片高度不代表时长。' : '按实际起止时间定位；短事项所在时段自动扩高，完整显示文字。点击事项可查看详情。' : '点击事项查看完整标题、时间和地点。';
     if (view === 'month') renderMonth(list); else if (view === 'week') renderWeek(list); else renderAgenda(list);
     renderDay(list); revealDay = false;
     const notice = $('calendar-notice'), bad = (snapshot.sources || []).filter(s => !s.ok);
@@ -180,5 +206,10 @@
   $('calendar-search').oninput = e => { query = e.target.value.trim().toLowerCase(); render(); };
   $('event-dialog-close').onclick = () => $('calendar-event-dialog').close();
   $('calendar-event-dialog').addEventListener('close', () => { if (focusedEventButton?.isConnected) focusedEventButton.focus(); });
+  let timelineWidth = 0;
+  new ResizeObserver(entries => { const width = entries[0].contentRect.width; if (Math.abs(width - timelineWidth) > .5) { timelineWidth = width; scheduleTimelineFit(); } }).observe($('calendar-surface'));
+  document.fonts.ready.then(scheduleTimelineFit);
+  document.fonts.addEventListener('loadingdone', scheduleTimelineFit);
+  window.addEventListener('resize', scheduleTimelineFit);
   load(); setInterval(load, 300000); setInterval(renderStatus, 60000);
 })();

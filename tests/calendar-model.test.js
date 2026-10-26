@@ -55,3 +55,29 @@ test('exam paper preparation stays work preparation even with a course source la
  }
  assert.equal(M.normalize([e('期中考试：汉语读写（A）',...span,{kind:'course'})])[0].category,'course');
 });
+
+test('timeline gives short and overlapping events enough room without moving their time boundaries', () => {
+ const blocks = [
+  {start:600,end:630,height:92},
+  {start:615,end:660,height:180},
+  {start:630,end:660,height:110},
+  {start:1375,end:1380,height:96}
+ ];
+ const axis=M.timelineAxis(480,1380,blocks);
+ for (const b of blocks) assert.ok(axis.position(b.end)-axis.position(b.start)>=b.height-0.001);
+ for(let minute=481;minute<=1380;minute++) assert.ok(axis.position(minute)>axis.position(minute-1));
+ assert.equal(axis.position(blocks[0].end),axis.position(blocks[2].start));
+ assert.ok(Math.abs(axis.position(540)-76)<0.001); // Empty hours keep their normal size.
+ assert.equal(axis.position(1380),axis.height);
+});
+
+test('timeline uses the largest text requirement across days and includes midnight boundaries', () => {
+ const axis=M.timelineAxis(0,1440,[{start:600,end:630,height:90},{start:600,end:630,height:180},{start:0,end:15,height:100},{start:1425,end:1440,height:110}]);
+ assert.ok(Math.abs(axis.position(630)-axis.position(600)-180)<0.001);
+ assert.ok(axis.position(15)>=100);
+ assert.ok(axis.height-axis.position(1425)>=110-0.001);
+ assert.equal(axis.position(-1),0);
+ assert.equal(axis.position(1441),axis.height);
+ const empty=M.timelineAxis(480,1380,[]);
+ assert.ok(Math.abs(empty.height-15*76)<0.001);
+});

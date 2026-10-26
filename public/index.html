@@ -96,7 +96,7 @@
 </div></footer>
 <script src="./content.js?v=1"></script>
 <script src="./builders.js?v=3"></script>
-<script src="./calendar-model.js?v=3"></script>
+<script src="./calendar-model.js?v=4"></script>
 <script src="./site.js?v=3"></script>
 <script>(()=>{const B=window.BUILDERS;if(!B)return;const all=B.groups.flatMap(g=>g.items);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 document.getElementById('home-builder-stats').innerHTML=[[all.length,'个账号'],[all.filter(i=>i.kind==='builder').length,'一线建造者'],[B.groups.length,'个分类']].map(([v,l])=>`<li><strong>${v}</strong><span>${l}</span></li>`).join('');

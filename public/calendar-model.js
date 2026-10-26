@@ -44,6 +44,27 @@
   function dailyAgenda(events, from, count = 30) {
     return Array.from({ length: count }, (_, i) => { const date = add(day(from), i); return { date, items: inDay(events, date) }; });
   }
+  // Stretch only the intervals that need room for text. All seven days share this axis.
+  function timelineAxis(start, end, blocks, pixelsPerMinute = 76 / 60) {
+    const needs = blocks.map(b => ({ start: Math.max(start, b.start), end: Math.min(end, b.end), height: b.height }))
+      .filter(b => b.end > b.start && Number.isFinite(b.height));
+    const edges = [...new Set([start, end, ...needs.flatMap(b => [b.start, b.end])])].sort((a, b) => a - b);
+    const heights = edges.slice(1).map((v, i) => (v - edges[i]) * pixelsPerMinute);
+    const indexes = new Map(edges.map((v, i) => [v, i]));
+    for (const b of needs.sort((a, b) => (a.end - a.start) - (b.end - b.start))) {
+      const first = indexes.get(b.start), last = indexes.get(b.end);
+      const deficit = b.height - heights.slice(first, last).reduce((sum, v) => sum + v, 0);
+      if (deficit > 0) for (let i = first; i < last; i++) heights[i] += deficit * (edges[i + 1] - edges[i]) / (b.end - b.start);
+    }
+    const offsets = [0]; for (const h of heights) offsets.push(offsets[offsets.length - 1] + h);
+    const position = minute => {
+      if (minute <= start) return 0;
+      if (minute >= end) return offsets[offsets.length - 1];
+      const i = edges.findIndex((v, i) => i > 0 && minute <= v) - 1;
+      return offsets[i] + (minute - edges[i]) / (edges[i + 1] - edges[i]) * heights[i];
+    };
+    return { height: offsets[offsets.length - 1], position };
+  }
   function dayTime(e, d) {
     if (e.allDay) return '全天';
     const a = day(d), b = add(a, 1), start = new Date(e.start), end = new Date(e.end);
@@ -62,5 +83,5 @@
     }
     return result;
   }
-  return { DAY, TZ, weekdays, labels, parts, key, day, parseDay, add, time, date, monday, month, nextMonth, normalize, inRange, inDay, dailyAgenda, dayTime, fullTime, conflicts };
+  return { DAY, TZ, weekdays, labels, parts, key, day, parseDay, add, time, date, monday, month, nextMonth, normalize, inRange, inDay, dailyAgenda, timelineAxis, dayTime, fullTime, conflicts };
 });
