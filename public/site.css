@@ -37,6 +37,17 @@ body.site main { flex: 1; }
 .today-list time { color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .today-list .n { font-weight: 600; }
 .today-list .n small { display: block; font-weight: 400; color: var(--ink-3); font-size: var(--text-xs); }
+.today-list li.todo { display: block; padding: var(--space-3) 0; font-size: var(--text-base); }
+.today-list li.todo label { display: grid; grid-template-columns: 1.4em max-content minmax(0,1fr); gap: var(--space-3); align-items: baseline; cursor: pointer; }
+.today-list li.todo input { width: 1.2em; height: 1.2em; margin: 0; accent-color: var(--accent); cursor: pointer; align-self: center; }
+.today-list li.todo .n small { font-size: var(--text-sm); margin-top: 2px; }
+.today-list li.todo.done time, .today-list li.todo.done .n { color: var(--ink-3); text-decoration: line-through; font-weight: 400; }
+.today-list li.grp { display: block; border-top: 0; padding: var(--space-3) 0 var(--space-1); font-size: var(--text-xs); color: var(--ink-3); letter-spacing: .1em; }
+.today-list li.grp + li { border-top: 0; }
+.entry-group { margin: var(--space-6) 0 var(--space-3); font-size: var(--text-base); color: var(--ink-2); font-weight: 600; }
+.entry-group:first-child { margin-top: 0; }
+.entry h3 { font-size: var(--text-lg); }
+.entry p { font-size: var(--text-base); }
 .today-list .empty { display: block; color: var(--ink-3); font-size: var(--text-sm); }
 .today-card .more { display: block; margin-top: var(--space-4); font-size: var(--text-sm); }
 

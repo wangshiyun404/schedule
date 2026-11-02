@@ -103,3 +103,37 @@ window.SITE = {
     // { label: '汕头大学', url: 'https://www.stu.edu.cn/' }
   ]
 };
+
+// 首页入口：我的课程与课程资料、我的 AI 作品（说明取自各仓库描述或页面标题）
+window.SITE.courseEntries = [
+  { group: '国际学院 · 本学期课程工作台', items: [
+      { title: '大一《汉语读写A》', url: 'https://wangshiyun404.github.io/chinese-reading-writing-a/', desc: '汉语读写 A 课堂工作台：课件动画、视频、授课进度、随机点名与画笔' },
+      { title: '大二《中级汉语听说A》', url: 'https://wangshiyun404.github.io/intermediate-chinese-listening-speaking-a/', desc: '中级汉语听说A（SIE2141B）教学工作台' },
+      { title: '大三《商务汉语精读A》', url: 'https://wangshiyun404.github.io/business-chinese-reading-a/', desc: '商务汉语精读 A 教学工作台：教材、课程安排、授课进度、随机抽问与画笔' },
+  ] },
+  { group: '《AI 时代的超级个体与协同团队》书院实践课', items: [
+      { title: '备课资源清单', url: 'https://wangshiyun404.github.io/ai-super-individual-course/', desc: '《AI 时代的超级个体与协同团队》书院实践课 · 备课资源清单' },
+  ] },
+  { group: '《知识、大学与发展》课件', items: [
+      { title: '第11讲', url: 'https://wangshiyun404.github.io/lecture-11/', desc: '全球化与信息化时代的大学' },
+      { title: '第12讲', url: 'https://wangshiyun404.github.io/lecture-12/', desc: '中国大学发展的反思与前瞻' },
+      { title: '第13讲', url: 'https://wangshiyun404.github.io/lecture-13/', desc: '未来大学的形态与知识使命（一）' },
+      { title: '第14讲', url: 'https://wangshiyun404.github.io/lecture-14/', desc: '未来大学的形态与知识使命（二）：大学与城市、产业的融合发展' },
+      { title: '第15讲', url: 'https://wangshiyun404.github.io/lecture-15/', desc: '未来大学的形态与知识使命（三）：跨学科研究与知识生产模式变革' },
+  ] },
+  { group: '《知识、大学与发展》配套小游戏', items: [
+      { title: '第11&12讲 · 知识闯关', url: 'https://wangshiyun404.github.io/quiz-11-12/', desc: '知识、大学与发展' },
+      { title: '第13周 · 未来大学雷达站', url: 'https://wangshiyun404.github.io/quiz-13/', desc: '预热身 + 课后复习' },
+      { title: '第14周 · 大学城邦创新局', url: 'https://wangshiyun404.github.io/quiz-14/', desc: '预热身 + 课后复习' },
+      { title: '第15周 · 知识拼图实验室', url: 'https://wangshiyun404.github.io/quiz-15/', desc: '预热身 + 课后复习' },
+  ] }
+];
+window.SITE.aiWorks = [
+      { title: '拼音歌词 101 首', url: 'https://wangshiyun404.github.io/pinyin-geci/', desc: '带拼音、简谱和俄语/土库曼语翻译的华语歌曲跟唱网页工具，供汉语课堂使用' },
+      { title: '织毯学土库曼语', url: 'https://wangshiyun404.github.io/turkmen-haly/', desc: '零基础土库曼语学习网页游戏：从 30 个字母到日常会话' },
+      { title: '冲工夫茶学潮汕话', url: 'https://wangshiyun404.github.io/chaoshan-gongfu-tea/', desc: '冲工夫茶学潮汕话' },
+      { title: '地球的公转与四季变化', url: 'https://wangshiyun404.github.io/earth-seasons-3d/', desc: '会立起来的科学书 · 教科版六上 互动演示' },
+      { title: '三体游戏', url: 'https://wangshiyun404.github.io/santi-ai-game/', desc: 'AI 低模叙事探索 · 非官方同人改编，原著 © 刘慈欣' },
+      { title: '智能体评测闯关', url: 'https://wangshiyun404.github.io/agent-eval-game/', desc: '中文互动小游戏 · Terminal-Bench 与 Harbor' },
+      { title: 'AI 缩略语猜猜看', url: 'https://wangshiyun404.github.io/ai-acronyms/', desc: '课堂热身小游戏' },
+];

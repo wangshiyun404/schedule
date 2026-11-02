@@ -48,6 +48,9 @@
     const tags = $('area-tags'); if (tags) tags.innerHTML = (S.researchAreas || []).map(a => `<li>${esc(a.name)}</li>`).join('');
     const areas = $('home-areas'); if (areas) areas.innerHTML = (S.researchAreas || []).map(a => `<a class="tile link" href="research.html"><h3>${esc(a.name)}</h3><span class="en">${esc(a.en || '')}</span><p>${esc(a.desc)}</p></a>`).join('');
     const projs = $('home-projects'); if (projs) projs.innerHTML = (S.projects || []).filter(p => p.status !== '已完成').slice(0, 3).map(projTile).join('');
+    const entry = (x) => `<a class="tile link entry" href="${esc(x.url)}" target="_blank" rel="noopener"><h3>${esc(x.title)}</h3><p>${esc(x.desc)}</p><span class="arrow">打开 →</span></a>`;
+    const ce = $('entry-courses'); if (ce) ce.innerHTML = (S.courseEntries || []).map(g => `<h3 class="entry-group">${esc(g.group)}</h3><div class="grid grid-3">${g.items.map(entry).join('')}</div>`).join('');
+    const we = $('entry-works'); if (we) we.innerHTML = (S.aiWorks || []).map(entry).join('');
     await loadSchedule();
     renderToday();
     const hc = $('home-courses'); if (hc) hc.innerHTML = currentCourses().slice(0, 4).map(c => `<a class="tile link" href="teaching.html"><h3>${esc(c.title)}</h3><p>${c.ss.map(x => `${WEEKDAYS[x.wd]} ${x.t}`).join(' · ') || '本学期'}</p></a>`).join('') || '<div class="tile"><p>课程信息同步中…</p></div>';
@@ -72,15 +75,38 @@
     // 今日 / 明日列表
     const d0 = startOfDay(now), d1 = new Date(d0.getTime() + DAY), d2 = new Date(d1.getTime() + DAY);
     const inDay = (a, b) => evs.filter(e => new Date(e.start) < b && new Date(e.end) > a).sort((x, y) => new Date(x.start) - new Date(y.start));
+    const DONE_KEY = 'homeTodoDone.v1';
+    let done = {}; try { done = JSON.parse(localStorage.getItem(DONE_KEY) || '{}'); } catch (_) { done = {}; }
+    const keyOf = (e, day) => `${md(day)}|${e.uid || e.id || e.title}|${e.start}`;
     const li = (e, day) => {
       const start = new Date(e.start), end = new Date(e.end), nextDay = new Date(day.getTime() + DAY);
       const label = e.allDay ? '全天' : `${start < day ? '00:00' : hhmm(start)}–${end >= nextDay ? '24:00' : hhmm(end)}${start < day || end > nextDay ? ' · 跨日' : ''}`;
-      return `<li><time>${label}</time><span class="n">${esc(e.title)}${e.location ? `<small>${esc(e.location)}</small>` : ''}</span></li>`;
+      const k = keyOf(e, day), isDone = !!done[k];
+      return `<li class="todo${isDone ? ' done' : ''}"><label><input type="checkbox" data-k="${esc(k)}"${isDone ? ' checked' : ''}><time>${label}</time><span class="n">${esc(e.title)}${e.location ? `<small>${esc(e.location)}</small>` : ''}</span></label></li>`;
+    };
+    const group = (list, day, emptyText) => {
+      if (!list.length) return `<li><span class="empty">${emptyText}</span></li>`;
+      const items = list.map(e => ({ e, d: !!done[keyOf(e, day)] }));
+      const todo = items.filter(x => !x.d), fin = items.filter(x => x.d);
+      return `<li class="grp">待办 · ${todo.length}</li>` + (todo.map(x => li(x.e, day)).join('') || '<li><span class="empty">全部完成</span></li>')
+        + (fin.length ? `<li class="grp">已办 · ${fin.length}</li>` + fin.map(x => li(x.e, day)).join('') : '');
     };
     const today = inDay(d0, d1), tomorrow = inDay(d1, d2);
-    $('today-list').innerHTML = today.length ? today.map(e => li(e, d0)).join('') : '<li><span class="empty">今天没有已排定的安排</span></li>';
+    $('today-list').innerHTML = group(today, d0, '今天没有已排定的安排');
+    $('tomorrow-list').innerHTML = group(tomorrow, d1, '明天暂无安排');
+    if (!el.dataset.todoBound) {
+      el.dataset.todoBound = '1';
+      el.addEventListener('change', (ev) => {
+        const cb = ev.target; if (!cb.matches('input[type=checkbox][data-k]')) return;
+        let d = {}; try { d = JSON.parse(localStorage.getItem(DONE_KEY) || '{}'); } catch (_) {}
+        if (cb.checked) d[cb.dataset.k] = Date.now(); else delete d[cb.dataset.k];
+        // 只保留近 30 天的勾选记录
+        for (const [k, t] of Object.entries(d)) if (Date.now() - t > 30 * DAY) delete d[k];
+        localStorage.setItem(DONE_KEY, JSON.stringify(d));
+        renderToday();
+      });
+    }
     $('today-h').textContent = `今天 · ${md(now)} ${WEEKDAYS[p.wd]}`;
-    $('tomorrow-list').innerHTML = tomorrow.length ? tomorrow.map(e => li(e, d1)).join('') : '<li><span class="empty">明天暂无安排</span></li>';
     $('tomorrow-h').textContent = `明天 · ${md(d1)} ${WEEKDAYS[parts(new Date(d1.getTime() + 3600000)).wd]}`;
   }
 
