@@ -4,106 +4,95 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>王世赟（Wáng Shìyūn）· 汕头大学</title>
-<meta name="description" content="王世赟（汕头大学）个人主页：研究方向、进行中的项目、本学期课程与实时同步的公开日程。">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%276%27 fill=%27%232e6b66%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%2715%27 rx=%272%27 fill=%27%23f6f3ec%27/%3E%3Crect x=%277%27 y=%279%27 width=%2718%27 height=%275%27 fill=%27%23b5542b%27/%3E%3C/svg%3E">
+<meta name="description" content="王世赟，汕头大学教师。书院实践课《智慧格致》、AI 作品与校企合作的可能方式。">
 <link rel="stylesheet" href="./style.css?v=6">
 <link rel="stylesheet" href="./site.css?v=3">
+<style>
+.pub .lead{font-size:var(--text-base);color:var(--ink-2);line-height:1.8;margin:0 0 var(--space-4)}
+.pub .intro{padding:var(--space-8) 0 var(--space-6)}
+.pub .facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4);list-style:none;padding:0;margin:var(--space-5) 0 0}
+.pub .facts li{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:var(--space-4);font-size:var(--text-sm);color:var(--ink-2);line-height:1.7}
+.pub .facts b{display:block;color:var(--ink);margin-bottom:4px}
+.pub .tbd{color:#9a5b2b;background:#fbf1e6;border:1px dashed #d9b48f;border-radius:4px;padding:0 4px}
+.pub .tile p{font-size:var(--text-sm);line-height:1.75;color:var(--ink-2)}
+.pub .tile h3{margin:0 0 var(--space-2)}
+.pub .note{font-size:var(--text-xs);color:var(--ink-3);margin-top:var(--space-4)}
+.pub ol.steps{margin:0;padding-left:1.3em;color:var(--ink-2);font-size:var(--text-sm);line-height:1.9}
+@media(max-width:760px){.pub .facts,.pub .grid-3,.pub .grid-2,.pub .contact-grid{grid-template-columns:1fr!important}.navlinks{display:none}}
+</style>
 </head>
-<body class="site" data-page="home">
+<body class="site pub" data-page="home">
 <nav class="topnav"><div class="wrap">
   <a class="brand" href="index.html">王世赟<small>Wáng Shìyūn · 汕头大学</small></a>
   <div class="navlinks">
-    <a href="index.html">首页</a>
-    <a href="research.html">研究</a>
-    <a href="teaching.html">教学</a>
-    <a href="index.html#my-ai-works">AI 作品</a>
-    <a href="builders.html">AI 信源</a>
-    <a href="schedule.html">日程</a>
-    <a href="index.html#contact">联系</a>
+    <a href="#about">我在做什么</a><a href="#course">实践课</a><a href="#works">AI 作品</a><a href="#ideas">设想与尝试</a><a href="#cooperate">合作方式</a><a href="#contact">联系</a>
   </div>
 </div></nav>
 <main>
-<header class="hero wrap">
-  <div class="hero-grid">
-    <div>
-      <p class="tagline" data-site="tagline"></p>
-      <ul class="tags" id="area-tags"></ul>
-      <div class="cta">
-        <a class="btn" href="schedule.html">查看课表与行程</a>
-        <a class="btn secondary" href="research.html">研究与项目</a>
-        <a class="btn secondary" href="mailto:wangsy@stu.edu.cn">发邮件</a>
-      </div>
-    </div>
-    <aside class="today-card" id="today-card" aria-live="polite">
-      <div class="status-row"><span class="dot" id="today-dot"></span><span class="status-label" id="today-label">正在读取日历…</span></div>
-      <p class="status-detail" id="today-detail">&nbsp;</p>
-      <div class="day-cols">
-        <div><h3 id="today-h">今天</h3><ul class="today-list" id="today-list"></ul></div>
-        <div><h3 id="tomorrow-h">明天</h3><ul class="today-list" id="tomorrow-list"></ul></div>
-      </div>
-      <a class="more" href="schedule.html">完整的周 / 月视图与可预约时段 →</a>
-    </aside>
-  </div>
+<header class="intro wrap" id="about">
+  <p class="lead">汕头大学教师，开设书院实践课《智慧格致：AI 时代的超级个体与协同团队》，希望带学生走进企业、了解真实产业，并向企业推荐优秀学生。</p>
+  <ul class="facts">
+    <li><b>教学</b>讲授商务汉语精读、汉语读写、中级汉语听说等国际学生课程，以及面向全校本科生的书院实践课。</li>
+    <li><b>学生指导</b>指导本科生创新创业训练与毕业论文，其中一个项目围绕汕头澄海玩具产业带展开。</li>
+    <li><b>AI 实践</b>用 AI 协作开发课堂工具与互动网页，内容由本人审核后在课堂中使用。</li>
+  </ul>
 </header>
 
-<section class="block" id="my-ai-works"><div class="wrap">
+<section class="block" id="course"><div class="wrap">
+  <div class="block-head"><h2>书院实践课：智慧格致</h2><a class="more" href="https://wangshiyun404.github.io/ai-super-individual-course/">课程资源清单 →</a></div>
+  <div class="grid grid-2">
+    <div class="tile"><h3>课程是什么</h3><p>《智慧格致：AI 时代的超级个体与协同团队》，书院实践课，汕头大学东海岸校区，面向全校本科生。学生学习使用 AI 工具完成真实项目，讨论个人能力边界、团队协作方式和伦理边界的变化。</p><p>本学期选课人数：<span class="tbd">【待补充：人数 / 分组数】</span></p></div>
+    <div class="tile"><h3>学生在做什么</h3><p>以小组为单位完成项目，经过多轮汇报，由同学互评选出优秀作品。</p><p><span class="tbd">【待补充：本学期项目主题与汇报安排】</span></p></div>
+  </div>
+  <h3 class="entry-group">学生作品</h3>
+  <div class="grid grid-3">
+    <div class="tile"><h3><span class="tbd">【待补充：作品名称】</span></h3><p><span class="tbd">【待补充：小组、要解决的问题、用到的 AI 工具、成果链接】</span></p></div>
+    <div class="tile"><h3><span class="tbd">【待补充：作品名称】</span></h3><p><span class="tbd">【待补充】</span></p></div>
+    <div class="tile"><h3><span class="tbd">【待补充：作品名称】</span></h3><p><span class="tbd">【待补充】</span></p></div>
+  </div>
+  <p class="note">学生姓名与作品在征得本人同意后公开。</p>
+</div></section>
+
+<section class="block" id="works"><div class="wrap">
   <div class="block-head"><h2>我的 AI 作品</h2></div>
-  <div class="grid grid-3" id="entry-works"></div>
+  <p class="lead">与 AI 协作开发、经本人审核后用于教学的网页工具，均可直接打开使用。</p>
+  <div class="grid grid-3" id="pub-works"></div>
 </div></section>
 
-<section class="block"><div class="wrap">
-  <div class="block-head"><h2>关于我</h2></div>
-  <div class="prose" id="about"></div>
-</div></section>
-
-<section class="block"><div class="wrap">
-  <div class="block-head"><h2>研究方向</h2><a class="more" href="research.html">全部研究与项目 →</a></div>
-  <div class="grid grid-4" id="home-areas"></div>
-</div></section>
-
-<section class="block"><div class="wrap">
-  <div class="block-head"><h2>进行中的项目</h2><a class="more" href="research.html#projects">更多 →</a></div>
-  <div class="grid grid-3" id="home-projects"></div>
-</div></section>
-
-<section class="block"><div class="wrap">
-  <div class="block-head"><h2>AI 信源名单</h2><a class="more" href="builders.html">完整名单与筛选 →</a></div>
-  <div class="home-builders">
-    <a class="tile link" href="builders.html">
-      <h3>Follow Builders, Not Influencers · 微信版</h3>
-      <p>仿张咋啦 follow-builders 的思路，整理微信公众号与视频号里亲手做模型、做产品、做研究的 AI builder，以及所在团队的官方号和创业、产品视角的深度号；资讯聚合号只作对照。</p>
-      <ul class="stat-strip" id="home-builder-stats"></ul>
-      <span class="arrow">查看全部 →</span>
-    </a>
-    <div class="tile"><h3>分类一览</h3><ul class="mini-list" id="home-builder-groups"></ul></div>
+<section class="block" id="ideas"><div class="wrap">
+  <div class="block-head"><h2>设想与尝试</h2></div>
+  <div class="grid grid-3">
+    <div class="tile"><h3>澄海玩具产业带 × 学生项目（进行中）</h3><p>指导大学生创新创业训练项目团队，探索两条线：教育类玩具的供应链与电商化运营验证；“汕潮玩”潮汕文化潮玩的电商赋能计划。</p></div>
+    <div class="tile"><h3>带学生走进企业（尝试中）</h3><p>组织学生到企业参访，了解市场、玩具制造业和 AI 应用的真实情况，回到课堂做调研汇报。<span class="tbd">【待补充：已参访企业（需企业同意后公开）】</span></p></div>
+    <div class="tile"><h3>AI 进入课堂（进行中）</h3><p>以商务汉语精读等课程为试点，搭建教学工作台和课堂互动页面；AI 负责起草与开发，教师负责判断与审核。</p></div>
   </div>
 </div></section>
 
-<section class="block"><div class="wrap">
-  <div class="block-head"><h2>本学期课程</h2><a class="more" href="teaching.html">课程详情 →</a></div>
-  <div class="grid grid-4" id="home-courses"></div>
+<section class="block" id="cooperate"><div class="wrap">
+  <div class="block-head"><h2>可以与贵公司合作的方式</h2></div>
+  <p class="lead">以下是我们愿意尝试的方向，具体内容可根据企业需要商量。</p>
+  <div class="grid grid-2">
+    <div class="tile"><h3>企业参访与交流</h3><p>带学生小组到企业参观、听一线人员讲解，学生事后提交观察报告，可供企业参考。</p></div>
+    <div class="tile"><h3>真实问题的学生项目</h3><p>企业提出一个具体问题（如市场调研、产品文案、跨境沟通、流程中可用 AI 的环节），学生小组在课程中尝试给出方案，由教师把关。</p></div>
+    <div class="tile"><h3>优秀学生推荐与实习</h3><p>向企业推荐在课程项目中表现突出的学生，包括熟悉中文和本国市场的国际学生，可洽谈实习或兼职。</p></div>
+    <div class="tile"><h3>AI 应用的探索交流</h3><p>分享我们在教学中使用 AI 工具的做法，与企业一起探讨适合自身业务的 AI 用法。</p></div>
+  </div>
+  <p class="lead" style="margin-top:var(--space-5)">一般流程：</p>
+  <ol class="steps"><li>邮件或微信沟通需求</li><li>商定参访时间或项目题目</li><li>学生参访 / 完成项目，向企业汇报</li><li>双方评估是否继续合作</li></ol>
 </div></section>
 
 <section class="block" id="contact"><div class="wrap">
   <div class="block-head"><h2>联系方式</h2></div>
   <div class="contact-grid">
-    <div class="tile"><h3>邮箱</h3><p><a data-site="email" href="mailto:wangsy@stu.edu.cn">wangsy@stu.edu.cn</a></p><h3 style="margin-top:var(--space-3)">手机 / 微信</h3><p><a href="tel:18301501736">183 0150 1736</a></p></div>
+    <div class="tile"><h3>邮箱</h3><p><a href="mailto:wangsy@stu.edu.cn">wangsy@stu.edu.cn</a></p></div>
+    <div class="tile"><h3>手机 / 微信</h3><p><a href="tel:18301501736">183 0150 1736</a></p></div>
     <div class="tile"><h3>办公地点</h3><p>汕头大学东海岸校区<br>行政楼 C502</p></div>
-    <div class="tile"><h3>可预约时间</h3><a class="more" href="schedule.html#find-me">查看实时空闲时段 →</a></div>
   </div>
 </div></section>
 </main>
-
-<footer class="site-foot"><div class="wrap">
-  <span>© <span id="year"></span> 王世赟 · 汕头大学 · 日程由个人日历自动同步（北京时间）</span>
-  <span><a href="research.html">研究</a><a href="teaching.html">教学</a><a href="builders.html">AI 信源</a><a href="schedule.html">日程</a><a href="mailto:wangsy@stu.edu.cn">邮件</a></span>
-</div></footer>
-<script src="./content.js?v=entries1"></script>
-<script src="./builders.js?v=3"></script>
-<script src="./calendar-model.js?v=4"></script>
-<script src="./site.js?v=4"></script>
-<script>(()=>{const B=window.BUILDERS;if(!B)return;const all=B.groups.flatMap(g=>g.items);const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-document.getElementById('home-builder-stats').innerHTML=[[all.length,'个账号'],[all.filter(i=>i.kind==='builder').length,'一线建造者'],[B.groups.length,'个分类']].map(([v,l])=>`<li><strong>${v}</strong><span>${l}</span></li>`).join('');
-document.getElementById('home-builder-groups').innerHTML=B.groups.map(g=>`<li><a href="builders.html#g-${esc(g.id)}"><b>${esc(g.title)}</b> · ${g.items.length}</a></li>`).join('');})();</script>
+<footer class="site-foot"><div class="wrap"><span>© 2026 王世赟 · 汕头大学</span><span><a href="mailto:wangsy@stu.edu.cn">邮件</a></span></div></footer>
+<script src="./content.js?v=pub1"></script>
+<script>(()=>{const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+document.getElementById('pub-works').innerHTML=(window.SITE.aiWorks||[]).map(w=>`<a class="tile link" href="${esc(w.url)}"><h3>${esc(w.title)}</h3><p>${esc(w.desc)}</p><span class="arrow">打开 →</span></a>`).join('');})();</script>
 </body>
 </html>
