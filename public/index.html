@@ -9,16 +9,16 @@
 <link rel="stylesheet" href="./site.css?v=3">
 <style>
 .pub .lead{font-size:var(--text-base);color:var(--ink-2);line-height:1.8;margin:0 0 var(--space-4)}
-.pub .intro{padding:var(--space-8) 0 var(--space-6)}
-.pub .facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4);list-style:none;padding:0;margin:var(--space-5) 0 0}
-.pub .facts li{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:var(--space-4);font-size:var(--text-sm);color:var(--ink-2);line-height:1.7}
-.pub .facts b{display:block;color:var(--ink);margin-bottom:4px}
+.pub .pub-intro{padding:var(--space-8) 0 var(--space-6)}
+.pub .pub-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4);list-style:none;padding:0;margin:var(--space-5) 0 0}
+.pub .pub-facts li{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:var(--space-4);font-size:var(--text-sm);color:var(--ink-2);line-height:1.7}
+.pub .pub-facts b{display:block;color:var(--ink);margin-bottom:4px}
 .pub .tbd{color:#9a5b2b;background:#fbf1e6;border:1px dashed #d9b48f;border-radius:4px;padding:0 4px}
 .pub .tile p{font-size:var(--text-sm);line-height:1.75;color:var(--ink-2)}
 .pub .tile h3{margin:0 0 var(--space-2)}
 .pub .note{font-size:var(--text-xs);color:var(--ink-3);margin-top:var(--space-4)}
 .pub ol.steps{margin:0;padding-left:1.3em;color:var(--ink-2);font-size:var(--text-sm);line-height:1.9}
-@media(max-width:760px){.pub .facts,.pub .grid-3,.pub .grid-2,.pub .contact-grid{grid-template-columns:1fr!important}.navlinks{display:none}}
+@media(max-width:760px){.pub .pub-facts,.pub .grid-3,.pub .grid-2,.pub .contact-grid{grid-template-columns:1fr!important}.navlinks{display:none}}
 </style>
 </head>
 <body class="site pub" data-page="home">
@@ -29,9 +29,9 @@
   </div>
 </div></nav>
 <main>
-<section class="intro" id="about"><div class="wrap">
+<section class="pub-intro" id="about"><div class="wrap">
   <p class="lead">汕头大学教师，开设书院实践课《智慧格致：AI 时代的超级个体与协同团队》，希望带学生走进企业、了解真实产业，并向企业推荐优秀学生。</p>
-  <ul class="facts">
+  <ul class="pub-facts">
     <li><b>教学</b>讲授商务汉语精读、汉语读写、中级汉语听说等国际学生课程，以及面向全校本科生的书院实践课。</li>
     <li><b>学生指导</b>指导本科生创新创业训练与毕业论文，其中一个项目围绕汕头澄海玩具产业带展开。</li>
     <li><b>AI 实践</b>用 AI 协作开发课堂工具与互动网页，内容由本人审核后在课堂中使用。</li>
