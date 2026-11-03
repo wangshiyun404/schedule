@@ -123,8 +123,9 @@
       if (e.location) c.locations.add(e.location);
       map.set(e.title, c);
     }
-    return [...map.values()].filter(c => c.inWindow && c.count >= 2).map(c => ({ ...c, ss: [...c.sessions.values()].sort((a, b) => a.sort - b.sort) }))
+    const __r = [...map.values()].filter(c => c.inWindow && c.count >= 2).map(c => ({ ...c, ss: [...c.sessions.values()].sort((a, b) => a.sort - b.sort) }))
       .sort((a, b) => (a.ss[0]?.sort ?? 1e9) - (b.ss[0]?.sort ?? 1e9));
+    return __r.sort((a, b) => (/智慧格致/.test(b.title) ? 1 : 0) - (/智慧格致/.test(a.title) ? 1 : 0));
   }
 
   // ---- 研究页 ----
@@ -147,7 +148,7 @@
   // ---- 教学页 ----
   async function renderTeaching() {
     await loadSchedule();
-    const live = currentCourses().sort((a, b) => (/智慧格致/.test(b.title) ? 1 : 0) - (/智慧格致/.test(a.title) ? 1 : 0));
+    const live = currentCourses();
     const meta = new Map((S.courses || []).map(c => [c.title, c]));
     const cur = $('courses-now'), past = $('courses-past');
     const tile = (title, m, lv, isPast) => `<article class="tile course-tile${isPast ? ' past' : ''}">
