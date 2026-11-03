@@ -18,7 +18,7 @@ body.site main { flex: 1; }
 .hero-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-10); align-items: start; }
 .hero .eyebrow { margin-bottom: var(--space-3); }
 .hero .name { font-size: clamp(2.4rem, 1.6rem + 3vw, 4rem); }
-.tagline { margin: var(--space-5) 0 var(--space-5); max-width: 34em; font-size: var(--text-base); color: var(--ink-2); line-height: 1.8; }
+.tagline { margin: var(--space-5) 0 var(--space-5); max-width: none; font-size: var(--text-base); color: var(--ink-2); line-height: 1.8; }
 .tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0 0 var(--space-6); padding: 0; list-style: none; }
 .tags li { font-size: var(--text-xs); padding: 3px 10px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--ink-2); }
 .cta { display: flex; gap: var(--space-3); flex-wrap: wrap; }
