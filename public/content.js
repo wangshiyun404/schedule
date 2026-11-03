@@ -82,15 +82,15 @@ window.SITE = {
   // ---------- 教学：课程说明（按课程名匹配日历里的课程，不在日历里的也会显示） ----------
   courses: [
     { title: '商务汉语精读（A）', en: 'Business Chinese Intensive Reading A', audience: '汉语国际教育专业本科生 / 国际学生',
-      desc: '以《新商务汉语精读教程（上册）》为主线，围绕求职面试、商务沟通等真实情境展开精读、词汇与语言点学习，配合课堂模拟与写作任务。' },
+      desc: '以《新商务汉语精读教程（上册）》为主线，围绕求职面试、商务沟通等真实情境展开精读、词汇与语言点学习，配合课堂模拟与写作任务。', links: [{ title: '课程工作台', url: 'https://wangshiyun404.github.io/business-chinese-reading-a/', desc: '教材、课程安排、授课进度、随机抽问与画笔' }] },
     { title: '汉语读写（A）', en: 'Chinese Reading & Writing A', audience: '国际学生',
-      desc: '以篇章阅读与应用写作为核心，训练学术与日常场景中的中文读写能力。' },
+      desc: '以篇章阅读与应用写作为核心，训练学术与日常场景中的中文读写能力。', links: [{ title: '课程工作台', url: 'https://wangshiyun404.github.io/chinese-reading-writing-a/', desc: '课件动画、视频、授课进度、随机点名与画笔' }] },
     { title: '中级汉语听说（A）', en: 'Intermediate Chinese Listening & Speaking A', audience: '国际学生',
-      desc: '通过情境对话、任务型活动与口头报告，提升中级阶段的汉语听力理解与口语表达。' },
+      desc: '通过情境对话、任务型活动与口头报告，提升中级阶段的汉语听力理解与口语表达。', links: [{ title: '课程工作台', url: 'https://wangshiyun404.github.io/intermediate-chinese-listening-speaking-a/', desc: 'SIE2141B 教学工作台' }] },
     { title: '智慧格致：AI时代的超级个体与协同团队', en: 'AI-era Super Individuals & Collaborative Teams', audience: '全校本科生（通识）',
-      desc: '跨学科通识课。学习使用 AI 工具完成真实项目，讨论个体能力边界、团队协作方式与伦理边界的变化。' },
+      desc: '跨学科通识课。学习使用 AI 工具完成真实项目，讨论个体能力边界、团队协作方式与伦理边界的变化。', links: [{ title: '书院实践课备课资源清单', url: 'https://wangshiyun404.github.io/ai-super-individual-course/' }] },
     { title: '知识、大学与发展', en: 'Knowledge, University and Development', audience: '全校本科生（通识）',
-      desc: '讨论大学的知识生产方式、课程结构的国际比较，以及高等教育与个人、社会发展的关系。', past: true }
+      desc: '讨论大学的知识生产方式、课程结构的国际比较，以及高等教育与个人、社会发展的关系。', links: [{ title: '第11讲 课件', url: 'https://wangshiyun404.github.io/lecture-11/', desc: '全球化与信息化时代的大学' }, { title: '第12讲 课件', url: 'https://wangshiyun404.github.io/lecture-12/', desc: '中国大学发展的反思与前瞻' }, { title: '第13讲 课件', url: 'https://wangshiyun404.github.io/lecture-13/', desc: '未来大学的形态与知识使命（一）' }, { title: '第14讲 课件', url: 'https://wangshiyun404.github.io/lecture-14/', desc: '未来大学的形态与知识使命（二）' }, { title: '第15讲 课件', url: 'https://wangshiyun404.github.io/lecture-15/', desc: '未来大学的形态与知识使命（三）' }, { title: '第11&12讲 · 知识闯关', url: 'https://wangshiyun404.github.io/quiz-11-12/', desc: '配套小游戏' }, { title: '第13周 · 未来大学雷达站', url: 'https://wangshiyun404.github.io/quiz-13/', desc: '配套小游戏' }, { title: '第14周 · 大学城邦创新局', url: 'https://wangshiyun404.github.io/quiz-14/', desc: '配套小游戏' }, { title: '第15周 · 知识拼图实验室', url: 'https://wangshiyun404.github.io/quiz-15/', desc: '配套小游戏' }], past: true }
   ],
 
   // ---------- 页脚 / 外部链接（可选） ----------
@@ -100,30 +100,7 @@ window.SITE = {
   ]
 };
 
-// 首页入口：我的课程与课程资料、我的 AI 作品（说明取自各仓库描述或页面标题）
-window.SITE.courseEntries = [
-  { group: '国际学院 · 本学期课程工作台', items: [
-      { title: '大一《汉语读写A》', url: 'https://wangshiyun404.github.io/chinese-reading-writing-a/', desc: '汉语读写 A 课堂工作台：课件动画、视频、授课进度、随机点名与画笔' },
-      { title: '大二《中级汉语听说A》', url: 'https://wangshiyun404.github.io/intermediate-chinese-listening-speaking-a/', desc: '中级汉语听说A（SIE2141B）教学工作台' },
-      { title: '大三《商务汉语精读A》', url: 'https://wangshiyun404.github.io/business-chinese-reading-a/', desc: '商务汉语精读 A 教学工作台：教材、课程安排、授课进度、随机抽问与画笔' },
-  ] },
-  { group: '《AI 时代的超级个体与协同团队》书院实践课', items: [
-      { title: '备课资源清单', url: 'https://wangshiyun404.github.io/ai-super-individual-course/', desc: '《AI 时代的超级个体与协同团队》书院实践课 · 备课资源清单' },
-  ] },
-  { group: '《知识、大学与发展》课件', items: [
-      { title: '第11讲', url: 'https://wangshiyun404.github.io/lecture-11/', desc: '全球化与信息化时代的大学' },
-      { title: '第12讲', url: 'https://wangshiyun404.github.io/lecture-12/', desc: '中国大学发展的反思与前瞻' },
-      { title: '第13讲', url: 'https://wangshiyun404.github.io/lecture-13/', desc: '未来大学的形态与知识使命（一）' },
-      { title: '第14讲', url: 'https://wangshiyun404.github.io/lecture-14/', desc: '未来大学的形态与知识使命（二）：大学与城市、产业的融合发展' },
-      { title: '第15讲', url: 'https://wangshiyun404.github.io/lecture-15/', desc: '未来大学的形态与知识使命（三）：跨学科研究与知识生产模式变革' },
-  ] },
-  { group: '《知识、大学与发展》配套小游戏', items: [
-      { title: '第11&12讲 · 知识闯关', url: 'https://wangshiyun404.github.io/quiz-11-12/', desc: '知识、大学与发展' },
-      { title: '第13周 · 未来大学雷达站', url: 'https://wangshiyun404.github.io/quiz-13/', desc: '预热身 + 课后复习' },
-      { title: '第14周 · 大学城邦创新局', url: 'https://wangshiyun404.github.io/quiz-14/', desc: '预热身 + 课后复习' },
-      { title: '第15周 · 知识拼图实验室', url: 'https://wangshiyun404.github.io/quiz-15/', desc: '预热身 + 课后复习' },
-  ] }
-];
+// 首页入口：我的 AI 作品（说明取自各仓库描述或页面标题）
 window.SITE.aiWorks = [
       { title: '拼音歌词 101 首', url: 'https://wangshiyun404.github.io/pinyin-geci/', desc: '带拼音、简谱和俄语/土库曼语翻译的华语歌曲跟唱网页工具，供汉语课堂使用' },
       { title: '织毯学土库曼语', url: 'https://wangshiyun404.github.io/turkmen-haly/', desc: '零基础土库曼语学习网页游戏：从 30 个字母到日常会话' },

@@ -155,6 +155,7 @@
       ${m?.audience ? `<span class="aud">${esc(m.audience)}</span>` : ''}
       ${lv?.ss?.length ? `<table class="when">${lv.ss.map(x => `<tr><th>${WEEKDAYS[x.wd]}</th><td>${x.t}</td></tr>`).join('')}</table>` : ''}
       ${m?.desc ? `<p>${esc(m.desc)}</p>` : ''}
+      ${m?.links?.length ? `<ul class="course-links">${m.links.map(l => `<li><a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.title)}</a>${l.desc ? `<small>${esc(l.desc)}</small>` : ''}</li>`).join('')}</ul>` : ''}
       ${lv ? `<span class="loc">${esc([...lv.locations].join(' / '))}${lv.locations.size ? ' · ' : ''}共 ${lv.count} 次 · 至 ${md(lv.last)}</span>` : ''}
     </article>`;
     const seen = new Set();

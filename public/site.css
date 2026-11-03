@@ -222,3 +222,8 @@ html.sched .masthead .jump { display: none; }
 
 .day-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
 @media (max-width: 760px) { .day-cols { grid-template-columns: 1fr; } }
+
+.course-links { list-style: none; margin: var(--space-2) 0 var(--space-3); padding: 0; font-size: var(--text-sm); }
+.course-links li { padding: 4px 0; border-top: 1px dashed var(--line); }
+.course-links li:first-child { border-top: 0; }
+.course-links small { display: block; color: var(--ink-3); font-size: var(--text-xs); }
