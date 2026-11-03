@@ -15,7 +15,7 @@ body.site main { flex: 1; }
 
 /* ---- 首页 Hero ---- */
 .hero { padding: var(--space-12) 0 var(--space-8); }
-.hero-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: var(--space-10); align-items: start; }
+.hero-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-10); align-items: start; }
 .hero .eyebrow { margin-bottom: var(--space-3); }
 .hero .name { font-size: clamp(2.4rem, 1.6rem + 3vw, 4rem); }
 .tagline { margin: var(--space-5) 0 var(--space-5); max-width: 34em; font-size: var(--text-base); color: var(--ink-2); line-height: 1.8; }
@@ -219,3 +219,6 @@ html.sched .masthead .jump { display: none; }
 }
 .mini-list a { color: inherit; text-decoration: none; display: block; }
 .mini-list a:hover b { color: var(--accent); }
+
+.day-cols { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); align-items: start; }
+@media (max-width: 760px) { .day-cols { grid-template-columns: 1fr; } }
