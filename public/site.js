@@ -115,7 +115,7 @@
     if (!schedule) return [];
     const from = mondayOf(new Date()), to = new Date(from.getTime() + 28 * DAY), map = new Map();
     for (const e of schedule.events) {
-      if (e.kind !== 'course' || e.allDay || e.status === 'CANCELLED') continue;
+      if (e.kind !== 'course' || e.allDay || e.status === 'CANCELLED' || /组会|复习课/.test(e.title || '')) continue;
       const s = new Date(e.start), en = new Date(e.end);
       const c = map.get(e.title) || { title: e.title, sessions: new Map(), locations: new Set(), count: 0, last: s };
       c.count++; if (s > c.last) c.last = s;

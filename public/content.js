@@ -90,11 +90,7 @@ window.SITE = {
     { title: '智慧格致：AI时代的超级个体与协同团队', en: 'AI-era Super Individuals & Collaborative Teams', audience: '全校本科生（通识）',
       desc: '跨学科通识课。学习使用 AI 工具完成真实项目，讨论个体能力边界、团队协作方式与伦理边界的变化。' },
     { title: '知识、大学与发展', en: 'Knowledge, University and Development', audience: '全校本科生（通识）',
-      desc: '讨论大学的知识生产方式、课程结构的国际比较，以及高等教育与个人、社会发展的关系。', past: true },
-    { title: '高教所研究生组会', en: 'Graduate Research Seminar', audience: '研究生',
-      desc: '每周研究进展汇报与文献讨论。' },
-    { title: '国际学院本科毕业论文组会', en: 'Undergraduate Thesis Seminar', audience: '国际学院毕业班',
-      desc: '选题、研究设计、数据与写作的阶段性指导。' }
+      desc: '讨论大学的知识生产方式、课程结构的国际比较，以及高等教育与个人、社会发展的关系。', past: true }
   ],
 
   // ---------- 页脚 / 外部链接（可选） ----------
