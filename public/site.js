@@ -147,7 +147,7 @@
   // ---- 教学页 ----
   async function renderTeaching() {
     await loadSchedule();
-    const live = currentCourses();
+    const live = currentCourses().sort((a, b) => (/智慧格致/.test(b.title) ? 1 : 0) - (/智慧格致/.test(a.title) ? 1 : 0));
     const meta = new Map((S.courses || []).map(c => [c.title, c]));
     const cur = $('courses-now'), past = $('courses-past');
     const tile = (title, m, lv, isPast) => `<article class="tile course-tile${isPast ? ' past' : ''}">
