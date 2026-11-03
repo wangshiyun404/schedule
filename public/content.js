@@ -6,7 +6,7 @@ window.SITE = {
   // ---------- 基本信息 ----------
   owner: {
     name: '王世赟',
-    nameEn: 'Wang Shiyun',
+    nameEn: 'Wáng Shǐyūn',
     title: '汕头大学 · 教师',
     affiliation: '汕头大学',
     // 首页一句话简介
