@@ -102,6 +102,7 @@ window.SITE = {
 
 // 首页入口：我的 AI 作品（说明取自各仓库描述或页面标题）
 window.SITE.aiWorks = [
+      { title: '以AI之问，叩产业之门', url: './ai-works/ai-enterprise-visit-20261107/', desc: '汕头大学《AI时代的超级个体与协同团队》企业行：走进五家企业，重温现场对话、滑动相册与原声视频。' },
       { title: '拼音歌词 101 首', url: 'https://wangshiyun404.github.io/pinyin-geci/', desc: '带拼音、简谱和俄语/土库曼语翻译的华语歌曲跟唱网页工具，供汉语课堂使用' },
       { title: '织毯学土库曼语', url: 'https://wangshiyun404.github.io/turkmen-haly/', desc: '零基础土库曼语学习网页游戏：从 30 个字母到日常会话' },
       { title: '冲工夫茶学潮汕话', url: 'https://wangshiyun404.github.io/chaoshan-gongfu-tea/', desc: '冲工夫茶学潮汕话' },
