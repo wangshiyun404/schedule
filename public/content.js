@@ -102,6 +102,7 @@ window.SITE = {
 
 // 首页入口：我的 AI 作品（说明取自各仓库描述或页面标题）
 window.SITE.aiWorks = [
+  { title: '生肖 × 星座 · Zodiac Explorer', url: './ai-works/zodiac-explorer/', desc: '中英双语生肖星座游戏：生日查询、40 位名人对比、汉语学习闯关、双人配对与分享卡。配对与运势仅供娱乐。' },
   { title: '团队项目六站路线图', url: './ai-works/team-project-roadmap.html', desc: '跟着小兔逐站开启团队项目：定题立项、比较方案、制作原型、反馈迭代、整理交付与展示答辩。' },
       { title: '以AI之问，叩产业之门', url: './ai-works/ai-enterprise-visit-20261107/', desc: '汕头大学《AI时代的超级个体与协同团队》企业行：走进五家企业，重温现场对话、滑动相册与原声视频。' },
       { title: '拼音歌词 101 首', url: 'https://wangshiyun404.github.io/pinyin-geci/', desc: '带拼音、简谱和俄语/土库曼语翻译的华语歌曲跟唱网页工具，供汉语课堂使用' },
