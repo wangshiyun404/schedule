@@ -1,6 +1,6 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>生肖 × 星座 · Zodiac Explorer</title></head><body><p id="loading">正在载入生肖 × 星座… Loading Zodiac Explorer…</p><script>
 fetch('./game.html').then(response=>{if(!response.ok)throw new Error('Game unavailable');return response.text();}).then(html=>{
- const enhanced=html.replace('</head>','<link rel="stylesheet" href="./pinyin.css"></head>').replace('</body>','<script src="./pinyin.js"><'+'/script></body>');
+ const enhanced=html.replace('</head>','<link rel="stylesheet" href="./pinyin.css?v=5b99f2e"></head>').replace('</body>','<script src="./pinyin.js?v=9b51241"><'+'/script></body>');
  document.open();document.write(enhanced);document.close();
 }).catch(()=>{document.getElementById('loading').innerHTML='暂时无法加载。请刷新页面，或 <a href="./game.html">打开原版游戏 / Open original game</a>。';});
 </script></body></html>
