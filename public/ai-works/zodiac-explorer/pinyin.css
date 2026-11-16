@@ -1,0 +1,36 @@
+
+.han-ruby{ruby-position:over;ruby-align:center;white-space:normal;letter-spacing:0}
+.han-ruby rt{font-family:var(--sans);font-size:clamp(9px,.48em,20px);font-weight:400;line-height:1.1;letter-spacing:0;text-transform:none;color:#766447;user-select:none}
+.no-pinyin .han-ruby rt{display:none}
+.ruby-enabled .pinyin{display:none!important}
+.ruby-enabled p,.ruby-enabled h2,.ruby-enabled h3,.ruby-enabled .boundary-note,.ruby-enabled .source-list,.ruby-enabled .person-bio{line-height:2.15}
+.ruby-enabled .hero h1{line-height:1.8}
+.ruby-enabled .nav-link{padding-top:9px;min-height:58px}
+.ruby-enabled .hero-description{line-height:2.5}
+.ruby-enabled .field-label{line-height:2.3}
+.ruby-enabled .precise-toggle{line-height:2.3;font-size:12px}
+.ruby-enabled .primary-button,.ruby-enabled .secondary-button,.ruby-enabled .chip{line-height:2;flex-wrap:wrap}
+.ruby-enabled .primary-button .han-ruby rt{color:inherit;opacity:.88}
+.ruby-enabled .wheel-animal .mini-name{bottom:6%;letter-spacing:0}
+.ruby-enabled .wheel-animal .animal-art{width:57%;height:60%;margin-top:-16px}
+.ruby-enabled .wheel-animal .han-ruby rt{font-size:9px}
+.ruby-enabled .brand-seal .han-ruby rt{color:#fff3d4;font-size:9px}
+.ruby-enabled .brand-seal{height:53px}
+.ruby-enabled .result-center strong{font-size:22px;line-height:2.15}
+.ruby-enabled .personal-tags,.ruby-enabled .person-signs{line-height:2.4}
+.ruby-enabled .star-card h3{line-height:2.5;margin-top:12px}
+.ruby-enabled .star-word strong{line-height:2.5}
+.ruby-enabled .element-tag{line-height:2.3}
+.ruby-enabled .people-modal-head{align-items:center}
+.ruby-enabled .animal-card strong{margin-top:12px;line-height:1.8}
+.ruby-enabled .daily-card h2{line-height:2.4}
+.ruby-enabled .daily-metrics>div{line-height:2.5}
+.ruby-enabled .section-heading{gap:18px;flex-wrap:wrap}
+.ruby-enabled .site-footer{line-height:2.3;flex-wrap:wrap}
+.ruby-enabled .quiz-options{gap:17px}
+.ruby-enabled .quiz-option{min-height:88px}
+.ruby-enabled .toast{line-height:2.3;max-width:min(650px,calc(100% - 30px))}
+.no-pinyin .hero h1{line-height:1.25}
+@media(max-width:800px){.ruby-enabled .site-header,.ruby-enabled .conversation,.ruby-enabled .people-search{flex-wrap:wrap}.ruby-enabled .hero{gap:30px}.ruby-enabled .people-toolbar{gap:18px}}
+@media(max-width:590px){.ruby-enabled .hero h1{font-size:42px;line-height:1.9}.ruby-enabled .hero-description{font-size:13px;text-align:left}.ruby-enabled .nav-link{font-size:12px}.ruby-enabled .header-actions{gap:12px}.ruby-enabled .wheel-topline{font-size:11px;flex-wrap:wrap;line-height:2.3}.ruby-enabled .wheel-caption{line-height:2.4}.ruby-enabled .result-title h2{font-size:25px}.ruby-enabled .people-modal-head{gap:14px}.ruby-enabled .people-modal-head h2{font-size:23px}.ruby-enabled .people-modal-head img{width:94px;height:125px}.ruby-enabled .people-search input{min-width:0}.ruby-enabled .daily-levels{gap:15px;flex-wrap:wrap}.ruby-enabled .compare-block{overflow-x:auto}.ruby-enabled .hero .birth-card{padding:22px 18px}}
+
