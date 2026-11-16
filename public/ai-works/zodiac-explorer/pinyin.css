@@ -34,3 +34,8 @@
 @media(max-width:800px){.ruby-enabled .site-header,.ruby-enabled .conversation,.ruby-enabled .people-search{flex-wrap:wrap}.ruby-enabled .hero{gap:30px}.ruby-enabled .people-toolbar{gap:18px}}
 @media(max-width:590px){.ruby-enabled .hero h1{font-size:42px;line-height:1.9}.ruby-enabled .hero-description{font-size:13px;text-align:left}.ruby-enabled .nav-link{font-size:12px}.ruby-enabled .header-actions{gap:12px}.ruby-enabled .wheel-topline{font-size:11px;flex-wrap:wrap;line-height:2.3}.ruby-enabled .wheel-caption{line-height:2.4}.ruby-enabled .result-title h2{font-size:25px}.ruby-enabled .people-modal-head{gap:14px}.ruby-enabled .people-modal-head h2{font-size:23px}.ruby-enabled .people-modal-head img{width:94px;height:125px}.ruby-enabled .people-search input{min-width:0}.ruby-enabled .daily-levels{gap:15px;flex-wrap:wrap}.ruby-enabled .compare-block{overflow-x:auto}.ruby-enabled .hero .birth-card{padding:22px 18px}}
 
+
+/* Keep sentence ruby on one line instead of separate flex rows. */
+.ruby-enabled .conversation-line{display:block;line-height:2.4}
+.ruby-enabled .conversation-line small{display:block;line-height:1.6;margin-top:8px}
+.han-ruby rt{padding-inline:1px}
