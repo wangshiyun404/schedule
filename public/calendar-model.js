@@ -65,8 +65,13 @@
     };
     return { height: offsets[offsets.length - 1], position };
   }
+  // This reminder has no confirmed arrival time; its end is only a calendar placeholder.
+  function departureOnly(e) {
+    return e.id === 'CF3F7D7E-C1A4-4A74-9EBD-7DD8CFC35B67' && e.start === '2026-11-17T14:20:00.000Z';
+  }
   function dayTime(e, d) {
     if (e.allDay) return '全天';
+    if (departureOnly(e)) return `${time(e.start)}发车`;
     const a = day(d), b = add(a, 1), start = new Date(e.start), end = new Date(e.end);
     const label = `${start < a ? '00:00' : time(start)}–${end >= b ? '24:00' : time(end)}`;
     return label + (start < a || end > b ? ' · 跨日' : '');
@@ -74,6 +79,7 @@
   function fullTime(e) {
     const a = new Date(e.start), b = new Date(e.end);
     if (e.allDay) { const last = new Date(+b - 1); return `${date(a)}${key(a) === key(last) ? '' : '—' + date(last)} · 全天`; }
+    if (departureOnly(e)) return `${date(a)} ${time(a)}发车`;
     return `${date(a)} ${time(a)}—${key(a) === key(b) ? '' : date(b) + ' '}${time(b)}`;
   }
   function conflicts(events) {
@@ -83,5 +89,5 @@
     }
     return result;
   }
-  return { DAY, TZ, weekdays, labels, parts, key, day, parseDay, add, time, date, monday, month, nextMonth, normalize, inRange, inDay, dailyAgenda, timelineAxis, dayTime, fullTime, conflicts };
+  return { DAY, TZ, weekdays, labels, parts, key, day, parseDay, add, time, date, monday, month, nextMonth, normalize, inRange, inDay, dailyAgenda, timelineAxis, departureOnly, dayTime, fullTime, conflicts };
 });

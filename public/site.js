@@ -63,7 +63,7 @@
     const now = new Date();
     if (!schedule) { $('today-label').textContent = '日程暂时无法读取'; return; }
     const evs = schedule.events.filter(e => e.status !== 'CANCELLED');
-    const current = evs.find(e => !e.allDay && new Date(e.start) <= now && new Date(e.end) > now);
+    const current = evs.find(e => !e.allDay && !(window.CalendarModel && window.CalendarModel.departureOnly(e)) && new Date(e.start) <= now && new Date(e.end) > now);
     const next = evs.find(e => !e.allDay && new Date(e.start) > now);
     const p = parts(now);
     const inOffice = (schedule.officeHours || []).some(oh => oh.days.includes(p.wd) && hm(oh.start) <= p.hh * 60 + p.mm && p.hh * 60 + p.mm < hm(oh.end));
@@ -80,7 +80,7 @@
     const keyOf = (e, day) => `${md(day)}|${e.uid || e.id || e.title}|${e.start}`;
     const li = (e, day) => {
       const start = new Date(e.start), end = new Date(e.end), nextDay = new Date(day.getTime() + DAY);
-      const label = e.allDay ? '全天' : `${start < day ? '00:00' : hhmm(start)}–${end >= nextDay ? '24:00' : hhmm(end)}${start < day || end > nextDay ? ' · 跨日' : ''}`;
+      const label = window.CalendarModel ? window.CalendarModel.dayTime(e, day) : e.allDay ? '全天' : `${start < day ? '00:00' : hhmm(start)}–${end >= nextDay ? '24:00' : hhmm(end)}${start < day || end > nextDay ? ' · 跨日' : ''}`;
       const k = keyOf(e, day), isDone = !!done[k];
       return `<li class="todo${isDone ? ' done' : ''}"><label><input type="checkbox" data-k="${esc(k)}"${isDone ? ' checked' : ''}><time>${label}</time><span class="n">${esc(e.title)}${e.location ? `<small>${esc(e.location)}</small>` : ''}</span></label></li>`;
     };

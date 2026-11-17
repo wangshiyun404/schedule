@@ -2,6 +2,12 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const M = require('../public/calendar-model');
 const e = (id, start, end, extra = {}) => ({ id, title: id, start, end, kind: 'event', ...extra });
+test('the departure-only shuttle hides its placeholder end in both time formats', () => {
+ const bus=e('CF3F7D7E-C1A4-4A74-9EBD-7DD8CFC35B67','2026-11-17T14:20:00.000Z','2026-11-17T14:30:00.000Z');
+ assert.equal(M.dayTime(bus,M.parseDay('2026-11-17')), '22:20发车');
+ assert.equal(M.fullTime(bus), '11月17日 22:20发车');
+ assert.equal(M.dayTime({...bus,id:'another'},M.parseDay('2026-11-17')), '22:20–22:30');
+});
 test('Beijing dates are independent of the viewer timezone', () => {
  assert.equal(M.key('2026-10-25T16:30:00Z'), '2026-10-26');
  assert.equal(M.key(M.monday('2026-10-25T16:30:00Z')), '2026-10-26');
