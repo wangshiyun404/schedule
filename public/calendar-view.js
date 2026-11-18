@@ -138,10 +138,11 @@
     const notice = $('calendar-notice');
     const sync = publicationState(snapshot);
     const outOfRange = b <= new Date(snapshot.range.from) || a >= new Date(snapshot.range.to);
-    const stateLabel = sync.status === 'failed' ? '抓取失败' : sync.status === 'empty' ? '已读取，没有公开事项' : sync.status === 'demo' ? '演示数据' : '读取成功';
+    const stateLabel = sync.status === 'failed' ? '抓取失败' : sync.status === 'empty' ? '已读取，没有公开事项' : sync.status === 'demo' ? '演示数据' : sync.status === 'retained' ? '较早的有效快照，不是刚刚同步' : '读取成功';
     notice.hidden = sync.status === 'ok' && !outOfRange;
     notice.textContent = sync.status === 'demo' ? '当前是演示数据，尚未接入公开日历。'
       : sync.status === 'failed' ? `${sync.failed.map(s => s.name).join('、') || '日历'}抓取失败。这次没有可用的新课表，空列表不代表这些日历里没有安排。`
+      : sync.status === 'retained' ? '这次没有换成新的课表。下面仍是较早一次成功读取的安排，数据时间没有被改成现在。'
       : sync.status === 'empty' ? '日历已成功读取，当前没有公开事项。'
       : outOfRange ? `当前同步范围为${M.date(snapshot.range.from)}至${M.date(snapshot.range.to)}，请选择范围内的日期。` : '';
     $('calendar-updated').textContent = `数据时间：${M.date(sync.dataAsOf)} ${M.time(sync.dataAsOf)} · ${stateLabel} · 可查看 ${M.key(snapshot.range.from)}—${M.key(snapshot.range.to)}`;
@@ -190,6 +191,11 @@
   function renderStatus() {
     if (!snapshot) return;
     const sync = publicationState(snapshot);
+    if (sync.status === 'retained') {
+      $('calendar-status').textContent = '显示较早的课表';
+      $('calendar-next').textContent = '不是刚刚同步的结果';
+      return;
+    }
     if (sync.status === 'failed') {
       $('calendar-status').textContent = '日历抓取失败';
       $('calendar-next').textContent = '空列表不代表没有安排';

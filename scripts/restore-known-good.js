@@ -5,7 +5,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
-const { decideRestore, isVerifiedGoodArtifact, KNOWN_GOOD_ARTIFACT } = require('../lib/schedule');
+const { decideRestore, isVerifiedGoodArtifact, markRetained, KNOWN_GOOD_ARTIFACT } = require('../lib/schedule');
 
 const LIVE_URL = 'https://wangshiyun404.github.io/schedule/data/schedule.json';
 
@@ -50,12 +50,14 @@ async function main() {
   const sourceFile = path.join(dir, 'data', 'schedule.json');
   const bytes = fs.readFileSync(sourceFile);
   const snapshot = JSON.parse(bytes.toString('utf8'));
-  if (!isVerifiedGoodArtifact(snapshot)) throw new Error('产物不是已核对的 10:08 课表，未发布');
+  const retained = markRetained(snapshot);
   const dest = path.join(__dirname, '..', 'public', 'data', 'schedule.json');
   fs.mkdirSync(path.dirname(dest), { recursive: true });
-  fs.writeFileSync(dest, bytes);
+  fs.writeFileSync(dest, JSON.stringify(retained));
   const restored = JSON.parse(fs.readFileSync(dest, 'utf8'));
-  if (restored.generatedAt !== KNOWN_GOOD_ARTIFACT.generatedAt || restored.events.length !== KNOWN_GOOD_ARTIFACT.eventCount || !bytes.equals(fs.readFileSync(dest)) || !isVerifiedGoodArtifact(restored)) {
+  const sameEvents = JSON.stringify(restored.events) === JSON.stringify(snapshot.events);
+  const sameSources = JSON.stringify(restored.sources) === JSON.stringify(snapshot.sources);
+  if (restored.generatedAt !== KNOWN_GOOD_ARTIFACT.generatedAt || restored.dataAsOf !== snapshot.generatedAt || restored.status !== 'retained' || restored.events.length !== KNOWN_GOOD_ARTIFACT.eventCount || !sameEvents || !sameSources || !isVerifiedGoodArtifact(snapshot)) {
     fs.rmSync(dest, { force: true });
     throw new Error('恢复后的课表与原产物不一致，已停止');
   }

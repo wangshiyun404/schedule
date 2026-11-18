@@ -164,8 +164,16 @@ test('the known bad publication is not last-known-good and cannot be replaced by
     sources: NAMES.map(name => ({ name, ok: true })),
   };
   assert.equal(S.isVerifiedGoodArtifact(good), true);
+  const retained = S.markRetained(good);
+  assert.equal(retained.status, 'retained');
+  assert.equal(retained.publication, 'retained');
+  assert.equal(retained.generatedAt, S.KNOWN_GOOD_ARTIFACT.generatedAt);
+  assert.equal(retained.dataAsOf, retained.generatedAt);
+  assert.equal(JSON.stringify(retained.events), JSON.stringify(good.events));
+  assert.equal(JSON.stringify(retained.sources), JSON.stringify(good.sources));
   good.generatedAt = '2026-11-18T10:09:22.073Z';
   assert.equal(S.isVerifiedGoodArtifact(good), false);
+  assert.throws(() => S.markRetained(good), /未发布/);
 });
 
 test('a smaller but non-empty successful read still publishes', async () => {

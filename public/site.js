@@ -84,7 +84,11 @@
     const p = parts(now);
     const inOffice = (schedule.officeHours || []).some(oh => oh.days.includes(p.wd) && hm(oh.start) <= p.hh * 60 + p.mm && p.hh * 60 + p.mm < hm(oh.end));
     const dot = $('today-dot'), lab = $('today-label'), det = $('today-detail');
-    if (sync.status === 'failed') {
+    if (sync.status === 'retained') {
+      dot.className = 'dot';
+      lab.textContent = '显示较早的课表';
+      det.textContent = `不是刚刚同步的结果。${stamp}`;
+    } else if (sync.status === 'failed') {
       dot.className = 'dot';
       lab.textContent = '日历抓取失败';
       det.textContent = `${sync.failed.map(s => s.name).join('、') || '日历'}没有读到。空列表不代表当天没有课程或安排。${stamp}`;
@@ -199,6 +203,7 @@
       const sync = schedule ? publicationState(schedule) : null;
       sub.textContent = !schedule ? '日历暂时无法读取'
         : sync.status === 'failed' ? '日历抓取失败，上课时间未更新'
+        : sync.status === 'retained' ? '上课时间来自较早的课表，不是刚刚同步'
         : sync.status === 'empty' ? '日历已读取，当前没有课程事项'
         : live.length ? `${live.length} 门 · 上课时间同步自日历` : '';
     }
