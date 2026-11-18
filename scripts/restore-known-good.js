@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// 只在线上仍是 2026-11-18 18:09 的空发布时，原样放回 run 44221004787 的产物。
-// 不改 schedule.json，因此数据时间仍是 10:08，不会被标成新的同步结果。
+// 只在线上仍是 2026-11-18 18:09 的空发布时，放回 run 44221004787 里已核对的课表。
+// 事件和 generatedAt 保持 10:08 的原值，并标明这是较早的快照，不是一次新的同步。
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
