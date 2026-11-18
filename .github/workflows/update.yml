@@ -2,22 +2,38 @@ name: 同步日历并发布到 GitHub Pages
 
 on:
   schedule:
-    - cron: '*/15 * * * *'   # 每 15 分钟（GitHub 在高峰期可能延迟几分钟）
+    # UTC。GitHub 在每小时开始时负载较高，排在 0/15/30/45 分的任务可能被推迟，
+    # 排队后还可能直接丢弃，而且不会补跑。7/15 是第 7、22、37、52 分。
+    # 这个改动只在合并到 main 后生效，仍然不能保证严格每 15 分钟触发。
+    - cron: '7/15 * * * *'
   workflow_dispatch:
   push:
     branches: [main]
+  pull_request:
 
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
-concurrency:
-  group: pages
-  cancel-in-progress: true
-
 jobs:
+  test:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm test
   build-deploy:
+    if: github.event_name != 'pull_request'
+    concurrency:
+      group: pages
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -30,10 +46,23 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
-      - name: 读取 iCloud 公共日历并生成 schedule.json
+      - name: 读取公开日历；失败或异常空结果不覆盖已有数据
+        id: build
+        continue-on-error: true
         env:
           CALENDARS_JSON: ${{ secrets.CALENDARS_JSON }}
+          SCHEDULE_PREVIOUS_URL: https://wangshiyun404.github.io/schedule/data/schedule.json
         run: node scripts/build.js
+      - name: 仅当线上仍是 18:09 的空发布时，原样放回 10:08 的 schedule.json
+        id: restore
+        if: steps.build.outcome == 'failure'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node scripts/restore-known-good.js
+      - name: 没有可安全发布的课表
+        if: steps.build.outcome != 'success' && steps.restore.outcome != 'success'
+        run: exit 1
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

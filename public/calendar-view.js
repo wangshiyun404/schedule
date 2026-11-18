@@ -135,11 +135,17 @@
     $('calendar-layout-note').textContent = view === 'week' ? compactWeek ? '空闲时段已收起；按每天的实际时间顺序排列，卡片高度不代表时长。' : '按实际起止时间定位；短事项所在时段自动扩高，完整显示文字。点击事项可查看详情。' : '点击事项查看完整标题、时间和地点。';
     if (view === 'month') renderMonth(list); else if (view === 'week') renderWeek(list); else renderAgenda(list);
     renderDay(list); revealDay = false;
-    const notice = $('calendar-notice'), bad = (snapshot.sources || []).filter(s => !s.ok);
+    const notice = $('calendar-notice');
+    const sync = publicationState(snapshot);
     const outOfRange = b <= new Date(snapshot.range.from) || a >= new Date(snapshot.range.to);
-    notice.hidden = !snapshot.demo && !bad.length && !outOfRange;
-    notice.textContent = snapshot.demo ? '当前是演示数据，尚未接入公开日历。' : bad.length ? `${bad.map(s => s.name).join('、')}暂时无法同步，当前安排可能不完整。` : outOfRange ? `当前同步范围为${M.date(snapshot.range.from)}至${M.date(snapshot.range.to)}，请选择范围内的日期。` : '';
-    $('calendar-updated').textContent = `更新：${M.date(snapshot.generatedAt)} ${M.time(snapshot.generatedAt)} · 可查看 ${M.key(snapshot.range.from)}—${M.key(snapshot.range.to)}`;
+    const stateLabel = sync.status === 'failed' ? '抓取失败' : sync.status === 'empty' ? '已读取，没有公开事项' : sync.status === 'demo' ? '演示数据' : sync.status === 'retained' ? '较早的有效快照，不是刚刚同步' : '读取成功';
+    notice.hidden = sync.status === 'ok' && !outOfRange;
+    notice.textContent = sync.status === 'demo' ? '当前是演示数据，尚未接入公开日历。'
+      : sync.status === 'failed' ? `${sync.failed.map(s => s.name).join('、') || '日历'}抓取失败。这次没有可用的新课表，空列表不代表这些日历里没有安排。`
+      : sync.status === 'retained' ? '这次没有换成新的课表。下面仍是较早一次成功读取的安排，数据时间没有被改成现在。'
+      : sync.status === 'empty' ? '日历已成功读取，当前没有公开事项。'
+      : outOfRange ? `当前同步范围为${M.date(snapshot.range.from)}至${M.date(snapshot.range.to)}，请选择范围内的日期。` : '';
+    $('calendar-updated').textContent = `数据时间：${M.date(sync.dataAsOf)} ${M.time(sync.dataAsOf)} · ${stateLabel} · 可查看 ${M.key(snapshot.range.from)}—${M.key(snapshot.range.to)}`;
   }
   function openEvent(id, source) {
     const e = events.find(e => e.id === id); if (!e) return;
@@ -151,6 +157,18 @@
   }
   function selectDay(d, shiftAnchor = false) { selected = M.day(d); revealDay = true; if (shiftAnchor) anchor = selected; render(); }
   function specialAndSlots() {
+    const sync = publicationState(snapshot);
+    const email = snapshot.owner.email || '';
+    $('calendar-contact').innerHTML = `<dt>邮箱</dt><dd><a href="mailto:${esc(email)}">${esc(email)}</a></dd><dt>手机 / 微信</dt><dd><a href="tel:18301501736">183 0150 1736</a></dd>${snapshot.owner.location ? `<dt>常用办公地点</dt><dd>${esc(snapshot.owner.location)}</dd>` : ''}`;
+    $('calendar-email').href = 'mailto:' + email + '?subject=' + encodeURIComponent('预约交流');
+    $('calendar-email-mobile').href = $('calendar-email').href;
+    if (sync.status === 'failed') {
+      $('calendar-special-summary').textContent = '这次没有读到日程，下面不是一份确认过的空课表。';
+      $('calendar-special').innerHTML = '<p class="upcoming-empty">日历抓取失败，暂时不能列出近期安排。</p>';
+      $('calendar-slot-summary').textContent = '抓取失败，暂不显示可约时段';
+      $('calendar-slots').innerHTML = '<p class="empty-calendar">日历没有读到，不能据此判断哪些时间有空。</p>';
+      return;
+    }
     const now = new Date(), days = M.dailyAgenda(events, now), unique = new Set(days.flatMap(d => d.items.map(e => e.id)));
     $('calendar-special-summary').textContent = `${dayName(days[0].date)}—${dayName(days[days.length - 1].date)} · 共${unique.size}项公开安排；跨日事项逐日列出。向下滚动查看全部日期。`;
     $('calendar-special').innerHTML = days.map(({ date, items }) => `<section class="upcoming-day" data-upcoming-day="${M.key(date)}"><h3>${dayName(date)}<span>${items.length ? items.length + '项' : '暂无安排'}</span></h3>${items.length ? items.map(e => `<button class="quick-row type-${e.category}" data-event-id="${esc(e.id)}"><time>${M.dayTime(e, date)}</time><span><strong>${esc(e.title)}</strong><small>${M.labels[e.category]}${e.location ? ' · ' + esc(e.location) : ''}</small></span></button>`).join('') : '<p class="upcoming-empty">暂无公开安排</p>'}</section>`).join('');
@@ -165,21 +183,46 @@
         if (end - cur >= (snapshot.minFreeMinutes || 30) * 60000) slots.push([cur, end]);
       }
     }
-    const email = snapshot.owner.email || '';
     const slotDays = new Map();
     for (const slot of slots) { const key = M.key(slot[0]); if (!slotDays.has(key)) slotDays.set(key, []); slotDays.get(key).push(slot); }
     $('calendar-slot-summary').textContent = `${M.date(now)}—${M.date(M.add(M.day(now), 6))} · ${slots.length}个可约时段`;
     $('calendar-slots').innerHTML = [...slotDays].map(([date, times]) => `<section class="availability-day"><h4><span>${M.weekdays[M.parts(times[0][0]).wd]}</span><time datetime="${date}">${M.date(times[0][0])}</time></h4><div class="slot-options">${times.map(([a, b]) => `<a class="free-slot" href="mailto:${esc(email)}?subject=${encodeURIComponent('预约：' + dayName(a) + ' ' + M.time(a) + '—' + M.time(b))}" aria-label="${esc('邮件预约 ' + dayName(a) + ' ' + M.time(a) + '—' + M.time(b))}"><span>${M.time(a)}—${M.time(b)}</span><span class="slot-arrow" aria-hidden="true">↗</span></a>`).join('')}</div></section>`).join('') || '<p class="empty-calendar">未来一周暂无可预约时段，欢迎邮件联系。</p>';
-    $('calendar-contact').innerHTML = `<dt>邮箱</dt><dd><a href="mailto:${esc(email)}">${esc(email)}</a></dd><dt>手机 / 微信</dt><dd><a href="tel:18301501736">183 0150 1736</a></dd>${snapshot.owner.location ? `<dt>常用办公地点</dt><dd>${esc(snapshot.owner.location)}</dd>` : ''}`;
-    $('calendar-email').href = 'mailto:' + email + '?subject=' + encodeURIComponent('预约交流');
-    $('calendar-email-mobile').href = $('calendar-email').href;
   }
   function renderStatus() {
     if (!snapshot) return;
+    const sync = publicationState(snapshot);
+    if (sync.status === 'retained') {
+      $('calendar-status').textContent = '显示较早的课表';
+      $('calendar-next').textContent = '不是刚刚同步的结果';
+      return;
+    }
+    if (sync.status === 'failed') {
+      $('calendar-status').textContent = '日历抓取失败';
+      $('calendar-next').textContent = '空列表不代表没有安排';
+      return;
+    }
+    if (sync.status === 'empty') {
+      $('calendar-status').textContent = '日历已读取，当前没有公开安排';
+      $('calendar-next').textContent = '这次读取成功，日历里没有事项';
+      return;
+    }
     const now = new Date(), current = events.filter(e => !e.allDay && new Date(e.start) <= now && new Date(e.end) > now);
     const next = events.find(e => !e.allDay && new Date(e.start) > now);
     $('calendar-status').textContent = current.length ? `正在进行：${current[0].title}` : '当前没有进行中的公开安排';
     $('calendar-next').textContent = next ? `下一项：${dayName(next.start)} ${M.time(next.start)} ${next.title}` : '近期暂无后续安排';
+  }
+  function publicationState(snapshot) {
+    const sources = snapshot.sources || [];
+    const failed = sources.filter(s => s.state === 'failed' || s.ok === false);
+    const dataAsOf = snapshot.dataAsOf || snapshot.generatedAt;
+    let status = snapshot.status;
+    if (!status) {
+      if (snapshot.demo) status = 'demo';
+      else if (failed.length) status = 'failed';
+      else if (sources.length && sources.every(s => s.state === 'empty') && !(snapshot.events || []).length) status = 'empty';
+      else status = 'ok';
+    }
+    return { status, failed, dataAsOf };
   }
   async function load() {
     try {

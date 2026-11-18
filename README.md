@@ -1,8 +1,8 @@
 # 王世赟 · 日程与课程
 
-个人公开日程页，数据来自 Mac「日历」中设为公共的 iCloud 日历（webcal 链接），由 GitHub Actions 每 15 分钟拉取一次并发布到 GitHub Pages。
+个人公开日程页，数据来自 Mac「日历」中设为公共的 iCloud 日历（webcal 链接），由 GitHub Actions 定时拉取并发布到 GitHub Pages。计划是大约每 15 分钟一次；GitHub 可能推迟或丢弃整点附近的定时任务，合并后的时刻是每小时的第 7、22、37、52 分（UTC）。
 
-- `scripts/build.js`：读取 ICS → 展开重复事件 → 分类（上课 / 出差 / 事项）→ 生成 `public/data/schedule.json`
+- `scripts/build.js`：读取 ICS → 展开重复事件 → 分类（上课 / 出差 / 事项）→ 生成 `public/data/schedule.json`。任一来源抓取失败，或上次有事项的来源突然变成空日历时，不会覆盖已发布的数据。真正读到空日历且没有上次有效数据时，会标明为空结果。
 - `public/`：静态页面；状态卡与空闲时段在浏览器端计算
 - `config.json`：显示设置（姓名、简介、可预约时间等）；日历地址通过仓库 Secret `CALENDARS_JSON` 注入，不入库
 - 本地预览：`cp config.local.example.json config.local.json` 填入链接后 `npm install && npm start`
