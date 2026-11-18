@@ -3,18 +3,24 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const { loadConfig, buildSnapshot } = require('./lib/schedule');
+const { loadConfig, buildSnapshot, publishSnapshot, referenceSnapshot } = require('./lib/schedule');
 
 const PORT = process.env.PORT || 8000;
 const OUT = path.join(__dirname, 'public', 'data', 'schedule.json');
 
+function readJson(file) {
+  try { return JSON.parse(fs.readFileSync(file, 'utf8')); }
+  catch { return null; }
+}
+
 async function rebuild() {
   try {
     const cfg = loadConfig(__dirname);
-    const snap = await buildSnapshot(cfg);
-    fs.mkdirSync(path.dirname(OUT), { recursive: true });
-    fs.writeFileSync(OUT, JSON.stringify(snap));
-  } catch (e) { console.error('rebuild failed:', e.message); }
+    const snap = await buildSnapshot(cfg, { retryDelayMs: 1000 });
+    const previous = referenceSnapshot(readJson(OUT));
+    const result = publishSnapshot(snap, previous, OUT);
+    if (!result.publish) console.error(`保留已有课表：${result.reason}`);
+  } catch (e) { console.error('rebuild failed'); }
 }
 
 const app = express();

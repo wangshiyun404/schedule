@@ -58,20 +58,46 @@
     setInterval(async () => { await loadSchedule(); renderToday(); }, 300000);
   }
 
+  function publicationState(snapshot) {
+    const sources = snapshot.sources || [];
+    const failed = sources.filter(s => s.state === 'failed' || s.ok === false);
+    const dataAsOf = snapshot.dataAsOf || snapshot.generatedAt;
+    let status = snapshot.status;
+    if (!status) {
+      if (snapshot.demo) status = 'demo';
+      else if (failed.length) status = 'failed';
+      else if (sources.length && sources.every(s => s.state === 'empty') && !(snapshot.events || []).length) status = 'empty';
+      else status = 'ok';
+    }
+    return { status, failed, dataAsOf };
+  }
+
   function renderToday() {
     const el = $('today-card'); if (!el) return;
     const now = new Date();
-    if (!schedule) { $('today-label').textContent = '日程暂时无法读取'; return; }
+    if (!schedule) { $('today-label').textContent = '日程暂时无法读取'; $('today-detail').textContent = '这次没有读到课表，不代表当天没有安排。'; return; }
+    const sync = publicationState(schedule);
+    const stamp = sync.dataAsOf ? `数据时间 ${md(new Date(sync.dataAsOf))} ${hhmm(new Date(sync.dataAsOf))}` : '';
     const evs = schedule.events.filter(e => e.status !== 'CANCELLED');
     const current = evs.find(e => !e.allDay && !(window.CalendarModel && window.CalendarModel.departureOnly(e)) && new Date(e.start) <= now && new Date(e.end) > now);
     const next = evs.find(e => !e.allDay && new Date(e.start) > now);
     const p = parts(now);
     const inOffice = (schedule.officeHours || []).some(oh => oh.days.includes(p.wd) && hm(oh.start) <= p.hh * 60 + p.mm && p.hh * 60 + p.mm < hm(oh.end));
     const dot = $('today-dot'), lab = $('today-label'), det = $('today-detail');
-    dot.className = 'dot ' + (current ? 'busy' : inOffice ? 'free' : '');
-    lab.textContent = current ? `忙碌中：${current.title}` : inOffice ? '现在有空' : '非办公时间';
-    det.textContent = current ? `到 ${hhmm(new Date(current.end))} 结束${current.location ? ' · ' + current.location : ''}`
-      : next ? `下一项：${md(new Date(next.start))} ${hhmm(new Date(next.start))} ${next.title}` : '近期没有已排定的安排';
+    if (sync.status === 'failed') {
+      dot.className = 'dot';
+      lab.textContent = '日历抓取失败';
+      det.textContent = `${sync.failed.map(s => s.name).join('、') || '日历'}没有读到。空列表不代表当天没有课程或安排。${stamp}`;
+    } else if (sync.status === 'empty') {
+      dot.className = 'dot';
+      lab.textContent = '日历已读取';
+      det.textContent = `当前没有公开事项。${stamp}`;
+    } else {
+      dot.className = 'dot ' + (current ? 'busy' : inOffice ? 'free' : '');
+      lab.textContent = current ? `忙碌中：${current.title}` : inOffice ? '现在有空' : '非办公时间';
+      det.textContent = (current ? `到 ${hhmm(new Date(current.end))} 结束${current.location ? ' · ' + current.location : ''}`
+        : next ? `下一项：${md(new Date(next.start))} ${hhmm(new Date(next.start))} ${next.title}` : '近期没有已排定的安排') + (stamp ? ` · ${stamp}` : '');
+    }
     // 今日 / 明日列表
     const d0 = startOfDay(now), d1 = new Date(d0.getTime() + DAY), d2 = new Date(d1.getTime() + DAY);
     const inDay = (a, b) => evs.filter(e => new Date(e.start) < b && new Date(e.end) > a).sort((x, y) => new Date(x.start) - new Date(y.start));
@@ -84,6 +110,8 @@
       const k = keyOf(e, day), isDone = !!done[k];
       return `<li class="todo${isDone ? ' done' : ''}"><label><input type="checkbox" data-k="${esc(k)}"${isDone ? ' checked' : ''}><time>${label}</time><span class="n">${esc(e.title)}${e.location ? `<small>${esc(e.location)}</small>` : ''}</span></label></li>`;
     };
+    const emptyToday = sync.status === 'failed' ? '这次没有读到今天的安排' : sync.status === 'empty' ? '今天没有公开事项' : '今天没有已排定的安排';
+    const emptyTomorrow = sync.status === 'failed' ? '这次没有读到明天的安排' : sync.status === 'empty' ? '明天没有公开事项' : '明天暂无安排';
     const group = (list, day, emptyText) => {
       if (!list.length) return `<li><span class="empty">${emptyText}</span></li>`;
       const items = list.map(e => ({ e, d: !!done[keyOf(e, day)] }));
@@ -92,8 +120,8 @@
         + (fin.length ? `<li class="grp">已办 · ${fin.length}</li>` + fin.map(x => li(x.e, day)).join('') : '');
     };
     const today = inDay(d0, d1), tomorrow = inDay(d1, d2);
-    $('today-list').innerHTML = group(today, d0, '今天没有已排定的安排');
-    $('tomorrow-list').innerHTML = group(tomorrow, d1, '明天暂无安排');
+    $('today-list').innerHTML = group(today, d0, emptyToday);
+    $('tomorrow-list').innerHTML = group(tomorrow, d1, emptyTomorrow);
     if (!el.dataset.todoBound) {
       el.dataset.todoBound = '1';
       el.addEventListener('change', (ev) => {
@@ -166,7 +194,14 @@
     cur.innerHTML = nowHtml.join('') || '<div class="tile"><p>课程信息同步中…</p></div>';
     const pastHtml = (S.courses || []).filter(c => c.past).map(c => tile(c.title, c, null, true));
     if (past) { past.innerHTML = pastHtml.join(''); past.closest('.block').hidden = !pastHtml.length; }
-    const sub = $('courses-sub'); if (sub) sub.textContent = live.length ? `${live.length} 门 · 上课时间同步自日历` : '';
+    const sub = $('courses-sub');
+    if (sub) {
+      const sync = schedule ? publicationState(schedule) : null;
+      sub.textContent = !schedule ? '日历暂时无法读取'
+        : sync.status === 'failed' ? '日历抓取失败，上课时间未更新'
+        : sync.status === 'empty' ? '日历已读取，当前没有课程事项'
+        : live.length ? `${live.length} 门 · 上课时间同步自日历` : '';
+    }
   }
 
   const page = document.body.dataset.page;
