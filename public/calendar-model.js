@@ -67,11 +67,13 @@
   }
   // This reminder has no confirmed arrival time; its end is only a calendar placeholder.
   function departureOnly(e) {
-    return e.id === 'CF3F7D7E-C1A4-4A74-9EBD-7DD8CFC35B67' && e.start === '2026-11-17T14:20:00.000Z';
+    return (e.id === 'CF3F7D7E-C1A4-4A74-9EBD-7DD8CFC35B67' && e.start === '2026-11-17T14:20:00.000Z') ||
+      (e.id === '3E29383E-E9D9-4936-8E82-8ABD6D5E395A' && e.start === '2026-11-20T22:50:00.000Z');
   }
+  const departureVerb = e => e.id === '3E29383E-E9D9-4936-8E82-8ABD6D5E395A' ? '出发' : '发车';
   function dayTime(e, d) {
     if (e.allDay) return '全天';
-    if (departureOnly(e)) return `${time(e.start)}发车`;
+    if (departureOnly(e)) return `${time(e.start)}${departureVerb(e)}`;
     const a = day(d), b = add(a, 1), start = new Date(e.start), end = new Date(e.end);
     const label = `${start < a ? '00:00' : time(start)}–${end >= b ? '24:00' : time(end)}`;
     return label + (start < a || end > b ? ' · 跨日' : '');
@@ -79,7 +81,7 @@
   function fullTime(e) {
     const a = new Date(e.start), b = new Date(e.end);
     if (e.allDay) { const last = new Date(+b - 1); return `${date(a)}${key(a) === key(last) ? '' : '—' + date(last)} · 全天`; }
-    if (departureOnly(e)) return `${date(a)} ${time(a)}发车`;
+    if (departureOnly(e)) return `${date(a)} ${time(a)}${departureVerb(e)}`;
     return `${date(a)} ${time(a)}—${key(a) === key(b) ? '' : date(b) + ' '}${time(b)}`;
   }
   function conflicts(events) {

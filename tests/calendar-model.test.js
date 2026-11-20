@@ -7,6 +7,9 @@ test('the departure-only shuttle hides its placeholder end in both time formats'
  assert.equal(M.dayTime(bus,M.parseDay('2026-11-17')), '22:20发车');
  assert.equal(M.fullTime(bus), '11月17日 22:20发车');
  assert.equal(M.dayTime({...bus,id:'another'},M.parseDay('2026-11-17')), '22:20–22:30');
+ const trip=e('3E29383E-E9D9-4936-8E82-8ABD6D5E395A','2026-11-20T22:50:00.000Z','2026-11-20T23:00:00.000Z');
+ assert.equal(M.dayTime(trip,M.parseDay('2026-11-21')), '06:50出发');
+ assert.equal(M.fullTime(trip), '11月21日 06:50出发');
 });
 test('Beijing dates are independent of the viewer timezone', () => {
  assert.equal(M.key('2026-10-25T16:30:00Z'), '2026-10-26');
