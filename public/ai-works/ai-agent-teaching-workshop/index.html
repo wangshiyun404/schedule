@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>与 AI 共事：教与学中的 AI Agent 实操工作坊</title>
+<meta name="description" content="教与学中的 AI Agent 实操工作坊讲义，可在网页上逐页查看。">
+<link rel="stylesheet" href="reader.css">
+<script src="slides.js" defer></script>
+<script src="reader.js" defer></script>
+</head>
+<body>
+<header><div class="wrap hero">
+  <a class="back" href="../../index.html#my-ai-works">‹ 返回个人主页 · AI 作品</a>
+  <p class="eyebrow">教师工作坊 · 网页讲义</p>
+  <h1>与 AI 共事<span>教与学中的 AI Agent 实操工作坊</span></h1>
+</div></header>
+<main class="wrap">
+  <div class="toolbar" id="toolbar">
+    <button type="button" id="prev">‹ 上一页</button>
+    <form id="jump"><label for="page">页码</label><input type="number" inputmode="numeric" min="1" id="page" required value="1"><span id="total"></span><button type="submit">跳转</button></form>
+    <button type="button" id="next">下一页 ›</button>
+    <button type="button" id="full">全屏</button>
+  </div>
+  <div class="viewer" id="viewer">
+    <figure><img id="slide" fetchpriority="high" src="slides/01.webp" alt="第 1 页：与 AI 共事"><figcaption id="caption" aria-live="polite">第 1 页：与 AI 共事</figcaption></figure>
+  </div>
+  <div id="resources" hidden></div>
+  <p class="hint">电脑可用 ← / → 翻页。手机可左右滑动，横屏查看更清楚。</p>
+  <details class="toc"><summary>查看全部页码</summary><nav id="pages" aria-label="逐页浏览"></nav></details>
+  <noscript>请开启 JavaScript 使用翻页功能。</noscript>
+</main>
+</body>
+</html>
