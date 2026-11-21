@@ -530,6 +530,10 @@ window.WORKSHOP_SLIDES = {
               0.65956
             ]
           ]
+        },
+        {
+          "url": "https://world-history-atlas-guide.web.app/#year=1200&lang=zh&mode=year&view=history",
+          "label": "世界历史地图集（现行站点）"
         }
       ]
     },
@@ -560,6 +564,10 @@ window.WORKSHOP_SLIDES = {
               0.04711
             ]
           ]
+        },
+        {
+          "url": "https://world-history-atlas-guide.web.app/#year=166&lang=zh&mode=year&entry=silk-roads-changan&view=history",
+          "label": "世界历史地图集（现行站点）"
         }
       ]
     },
