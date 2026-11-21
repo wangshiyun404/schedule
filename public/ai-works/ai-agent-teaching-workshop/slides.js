@@ -3,102 +3,111 @@ window.WORKSHOP_SLIDES = {
   "height": 900,
   "slides": [
     {
-      "src": "slides/01.webp",
+      "src": "slides/01.webp?v=original20261121",
       "title": "与 AI 共事",
       "links": []
     },
     {
-      "src": "slides/02.webp",
-      "title": "现场入群（仅限活动现场）",
+      "src": "slides/02.webp?v=original20261121",
+      "title": "微信面对面建群",
       "links": []
     },
     {
-      "src": "slides/03.webp",
-      "title": "现场前测 · 自我对照",
-      "links": []
+      "src": "slides/03.webp?v=original20261121",
+      "title": "现场前测",
+      "links": [
+        {
+          "url": "https://wj.qq.com/s2/28767391/js98/",
+          "label": "填写现场前测"
+        },
+        {
+          "url": "https://wj.qq.com/stat/8/chart?sid=28767391&org=60064385134",
+          "label": "查看实时统计"
+        }
+      ]
     },
     {
-      "src": "slides/04.webp",
+      "src": "slides/04.webp?v=original20261121",
       "title": "工作坊目录",
       "links": []
     },
     {
-      "src": "slides/05.webp",
+      "src": "slides/05.webp?v=original20261121",
       "title": "目录 · AI 的发展历程",
       "links": []
     },
     {
-      "src": "slides/06.webp",
+      "src": "slides/06.webp?v=original20261121",
       "title": "人工智能技术的发展历史",
       "links": []
     },
     {
-      "src": "slides/07.webp",
+      "src": "slides/07.webp?v=original20261121",
       "title": "机器学习",
       "links": []
     },
     {
-      "src": "slides/08.webp",
+      "src": "slides/08.webp?v=original20261121",
       "title": "ImageNet",
       "links": []
     },
     {
-      "src": "slides/09.webp",
+      "src": "slides/09.webp?v=original20261121",
       "title": "GPT-3",
       "links": []
     },
     {
-      "src": "slides/10.webp",
+      "src": "slides/10.webp?v=original20261121",
       "title": "ChatGPT 的推出",
       "links": []
     },
     {
-      "src": "slides/11.webp",
+      "src": "slides/11.webp?v=original20261121",
       "title": "Q&A：AI 的发展",
       "links": []
     },
     {
-      "src": "slides/12.webp",
+      "src": "slides/12.webp?v=original20261121",
       "title": "Gemini",
       "links": []
     },
     {
-      "src": "slides/13.webp",
+      "src": "slides/13.webp?v=original20261121",
       "title": "智能涌现",
       "links": []
     },
     {
-      "src": "slides/14.webp",
+      "src": "slides/14.webp?v=original20261121",
       "title": "智能涌现与缩放定律",
       "links": []
     },
     {
-      "src": "slides/15.webp",
+      "src": "slides/15.webp?v=original20261121",
       "title": "大模型热潮的约束",
       "links": []
     },
     {
-      "src": "slides/16.webp",
+      "src": "slides/16.webp?v=original20261121",
       "title": "大模型热潮的起点",
       "links": []
     },
     {
-      "src": "slides/17.webp",
+      "src": "slides/17.webp?v=original20261121",
       "title": "Scaling Law：规模定律",
       "links": []
     },
     {
-      "src": "slides/18.webp",
+      "src": "slides/18.webp?v=original20261121",
       "title": "学术界「AI 三巨头」",
       "links": []
     },
     {
-      "src": "slides/19.webp",
+      "src": "slides/19.webp?v=original20261121",
       "title": "产业界「AI 三巨头」",
       "links": []
     },
     {
-      "src": "slides/20.webp",
+      "src": "slides/20.webp?v=original20261121",
       "title": "国外大模型：Chat 与 Agent",
       "links": [
         {
@@ -120,7 +129,7 @@ window.WORKSHOP_SLIDES = {
       ]
     },
     {
-      "src": "slides/21.webp",
+      "src": "slides/21.webp?v=original20261121",
       "title": "国内大模型：Chat 与 Agent",
       "links": [
         {
@@ -162,17 +171,17 @@ window.WORKSHOP_SLIDES = {
       ]
     },
     {
-      "src": "slides/22.webp",
+      "src": "slides/22.webp?v=original20261121",
       "title": "国内大模型的擅长领域",
       "links": []
     },
     {
-      "src": "slides/23.webp",
+      "src": "slides/23.webp?v=original20261121",
       "title": "国外大模型的擅长领域",
       "links": []
     },
     {
-      "src": "slides/24.webp",
+      "src": "slides/24.webp?v=original20261121",
       "title": "为什么要学习某项技术",
       "links": [
         {
@@ -182,142 +191,142 @@ window.WORKSHOP_SLIDES = {
       ]
     },
     {
-      "src": "slides/25.webp",
+      "src": "slides/25.webp?v=original20261121",
       "title": "目录 · 认识 AI Agent",
       "links": []
     },
     {
-      "src": "slides/26.webp",
+      "src": "slides/26.webp?v=original20261121",
       "title": "Agent 最大的特征：自主性",
       "links": []
     },
     {
-      "src": "slides/27.webp",
+      "src": "slides/27.webp?v=original20261121",
       "title": "一句话看懂 AI Agent",
       "links": []
     },
     {
-      "src": "slides/28.webp",
+      "src": "slides/28.webp?v=original20261121",
       "title": "AI Agent 的定义",
       "links": []
     },
     {
-      "src": "slides/29.webp",
+      "src": "slides/29.webp?v=original20261121",
       "title": "人机协作循环",
       "links": []
     },
     {
-      "src": "slides/30.webp",
+      "src": "slides/30.webp?v=original20261121",
       "title": "工作坊的初衷",
       "links": []
     },
     {
-      "src": "slides/31.webp",
+      "src": "slides/31.webp?v=original20261121",
       "title": "AI Agent",
       "links": []
     },
     {
-      "src": "slides/32.webp",
+      "src": "slides/32.webp?v=original20261121",
       "title": "Agent 时代工程体系的三次演进",
       "links": []
     },
     {
-      "src": "slides/33.webp",
+      "src": "slides/33.webp?v=original20261121",
       "title": "驾驭工程（Harness Engineering）",
       "links": []
     },
     {
-      "src": "slides/34.webp",
+      "src": "slides/34.webp?v=original20261121",
       "title": "Skills：一个动作后面的执行逻辑",
       "links": []
     },
     {
-      "src": "slides/35.webp",
+      "src": "slides/35.webp?v=original20261121",
       "title": "工作流的基本概念",
       "links": []
     },
     {
-      "src": "slides/36.webp",
+      "src": "slides/36.webp?v=original20261121",
       "title": "目录 · 教与学实操",
       "links": []
     },
     {
-      "src": "slides/37.webp",
+      "src": "slides/37.webp?v=original20261121",
       "title": "头脑风暴：AI 与我们的教学日常",
       "links": []
     },
     {
-      "src": "slides/38.webp",
+      "src": "slides/38.webp?v=original20261121",
       "title": "WorkBuddy：会干活的 AI 助理",
       "links": []
     },
     {
-      "src": "slides/39.webp",
+      "src": "slides/39.webp?v=original20261121",
       "title": "WorkBuddy 能帮老师做什么",
       "links": []
     },
     {
-      "src": "slides/40.webp",
+      "src": "slides/40.webp?v=original20261121",
       "title": "《春》教案与课件：指令与材料",
       "links": []
     },
     {
-      "src": "slides/41.webp",
+      "src": "slides/41.webp?v=original20261121",
       "title": "《春》教案与课件：交付与验收",
       "links": []
     },
     {
-      "src": "slides/42.webp",
+      "src": "slides/42.webp?v=original20261121",
       "title": "分层单元测验：指令与材料",
       "links": []
     },
     {
-      "src": "slides/43.webp",
+      "src": "slides/43.webp?v=original20261121",
       "title": "分层单元测验：交付与验收",
       "links": []
     },
     {
-      "src": "slides/44.webp",
+      "src": "slides/44.webp?v=original20261121",
       "title": "作文评语：指令与材料",
       "links": []
     },
     {
-      "src": "slides/45.webp",
+      "src": "slides/45.webp?v=original20261121",
       "title": "作文评语：交付与验收",
       "links": []
     },
     {
-      "src": "slides/46.webp",
+      "src": "slides/46.webp?v=original20261121",
       "title": "家长通知：指令与材料",
       "links": []
     },
     {
-      "src": "slides/47.webp",
+      "src": "slides/47.webp?v=original20261121",
       "title": "家长通知：交付与验收",
       "links": []
     },
     {
-      "src": "slides/48.webp",
+      "src": "slides/48.webp?v=original20261121",
       "title": "在学校事务中使用 WorkBuddy",
       "links": []
     },
     {
-      "src": "slides/49.webp",
+      "src": "slides/49.webp?v=original20261121",
       "title": "四步协作，三条提醒",
       "links": []
     },
     {
-      "src": "slides/50.webp",
+      "src": "slides/50.webp?v=original20261121",
       "title": "使用 AI Agent",
       "links": []
     },
     {
-      "src": "slides/51.webp",
+      "src": "slides/51.webp?v=original20261121",
       "title": "REA：从现有作品学习制作方法",
       "links": []
     },
     {
-      "src": "slides/52.webp",
+      "src": "slides/52.webp?v=original20261121",
       "title": "参考案例：世界历史地图集",
       "links": [
         {
@@ -327,7 +336,7 @@ window.WORKSHOP_SLIDES = {
       ]
     },
     {
-      "src": "slides/53.webp",
+      "src": "slides/53.webp?v=original20261121",
       "title": "提示词：人类科学发展历史地图",
       "links": [
         {
@@ -337,12 +346,12 @@ window.WORKSHOP_SLIDES = {
       ]
     },
     {
-      "src": "slides/54.webp",
+      "src": "slides/54.webp?v=original20261121",
       "title": "人类科学发展历史地图 · 作品示例",
       "links": []
     },
     {
-      "src": "slides/55.webp",
+      "src": "slides/55.webp?v=original20261121",
       "title": "参考案例：小学教育开放地图",
       "links": [
         {
@@ -352,7 +361,7 @@ window.WORKSHOP_SLIDES = {
       ]
     },
     {
-      "src": "slides/56.webp",
+      "src": "slides/56.webp?v=original20261121",
       "title": "提示词：中国小学教育开放地图",
       "links": [
         {
@@ -362,22 +371,22 @@ window.WORKSHOP_SLIDES = {
       ]
     },
     {
-      "src": "slides/57.webp",
+      "src": "slides/57.webp?v=original20261121",
       "title": "中国小学教育开放地图 · 作品示例",
       "links": []
     },
     {
-      "src": "slides/58.webp",
+      "src": "slides/58.webp?v=original20261121",
       "title": "更多作品示例",
       "links": []
     },
     {
-      "src": "slides/59.webp",
+      "src": "slides/59.webp?v=original20261121",
       "title": "AI 时代的教育",
       "links": []
     },
     {
-      "src": "slides/60.webp",
+      "src": "slides/60.webp?v=original20261121",
       "title": "HTML 的有效性",
       "links": [
         {
@@ -391,22 +400,22 @@ window.WORKSHOP_SLIDES = {
       ]
     },
     {
-      "src": "slides/61.webp",
+      "src": "slides/61.webp?v=original20261121",
       "title": "结语：实践出真知",
       "links": []
     },
     {
-      "src": "slides/62.webp",
+      "src": "slides/62.webp?v=original20261121",
       "title": "自我探索",
       "links": []
     },
     {
-      "src": "slides/63.webp",
+      "src": "slides/63.webp?v=original20261121",
       "title": "互动答疑",
       "links": []
     },
     {
-      "src": "slides/64.webp",
+      "src": "slides/64.webp?v=original20261121",
       "title": "感谢参与",
       "links": []
     }

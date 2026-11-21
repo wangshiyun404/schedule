@@ -102,7 +102,7 @@ window.SITE = {
 
 // 首页入口：我的 AI 作品（说明取自各仓库描述或页面标题）
 window.SITE.aiWorks = [
-  { title: '与 AI 共事：教与学中的 AI Agent 实操工作坊', url: './ai-works/ai-agent-teaching-workshop/', desc: '教师工作坊网页讲义：从认识 AI Agent 到备课、组卷、评语与家校沟通实操。支持手机翻页和电脑全屏。' },
+  { title: '与 AI 共事：教与学中的 AI Agent 实操工作坊', url: './ai-works/ai-agent-teaching-workshop/?v=original20261121', desc: '教师工作坊网页讲义：从认识 AI Agent 到备课、组卷、评语与家校沟通实操。支持手机翻页和电脑全屏。' },
   { title: '生肖 × 星座 · Zodiac Explorer', url: './ai-works/zodiac-explorer/', desc: '中英双语生肖星座游戏：生日查询、40 位名人对比、汉语学习闯关、双人配对与分享卡。配对与运势仅供娱乐。' },
   { title: '团队项目六站路线图', url: './ai-works/team-project-roadmap.html', desc: '跟着小兔逐站开启团队项目：定题立项、比较方案、制作原型、反馈迭代、整理交付与展示答辩。' },
       { title: '以AI之问，叩产业之门', url: './ai-works/ai-enterprise-visit-20261107/', desc: '汕头大学《AI时代的超级个体与协同团队》企业行：走进五家企业，重温现场对话、滑动相册与原声视频。' },
