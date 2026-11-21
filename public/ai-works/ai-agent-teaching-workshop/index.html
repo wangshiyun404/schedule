@@ -7,7 +7,7 @@
 <meta name="description" content="教与学中的 AI Agent 实操工作坊讲义，可在网页上逐页查看。">
 <link rel="stylesheet" href="reader.css?v=links20261121b">
 <script src="slides.js?v=links20261121b" defer></script>
-<script src="reader.js?v=links20261121b" defer></script>
+<script src="reader.js?v=clicker20261121" defer></script>
 </head>
 <body>
 <header><div class="wrap hero">
@@ -22,11 +22,11 @@
     <button type="button" id="next">下一页 ›</button>
     <button type="button" id="full">全屏</button>
   </div>
-  <div class="viewer" id="viewer">
+  <div class="viewer" id="viewer" tabindex="-1">
     <figure><div class="slide-frame"><img id="slide" fetchpriority="high" src="slides/01.webp" alt="第 1 页：与 AI 共事"><div id="hotspots"></div></div><figcaption id="caption" aria-live="polite">第 1 页：与 AI 共事</figcaption></figure>
   </div>
   <div id="resources" hidden></div>
-  <p class="hint">电脑可用 ← / → 翻页。手机可左右滑动，横屏查看更清楚。幻灯片中的链接可直接点击。</p>
+  <p class="hint">演示时可用翻页笔，或按 Page ↑ / Page ↓、← / → 翻页。手机可左右滑动，横屏查看更清楚。幻灯片中的链接可直接点击。</p>
   <details class="toc"><summary>查看全部页码</summary><nav id="pages" aria-label="逐页浏览"></nav></details>
   <noscript>请开启 JavaScript 使用翻页功能。</noscript>
 </main>

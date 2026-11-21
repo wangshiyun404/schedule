@@ -58,15 +58,40 @@
   });
   prev.addEventListener('click', () => render(current-1,true));
   next.addEventListener('click', () => render(current+1,true));
-  byId('jump').addEventListener('submit', e => {e.preventDefault();render(+field.value,true);});
+  const focusViewer = () => viewer.focus({preventScroll:true});
+  byId('jump').addEventListener('submit', e => {
+    e.preventDefault();
+    render(+field.value,true);
+    focusViewer();
+  });
   window.addEventListener('hashchange', () => render(readHash()));
-  const toggleFull = (on) => {document.body.classList.toggle('present', on);full.textContent = on ? '退出全屏' : '全屏';full.setAttribute('aria-pressed',String(on));};
+  const presenting = () => document.body.classList.contains('present');
+  const toggleFull = on => {
+    document.body.classList.toggle('present', on);
+    full.textContent = on ? '退出全屏' : '全屏';
+    full.setAttribute('aria-pressed',String(on));
+    if (on) focusViewer(); else full.focus({preventScroll:true});
+  };
   full.setAttribute('aria-pressed','false');
-  full.addEventListener('click', () => toggleFull(!document.body.classList.contains('present')));
+  full.addEventListener('click', () => toggleFull(!presenting()));
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && document.body.classList.contains('present')) {toggleFull(false);return;}
-    if (e.altKey || e.ctrlKey || e.metaKey || /INPUT|TEXTAREA|SELECT/.test(e.target.tagName) || e.target.isContentEditable) return;
-    const chosen = {ArrowLeft:current-1, ArrowRight:current+1, Home:1, End:slides.length}[e.key];
+    if (e.defaultPrevented || e.isComposing || e.altKey || e.ctrlKey || e.metaKey) return;
+    const target = e.target;
+    if (e.key === 'Escape' && presenting()) {
+      e.preventDefault();
+      toggleFull(false);
+      return;
+    }
+    if (target.closest?.('input,textarea,select,[role="textbox"]') || target.isContentEditable) return;
+    const pageKeys = {PageUp:current-1,PageDown:current+1,ArrowLeft:current-1,ArrowRight:current+1,Home:1,End:slides.length};
+    let chosen = pageKeys[e.key] ?? pageKeys[e.code];
+    // Space/Backspace stay native on controls and when browsing the rest of the page.
+    const isControl = target.closest?.('a,button,summary,[role="button"],[role="link"]');
+    if (chosen === undefined && !isControl && (presenting() || target === viewer)) {
+      if (e.key === ' ' || e.code === 'Space') chosen = current + (e.shiftKey ? -1 : 1);
+      else if (e.key === 'Backspace' || e.code === 'Backspace' || e.key === 'ArrowUp' || e.code === 'ArrowUp') chosen = current-1;
+      else if (e.key === 'ArrowDown' || e.code === 'ArrowDown') chosen = current+1;
+    }
     if (typeof chosen === 'number') {e.preventDefault();render(chosen,true);}
   });
   viewer.addEventListener('touchstart', e => {touch = e.touches.length === 1 ? [e.touches[0].clientX,e.touches[0].clientY] : null;}, {passive:true});
