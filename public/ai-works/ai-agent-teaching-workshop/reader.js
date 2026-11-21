@@ -6,24 +6,41 @@
   const byId = id => document.getElementById(id);
   const image = byId('slide'), caption = byId('caption'), field = byId('page');
   const prev = byId('prev'), next = byId('next'), full = byId('full');
-  const viewer = byId('viewer'), resources = byId('resources'), links = [];
+  const viewer = byId('viewer'), resources = byId('resources'), hotspots = byId('hotspots'), links = [];
   let current = 0, touch = null;
   document.documentElement.style.setProperty('--slide-ratio', data.width + '/' + data.height);
   field.max = slides.length;
   byId('total').textContent = '/ ' + slides.length;
   const hash = n => '#slide-' + n;
   const readHash = () => +(location.hash.match(/^#slide-(\d+)$/)?.[1] || 1);
+  function resourceLink(url) {
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.target = '_blank';
+    anchor.rel = 'noopener noreferrer';
+    return anchor;
+  }
   function render(n, update=false) {
     current = Math.max(1, Math.min(slides.length, Math.trunc(n) || 1));
     const entry = slides[current - 1];
     const label = '第 ' + current + ' 页' + (entry.title ? '：' + entry.title : '');
     image.alt = label; image.src = entry.src; caption.textContent = label;
     resources.replaceChildren();
+    hotspots.replaceChildren();
     resources.hidden = !entry.links?.length;
     if (!resources.hidden) {
       const lead = document.createElement('span'); lead.textContent = '本页链接：'; resources.append(lead);
-      entry.links.forEach(({label,url}) => {
-        const a = document.createElement('a'); a.href=url; a.textContent=label; a.target='_blank'; a.rel='noopener noreferrer'; resources.append(a);
+      entry.links.forEach(({label,url,rects = []}) => {
+        const a = resourceLink(url); a.textContent = label; resources.append(a);
+        rects.forEach(([x,y,w,h], i) => {
+          const hotspot = resourceLink(url);
+          hotspot.className = 'hotspot';
+          hotspot.title = label;
+          hotspot.setAttribute('aria-label', label);
+          if (i) {hotspot.tabIndex = -1; hotspot.setAttribute('aria-hidden','true');}
+          Object.assign(hotspot.style, {left:x*100+'%',top:y*100+'%',width:w*100+'%',height:h*100+'%'});
+          hotspots.append(hotspot);
+        });
       });
     }
     field.value = current; prev.disabled = current === 1; next.disabled = current === slides.length;

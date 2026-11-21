@@ -18,11 +18,27 @@ window.WORKSHOP_SLIDES = {
       "links": [
         {
           "url": "https://wj.qq.com/s2/28767391/js98/",
-          "label": "填写现场前测"
+          "label": "填写现场前测",
+          "rects": [
+            [
+              0.625,
+              0.20356,
+              0.29975,
+              0.53333
+            ]
+          ]
         },
         {
           "url": "https://wj.qq.com/stat/8/chart?sid=28767391&org=60064385134",
-          "label": "查看实时统计"
+          "label": "查看实时统计",
+          "rects": [
+            [
+              0.6665,
+              0.78489,
+              0.21875,
+              0.09067
+            ]
+          ]
         }
       ]
     },
@@ -84,12 +100,50 @@ window.WORKSHOP_SLIDES = {
     {
       "src": "slides/15.webp?v=original20261121",
       "title": "大模型热潮的约束",
-      "links": []
+      "links": [
+        {
+          "url": "https://arxiv.org/abs/2001.08361",
+          "label": "Kaplan 等（2020）论文",
+          "rects": [
+            [
+              0.16152,
+              0.9277,
+              0.14687,
+              0.022
+            ]
+          ]
+        }
+      ]
     },
     {
       "src": "slides/16.webp?v=original20261121",
       "title": "大模型热潮的起点",
-      "links": []
+      "links": [
+        {
+          "url": "https://arxiv.org/abs/2206.07682",
+          "label": "Wei 等（2022）论文",
+          "rects": [
+            [
+              0.14825,
+              0.9277,
+              0.14687,
+              0.022
+            ]
+          ]
+        },
+        {
+          "url": "https://arxiv.org/abs/2002.05202",
+          "label": "Shazeer（2020）论文",
+          "rects": [
+            [
+              0.37325,
+              0.9277,
+              0.14692,
+              0.022
+            ]
+          ]
+        }
+      ]
     },
     {
       "src": "slides/17.webp?v=original20261121",
@@ -111,20 +165,52 @@ window.WORKSHOP_SLIDES = {
       "title": "国外大模型：Chat 与 Agent",
       "links": [
         {
-          "url": "https://claude.ai/",
-          "label": "Claude"
-        },
-        {
           "url": "https://chatgpt.com/",
-          "label": "ChatGPT"
+          "label": "ChatGPT",
+          "rects": [
+            [
+              0.7605,
+              0.36978,
+              0.1225,
+              0.024
+            ]
+          ]
         },
         {
-          "url": "https://grok.x.ai/",
-          "label": "Grok"
+          "url": "https://claude.ai/",
+          "label": "Claude",
+          "rects": [
+            [
+              0.7605,
+              0.47644,
+              0.1055,
+              0.024
+            ]
+          ]
         },
         {
           "url": "https://gemini.google.com/",
-          "label": "Gemini"
+          "label": "Gemini",
+          "rects": [
+            [
+              0.7605,
+              0.58311,
+              0.1645,
+              0.024
+            ]
+          ]
+        },
+        {
+          "url": "https://grok.x.ai/",
+          "label": "Grok",
+          "rects": [
+            [
+              0.7605,
+              0.68089,
+              0.1025,
+              0.024
+            ]
+          ]
         }
       ]
     },
@@ -133,40 +219,136 @@ window.WORKSHOP_SLIDES = {
       "title": "国内大模型：Chat 与 Agent",
       "links": [
         {
-          "url": "https://kimi.moonshot.cn/",
-          "label": "Kimi"
-        },
-        {
-          "url": "https://www.ciciai.com/",
-          "label": "Cici"
-        },
-        {
-          "url": "https://yuanbao.tencent.com/",
-          "label": "腾讯元宝"
-        },
-        {
-          "url": "https://www.doubao.com/",
-          "label": "豆包"
-        },
-        {
-          "url": "https://yiyan.baidu.com/",
-          "label": "文心一言"
-        },
-        {
-          "url": "https://z.ai/",
-          "label": "Z.ai"
-        },
-        {
-          "url": "https://chat.qwen.ai/",
-          "label": "Qwen"
+          "url": "https://www.deepseek.com/",
+          "label": "DeepSeek",
+          "rects": [
+            [
+              0.70125,
+              0.32267,
+              0.16175,
+              0.024
+            ]
+          ]
         },
         {
           "url": "https://chatglm.cn/",
-          "label": "智谱清言"
+          "label": "智谱清言",
+          "rects": [
+            [
+              0.70125,
+              0.38756,
+              0.119,
+              0.02356
+            ]
+          ]
+        },
+        {
+          "url": "https://z.ai/",
+          "label": "Z.ai",
+          "rects": [
+            [
+              0.87025,
+              0.38756,
+              0.06425,
+              0.02356
+            ]
+          ]
+        },
+        {
+          "url": "https://www.doubao.com/",
+          "label": "豆包",
+          "rects": [
+            [
+              0.70125,
+              0.46756,
+              0.16325,
+              0.024
+            ]
+          ]
+        },
+        {
+          "url": "https://www.ciciai.com/",
+          "label": "Cici",
+          "rects": [
+            [
+              0.70125,
+              0.49911,
+              0.145,
+              0.024
+            ]
+          ]
+        },
+        {
+          "url": "https://kimi.moonshot.cn/",
+          "label": "Kimi",
+          "rects": [
+            [
+              0.70125,
+              0.56356,
+              0.16125,
+              0.024
+            ]
+          ]
         },
         {
           "url": "https://qianwen.aliyun.com/",
-          "label": "通义"
+          "label": "通义",
+          "rects": [
+            [
+              0.70125,
+              0.62844,
+              0.1735,
+              0.024
+            ]
+          ]
+        },
+        {
+          "url": "https://chat.qwen.ai/",
+          "label": "Qwen",
+          "rects": [
+            [
+              0.70125,
+              0.66,
+              0.12825,
+              0.02356
+            ]
+          ]
+        },
+        {
+          "url": "https://yiyan.baidu.com/",
+          "label": "文心一言",
+          "rects": [
+            [
+              0.70125,
+              0.74,
+              0.1515,
+              0.024
+            ]
+          ]
+        },
+        {
+          "url": "https://yuanbao.tencent.com/",
+          "label": "腾讯元宝",
+          "rects": [
+            [
+              0.70125,
+              0.80444,
+              0.1855,
+              0.024
+            ]
+          ]
+        },
+        {
+          "url": "https://www.codebuddy.cn/work/",
+          "label": "WorkBuddy",
+          "rects": [
+            [
+              0.7001,
+              0.88167,
+              0.16373,
+              0.02701
+            ]
+          ]
         }
       ]
     },
@@ -186,7 +368,15 @@ window.WORKSHOP_SLIDES = {
       "links": [
         {
           "url": "https://mp.weixin.qq.com/s/woPF2HIvcfuiwO1W-6EwLA",
-          "label": "原文"
+          "label": "原文",
+          "rects": [
+            [
+              0.07825,
+              0.83911,
+              0.59875,
+              0.04044
+            ]
+          ]
         }
       ]
     },
@@ -331,7 +521,15 @@ window.WORKSHOP_SLIDES = {
       "links": [
         {
           "url": "https://haitaowu12.github.io/world-history-atlas/#year=1200&lang=zh&mode=year&view=history",
-          "label": "世界历史地图集"
+          "label": "世界历史地图集",
+          "rects": [
+            [
+              0.29375,
+              0.25333,
+              0.6385,
+              0.65956
+            ]
+          ]
         }
       ]
     },
@@ -341,7 +539,27 @@ window.WORKSHOP_SLIDES = {
       "links": [
         {
           "url": "https://haitaowu12.github.io/world-history-atlas/#year=166&lang=zh&mode=year&entry=silk-roads-changan&view=history",
-          "label": "世界历史地图集"
+          "label": "世界历史地图集",
+          "rects": [
+            [
+              0.07775,
+              0.28044,
+              0.5625,
+              0.04711
+            ],
+            [
+              0.09625,
+              0.336,
+              0.734,
+              0.04711
+            ],
+            [
+              0.09625,
+              0.39156,
+              0.2865,
+              0.04711
+            ]
+          ]
         }
       ]
     },
@@ -356,7 +574,15 @@ window.WORKSHOP_SLIDES = {
       "links": [
         {
           "url": "https://withmarble.com/curriculum/",
-          "label": "Marble 课程地图"
+          "label": "Marble 课程地图",
+          "rects": [
+            [
+              0.3165,
+              0.24444,
+              0.56875,
+              0.63689
+            ]
+          ]
         }
       ]
     },
@@ -366,7 +592,15 @@ window.WORKSHOP_SLIDES = {
       "links": [
         {
           "url": "https://withmarble.com/curriculum/",
-          "label": "Marble 课程地图"
+          "label": "Marble 课程地图",
+          "rects": [
+            [
+              0.07825,
+              0.32267,
+              0.65375,
+              0.06756
+            ]
+          ]
         }
       ]
     },
@@ -390,12 +624,28 @@ window.WORKSHOP_SLIDES = {
       "title": "HTML 的有效性",
       "links": [
         {
-          "url": "https://x.com/karpathy",
-          "label": "X 原帖"
+          "url": "https://x.com/trq212/status/2052809885763747935",
+          "label": "Claude Code 文章（X）",
+          "rects": [
+            [
+              0.077,
+              0.27378,
+              0.355,
+              0.03244
+            ]
+          ]
         },
         {
-          "url": "https://x.com/trq212/status/2052809885763747935",
-          "label": "X 原帖"
+          "url": "https://x.com/karpathy",
+          "label": "Karpathy 的 X 主页",
+          "rects": [
+            [
+              0.0,
+              0.648,
+              0.46037,
+              0.352
+            ]
+          ]
         }
       ]
     },
