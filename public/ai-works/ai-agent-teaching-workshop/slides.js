@@ -176,7 +176,7 @@ window.WORKSHOP_SLIDES = {
       "links": []
     },
     {
-      "src": "slides/23.webp?v=original20261121",
+      "src": "slides/23.webp?v=google20261121",
       "title": "国外大模型的擅长领域",
       "links": []
     },
