@@ -207,3 +207,17 @@ test('demo data does not replace a real schedule', async () => {
   assert.equal(S.assessPublication(demo, previousGood()).publish, false);
   assert.equal(S.assessPublication(demo, previousGood()).reason, 'demo-preserves-good');
 });
+
+test('temporary public busy blocks disclose no details and expire without masking empty feeds', async () => {
+  const start = '2026-11-25T12:00:00.000Z', end = '2026-11-25T12:15:00.000Z';
+  const config = { ...cfg(), publicBusyBlocks: [{ start, end, title: 'not public', location: 'not public' }] };
+  const options = { now: NOW, retryDelayMs: 0, fetchImpl: fetchFrom(() => response(ics('Existing'))) };
+  const snapshot = await S.buildSnapshot(config, options);
+  const block = snapshot.events.find(e => e.id.startsWith('public-busy-'));
+  assert.deepEqual([block.title, block.start, block.end, block.location, block.description], ['忙碌', start, end, '', '']);
+  const expired = await S.buildSnapshot(config, { ...options, now: end });
+  assert.equal(expired.events.some(e => e.id.startsWith('public-busy-')), false);
+  const empty = await S.buildSnapshot(config, { ...options, fetchImpl: fetchFrom(() => response(EMPTY_ICS)) });
+  assert.equal(empty.status, 'empty');
+  assert.equal(empty.events.length, 0);
+});
