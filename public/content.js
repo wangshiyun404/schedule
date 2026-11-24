@@ -82,7 +82,10 @@ window.SITE = {
   // ---------- 教学：课程说明（按课程名匹配日历里的课程，不在日历里的也会显示） ----------
   courses: [
     { title: '商务汉语精读（A）', en: 'Business Chinese Intensive Reading A', audience: '汉语国际教育专业本科生 / 国际学生',
-      desc: '以《新商务汉语精读教程（上册）》为主线，围绕求职面试、商务沟通等真实情境展开精读、词汇与语言点学习，配合课堂模拟与写作任务。', links: [{ title: '课程工作台', url: 'https://wangshiyun404.github.io/business-chinese-reading-a/', desc: '教材、课程安排、授课进度、随机抽问与画笔' }] },
+      desc: '以《新商务汉语精读教程（上册）》为主线，围绕求职面试、商务沟通等真实情境展开精读、词汇与语言点学习，配合课堂模拟与写作任务。', links: [
+        { title: '课程工作台', url: 'https://wangshiyun404.github.io/business-chinese-reading-a/', desc: '教材、课程安排、授课进度、随机抽问与画笔' },
+        { title: '第3课《入职培训》课堂互动', url: 'https://wangshiyun404.github.io/business-chinese-reading-a/#lesson=3&section=lx1', desc: '新员工找部门、生词消消乐' }
+      ] },
     { title: '汉语读写（A）', en: 'Chinese Reading & Writing A', audience: '国际学生',
       desc: '以篇章阅读与应用写作为核心，训练学术与日常场景中的中文读写能力。', links: [{ title: '课程工作台', url: 'https://wangshiyun404.github.io/chinese-reading-writing-a/', desc: '课件动画、视频、授课进度、随机点名与画笔' }] },
     { title: '中级汉语听说（A）', en: 'Intermediate Chinese Listening & Speaking A', audience: '国际学生',
