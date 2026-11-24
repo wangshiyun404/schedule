@@ -102,6 +102,7 @@ window.SITE = {
 
 // 首页入口：我的 AI 作品（说明取自各仓库描述或页面标题）
 window.SITE.aiWorks = [
+  { title: '越南全景旅行地图', url: 'https://sites.google.com/view/vietnamtravelatlas/full-page-embed', desc: '通过地图探索越南，查看旅行路线、景点、饮食与文化。' },
   { title: '与 AI 共事：教与学中的 AI Agent 实操工作坊', url: './ai-works/ai-agent-teaching-workshop/?v=clicker20261121', desc: '教师工作坊网页讲义：从认识 AI Agent 到备课、组卷、评语与家校沟通实操。支持手机翻页和电脑全屏。' },
   { title: '生肖 × 星座 · Zodiac Explorer', url: './ai-works/zodiac-explorer/', desc: '中英双语生肖星座游戏：生日查询、40 位名人对比、汉语学习闯关、双人配对与分享卡。配对与运势仅供娱乐。' },
   { title: '团队项目六站路线图', url: './ai-works/team-project-roadmap.html', desc: '跟着小兔逐站开启团队项目：定题立项、比较方案、制作原型、反馈迭代、整理交付与展示答辩。' },
